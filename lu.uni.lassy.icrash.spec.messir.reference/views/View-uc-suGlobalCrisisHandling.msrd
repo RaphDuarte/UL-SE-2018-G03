@@ -1,5 +1,0 @@
-@@view uc-suGlobalCrisisHandling
-@model Use-Case icrash.usecases.suGlobalCrisisHandling.suGlobalCrisisHandling
-@description "shows the use case diagram for the suGlobalCrisisHandling user goal use case"
-@caption ' suGlobalCrisisHandling user goal use case'
-@scale 0.75
