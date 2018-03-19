@@ -1,0 +1,36 @@
+\subsection{Operation Model for isAllocatedIfPossible}
+
+\label{OM-isAllocatedIfPossible}
+
+
+The \msrcode{isAllocatedIfPossible} operation has the following properties:
+
+	\begin{operationmodel}
+	\addheading{Operation}
+	\adddoublerow{isAllocatedIfPossible}{used to allocate a crisis to a coordinator if any or to alert the administrator of crisis waiting to be handled.}
+
+
+	\addrowheading{Return type}
+	\addsinglerow{ptBoolean}
+
+		
+
+	\addrowheading{Post-Condition (functional)}
+	\addnumberedsinglerow{PostF}{ true iff the duration between the crisis creation and the system's clock is greater than the maximum delay defined
+	and }
+	\addnumberedsinglerow{PostF}{if there exist at least one coordinator then (a) the post state associates to the crisis any of the existing coordinators and (b) the coordinator is informed that he is now the handlers of the crisis whose ID is communicated}
+	\addnumberedsinglerow{PostF}{else a message is sent to all known administrators to request creation of new coordinators.}
+
+	\end{operationmodel}
+
+
+
+	
+	
+	
+	
+
+
+
+
+

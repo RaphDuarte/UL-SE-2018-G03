@@ -1,0 +1,33 @@
+\subsection{Operation Model for handlingDelayPassed}
+
+\label{OM-handlingDelayPassed}
+
+
+The \msrcode{handlingDelayPassed} operation has the following properties:
+
+	\begin{operationmodel}
+	\addheading{Operation}
+	\adddoublerow{handlingDelayPassed}{used to determine if the crisis stood too longly in a pending status since last reminder.}
+
+
+	\addrowheading{Return type}
+	\addsinglerow{ptBoolean}
+
+		
+
+	\addrowheading{Post-Condition (functional)}
+	\addnumberedsinglerow{PostF}{true iff the crisis is in pending status and if the duration between the current ctState clock information and the last reminder is greater than the crisis reminder period duration.}
+
+	\end{operationmodel}
+
+
+
+	
+	
+	
+	
+
+
+
+
+
