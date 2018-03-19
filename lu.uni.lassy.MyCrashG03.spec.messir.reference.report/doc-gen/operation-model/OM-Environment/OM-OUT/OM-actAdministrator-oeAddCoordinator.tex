@@ -1,0 +1,48 @@
+\subsection{Operation Model for oeAddCoordinator}
+
+\label{OM-oeAddCoordinator}
+
+
+The \msrcode{oeAddCoordinator} operation has the following properties:
+
+	\begin{operationmodel}
+	\addheading{Operation}
+	\adddoublerow{oeAddCoordinator}{sent to add a new coordinator in the system's post state and environment's post state.}
+
+	\addrowheading{Parameters}
+	\addnumbereddoublerow{}{AdtCoordinatorID: dtCoordinatorID}{used to initialize the id field} 
+	\addnumbereddoublerow{}{AdtLogin: dtLogin}{used to initialize the login field} 
+	\addnumbereddoublerow{}{AdtPassword: dtPassword}{used to initialize the password field} 
+
+	\addrowheading{Return type}
+	\addsinglerow{ptBoolean}
+
+	\addrowheading{Pre-Condition (protocol)}
+	\addnumberedsinglerow{PreP}{the system is started}
+	\addnumberedsinglerow{PreP}{the actor logged previously and did not log out ! (i.e. the associated ctAdministrator instance is considered logged)}
+		
+	\addrowheading{Pre-Condition (functional)}
+	\addnumberedsinglerow{PreF}{ it is supposed that there cannot exist a ctCoordinator instance with the same \msrcode{id} attribute as the one the administrator wants to delete.}
+
+	\addrowheading{Post-Condition (functional)}
+	\addnumberedsinglerow{PostF}{ the environment has a new instance of coordinator actor allowing for input/output message communication with the system.}
+	\addnumberedsinglerow{PostF}{the system's state has a new instance of ctCoordinator initialized with the given values.}
+	\addnumberedsinglerow{PostF}{the new actor instance and ctCoordinator instance are related.}
+	\addnumberedsinglerow{PostF}{the new actor instance and ctCoordinator instance are related according to the authenticated association.}
+	\addnumberedsinglerow{PostF}{the administrator actor is informed about the satisfaction of its request.}
+
+	\addrowheading{Post-Condition (protocol)}
+	\addnumberedsinglerow{PostP}{ none}
+	\end{operationmodel}
+
+
+
+	
+	
+	
+	
+
+
+
+
+
