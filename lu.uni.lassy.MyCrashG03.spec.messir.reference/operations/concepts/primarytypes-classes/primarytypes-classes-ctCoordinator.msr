@@ -6,7 +6,7 @@ import icrash.concepts.primarytypes.classes
 
 Operation Model {
 
-operation: icrash.concepts.primarytypes.classes.ctCoordinator.init(Aid:dtCoordinatorID, Alogin:dtLogin, Apwd:dtPassword):ptBoolean
+operation: icrash.concepts.primarytypes.classes.ctCoordinator.init(Aid:dtCoordinatorID, Alogin:dtLogin, Adomain:etExpertiseDomain, Apwd:dtPassword):ptBoolean
 {
 postF{ 
 if
@@ -16,6 +16,7 @@ let Self:ctCoordinator in
 Self.id = Aid
 and Self.login = Alogin
 and Self.pwd = Apwd
+and Self.domain = Adomain
 and Self.vpIsLogged = false
 /* Post F02 */
 and (Self.oclIsNew and self = Self)

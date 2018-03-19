@@ -40,7 +40,7 @@ package icrash.concepts.primarytypes.datatypes {
 				operation isNearTo(AGPSLocation:dtGPSLocation):ptBoolean
 			}
 			enum etExpertiseDomain {
-				constants["small", "medium", "huge"]
+				constants["regular", "light", "heavy", "mass"]
 				operation is():ptBoolean
 			}
 			enum etCrisisStatus {

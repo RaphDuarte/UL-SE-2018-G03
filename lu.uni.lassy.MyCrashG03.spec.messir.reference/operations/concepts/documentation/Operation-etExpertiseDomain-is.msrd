@@ -1,0 +1,17 @@
+/*
+@author dgrap
+@date Mon Mar 19 15:30:03 CET 2018
+*/
+
+
+@@Operation
+icrash.concepts.primarytypes.datatypes.etExpertiseDomain.is
+@description
+"used to determine which literal belongs to the enumeration."
+//postFunctional descriptions
+@postF 
+"true iff the value is equal to one of the following values: \msrcode{regular, light, heavy, mass}."
+
+@endPostF
+//example
+@example" "

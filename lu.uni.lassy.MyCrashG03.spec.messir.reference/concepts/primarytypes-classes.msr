@@ -50,6 +50,7 @@ import lu.uni.lassy.messir.libraries.calendar
 				attribute status: etCrisisStatus
 				attribute location:dtGPSLocation
 				attribute instant:dtDateAndTime
+				attribute domain:etExpertiseDomain
 				attribute comment:dtComment
 				
 				operation init(
@@ -58,6 +59,7 @@ import lu.uni.lassy.messir.libraries.calendar
 										Astatus:etCrisisStatus ,
 										Alocation:dtGPSLocation ,
 										Ainstant:dtDateAndTime ,
+										Adomain:etExpertiseDomain ,
 										Acomment:dtComment ):ptBoolean
 										
 				operation handlingDelayPassed():ptBoolean
@@ -103,7 +105,7 @@ import lu.uni.lassy.messir.libraries.calendar
 				operation init(
 										Aid:dtCoordinatorID ,
 										Alogin:dtLogin ,
-										Adomain: etExpertiseDomain
+										Adomain:etExpertiseDomain ,
 										Apwd:dtPassword ):ptBoolean
 			}
 

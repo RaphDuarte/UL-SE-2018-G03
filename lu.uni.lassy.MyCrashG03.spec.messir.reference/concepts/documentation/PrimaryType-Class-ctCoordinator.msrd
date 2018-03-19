@@ -6,6 +6,9 @@
 @attribute icrash.concepts.primarytypes.classes.ctCoordinator.id
 "a unique identification information."
 
+@attribute icrash.concepts.primarytypes.classes.ctCoordinator.domain
+"a domain of expertise to identify preferred crisis."
+
 @endAttributes
 
 @operation icrash.concepts.primarytypes.classes.ctCoordinator.init

@@ -20,6 +20,7 @@ operation: icrash.concepts.primarytypes.classes.ctCrisis.init(
                 Astatus:etCrisisStatus,
                 Alocation:dtGPSLocation,
                 Ainstant:dtDateAndTime,
+                Adomain:etExpertiseDomain,
                 Acomment:dtComment
               ):ptBoolean{
 postF{
@@ -32,6 +33,7 @@ and Self.type = Atype
 and Self.status = Astatus
 and Self.location = Alocation
 and Self.instant = Ainstant
+and Self.domain = Adomain
 and Self.comment = Acomment
 /* Post F02 */
 and (Self.oclIsNew and self = Self)
@@ -92,6 +94,7 @@ postF{
 if 
 (
 /* Post F01 */
+// Add a constrain that only Coordinators with the domain receive a crisis
   AactCoordinator.rnInterfaceIN.ieSendACrisis(self)
 )
 then (result = true)

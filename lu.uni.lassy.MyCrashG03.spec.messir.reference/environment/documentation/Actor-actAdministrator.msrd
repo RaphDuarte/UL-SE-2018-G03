@@ -4,9 +4,9 @@
 "represents an actor responsible of administration tasks for the \msricrash system."
 //input events
 @inputEvent icrash.environment.actAdministrator.inactAdministrator.ieCoordinatorAdded
-"its reception confirms the creation of the requested coodinator. "
+"its reception confirms the creation of the requested coordinator. "
 @inputEvent icrash.environment.actAdministrator.inactAdministrator.ieCoordinatorDeleted
-"its reception confirms the deletion of the requested coodinator. "
+"its reception confirms the deletion of the requested coordinator. "
 @endInputEvents
 
 //output events

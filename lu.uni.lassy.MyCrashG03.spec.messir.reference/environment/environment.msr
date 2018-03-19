@@ -32,6 +32,7 @@ import lu.uni.lassy.messir.libraries.calendar
 				operation oeAddCoordinator(
 											AdtCoordinatorID:dtCoordinatorID ,
 											AdtLogin:dtLogin , 
+											Adomain:etExpertiseDomain ,
 											AdtPassword:dtPassword ):ptBoolean
 											
 				operation oeDeleteCoordinator(
