@@ -1,9 +1,0 @@
-@@Primary Type Datatype icrash.concepts.primarytypes.datatypes.dtPI
-
-@description
-"Title of Point of Interest"
-
-@operation icrash.concepts.primarytypes.datatypes.dtPI.is
- "used to determine if the length of dtPI is valid"
-
-@endOperations

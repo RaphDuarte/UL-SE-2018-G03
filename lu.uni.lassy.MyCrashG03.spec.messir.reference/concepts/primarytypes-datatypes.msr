@@ -59,11 +59,14 @@ package icrash.concepts.primarytypes.datatypes {
 				constants["witness", "victim", "anonymous"]
 				operation is():ptBoolean
 			}
-			datatype dtPI extends dtString {
-				operation is():ptBoolean
-			}
 			enum etPICategory {
 				constants["crash", "gas", "food", "music", "movie", "other"]
+				operation is():ptBoolean
+			}
+			datatype dtPITitle extends dtString {
+				operation is():ptBoolean
+			}
+			datatype dtPIID extends dtString {
 				operation is():ptBoolean
 			}
 		}

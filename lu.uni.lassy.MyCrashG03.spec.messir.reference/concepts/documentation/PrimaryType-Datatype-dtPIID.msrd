@@ -1,0 +1,9 @@
+@@Primary Type Datatype icrash.concepts.primarytypes.datatypes.dtPIID
+
+@description
+"Point of Interest identifier"
+
+@operation icrash.concepts.primarytypes.datatypes.dtPIID.is
+ "used to determine which strings are considered as valid Point of Interest identifiers."
+
+@endOperations
