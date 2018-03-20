@@ -676,6 +676,8 @@
   <semanticResources>concepts/documentation/PrimaryType-Enumeration-etExpertiseDomain.msrd</semanticResources>
   <semanticResources>operations/concepts/primarytypes-datatypes/primarytypes-datatypes-etExpertiseDomain.msr</semanticResources>
   <semanticResources>operations/concepts/documentation/Operation-etExpertiseDomain-is.msrd</semanticResources>
+  <semanticResources>concepts/documentation/PrimaryType-Datatype-dtPI.msrd</semanticResources>
+  <semanticResources>concepts/documentation/PrimaryType-Enumeration-etPICategory.msrd</semanticResources>
   <ownedViews xmi:type="viewpoint:DView" xmi:id="_VxVZ4PWqEeSOM9Kfym77Zg">
     <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/lu.uni.lassy.excalibur.ui.viewer/description/excalibur_models.odesign#//@ownedViewpoints[name='msr-viewpoint']"/>
   </ownedViews>

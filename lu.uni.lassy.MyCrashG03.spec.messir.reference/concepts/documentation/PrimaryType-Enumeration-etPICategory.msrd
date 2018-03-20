@@ -1,0 +1,9 @@
+@@Primary Type
+Enumeration icrash.concepts.primarytypes.datatypes.etPICategory
+
+@description
+"This enum specifies the category of PI"
+
+@operation icrash.concepts.primarytypes.datatypes.etPICategory.is
+""
+@endOperations
