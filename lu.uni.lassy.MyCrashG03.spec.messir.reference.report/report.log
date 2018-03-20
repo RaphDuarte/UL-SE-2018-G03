@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=latex 2018.2.25)  19 MAR 2018 12:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=latex 2017.10.23)  20 MAR 2018 13:27
 entering extended mode
  restricted \write18 enabled.
  Source specials enabled.
@@ -6,10 +6,10 @@ entering extended mode
 **report.tex
 (./report.tex
 LaTeX2e <2017-04-15>
-Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
-(d:/Program Files/texlive/2017/texmf-dist/tex/latex/base/book.cls
+Babel <3.10> and hyphenation patterns for 84 language(s) loaded.
+(/usr/local/texlive/2017/texmf-dist/tex/latex/base/book.cls
 Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
-(d:/Program Files/texlive/2017/texmf-dist/tex/latex/base/bk11.clo
+(/usr/local/texlive/2017/texmf-dist/tex/latex/base/bk11.clo
 File: bk11.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
@@ -42,10 +42,10 @@ l.21 \usepackage
 
  
 Here is how much of TeX's memory you used:
- 227 strings out of 492983
- 2755 string characters out of 6129715
- 55207 words of memory out of 5000000
- 3882 multiletter control sequences out of 15000+600000
+ 227 strings out of 492996
+ 2724 string characters out of 6132729
+ 55043 words of memory out of 5000000
+ 3869 multiletter control sequences out of 15000+600000
  3940 words of font info for 15 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  21i,0n,21p,203b,36s stack positions out of 5000i,500n,10000p,200000b,80000s
