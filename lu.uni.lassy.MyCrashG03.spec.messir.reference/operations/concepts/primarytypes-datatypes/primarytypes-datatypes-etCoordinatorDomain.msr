@@ -1,4 +1,4 @@
-package icrash.operations.concepts.primarytypes.datatypes.etCrisisStatus{ 
+package icrash.operations.concepts.primarytypes.datatypes.etCoordinatorDomain { 
 	
 import lu.uni.lassy.messir.libraries.primitives
 
