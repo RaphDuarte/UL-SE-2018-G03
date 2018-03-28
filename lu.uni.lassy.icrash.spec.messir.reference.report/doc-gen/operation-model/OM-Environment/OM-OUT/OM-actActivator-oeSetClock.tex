@@ -1,0 +1,45 @@
+\subsection{Operation Model for oeSetClock}
+
+\label{OM-oeSetClock}
+
+
+The \msrcode{oeSetClock} operation has the following properties:
+
+	\begin{operationmodel}
+	\addheading{Operation}
+	\adddoublerow{oeSetClock[proactive]}{ 
+	An active message used to statically set the date and time information in the system's state. 
+	}
+
+	\addrowheading{Parameters}
+	\addnumbereddoublerow{}{AcurrentClock: dtDateAndTime}{ the date and time to be considered as the actual one.} 
+
+	\addrowheading{Return type}
+	\addsinglerow{ptBoolean}
+
+	\addrowheading{Pre-Condition (protocol)}
+	\addnumberedsinglerow{PreP}{ the system is supposed to be created and initialized and the provided date and time value is greater than the one known by the system.}
+		
+	\addrowheading{Pre-Condition (functional)}
+	\addnumberedsinglerow{PreF}{ none }
+
+	\addrowheading{Post-Condition (functional)}
+	\addnumberedsinglerow{PostF}{ 
+	the ctState instance post-state is updated to have its clock attribute equal to the given date and time.
+	}
+
+	\addrowheading{Post-Condition (protocol)}
+	\addnumberedsinglerow{PostP}{none}
+	\end{operationmodel}
+
+
+
+	
+	
+	
+	
+
+
+
+
+

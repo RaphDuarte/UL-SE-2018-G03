@@ -1,0 +1,38 @@
+	\subsubsection{testcase01-ts06oeSetClock02-actActivator.outactActivator.oeSetClock}
+	\label{TM-testcase01-ts06oeSetClock02-actActivator.outactActivator.oeSetClock}
+
+	The \msrcode{testcase01-ts06oeSetClock02-actActivator.outactActivator.oeSetClock} has the following properties:
+
+	\begin{teststepmodel}
+		\addheading{Test Step}
+		\adddoublerow{ts06oeSetClock02}{test the update of the current time.}
+		
+		
+		\addrowheading{Test Sent Message}
+		\addnumberedsinglerow{TSM}{
+		\vspace{-0.5cm}
+		\begin{description}
+			\item[] \textbf{out:TheActor}
+			\item[] \textbf{sends to system}
+			\item[] \textbf{\hyperlink{actActivator.outactActivator.oeSetClock}{actActivator.outactActivator.oeSetClock} (ACurrentClock)}
+		\end{description}}
+		
+		
+		
+		\addrowheading{Variables}
+		\addnumbereddoublerow{V}{TheActor:icrash.environment.actActivator}
+		{proactive actors responsible of requesting the update of the system's clock.}
+
+		\addrowheading{Constraints}
+		\addnumberedsinglerow{C}{TheActor is any instance existing in the current environment status.}
+		\addnumberedsinglerow{C}{ACurrentClock is a fixed date equal to the 26th November 2017 at 10:15:00 using a 24-hours notation.}
+
+
+		\addrowheading{Oracle Constraints}
+		\addnumberedsinglerow{OC}{true for testing only the executability (is available and can be triggered) of the operation.}
+	\end{teststepmodel}
+	
+	
+	
+	
+	
