@@ -1,0 +1,40 @@
+	\subsubsection{testcase01-ts03oeLogin-actAdministrator.outactAdministrator.oeLogin}
+	\label{TM-testcase01-ts03oeLogin-actAdministrator.outactAdministrator.oeLogin}
+
+	The \msrcode{testcase01-ts03oeLogin-actAdministrator.outactAdministrator.oeLogin} has the following properties:
+
+	\begin{teststepmodel}
+		\addheading{Test Step}
+		\adddoublerow{ts03oeLogin}{test the authentified access of the administrator}
+		
+		
+		\addrowheading{Test Sent Message}
+		\addnumberedsinglerow{TSM}{
+		\vspace{-0.5cm}
+		\begin{description}
+			\item[] \textbf{out:TheActor}
+			\item[] \textbf{sends to system}
+			\item[] \textbf{\hyperlink{actAdministrator.outactAdministrator.oeLogin}{actAdministrator.outactAdministrator.oeLogin} (AdtLogin, AdtPassword)}
+		\end{description}}
+		
+		
+		
+		\addrowheading{Variables}
+		\addnumbereddoublerow{V}{TheActor:actAdministrator}
+		{an actAdministor actor as subtype of actAuthenticated can send oeLogin messages to the system.}
+
+		\addrowheading{Constraints}
+		\addnumberedsinglerow{C}{TheActor is any \msrcode{actAdministrator} instance existing in the environment. It is thus expected that there exist at least one.}
+		\addnumberedsinglerow{C}{AdtLogin has its value attribute equal to the primitive string 'icrashadmin' (which is the correct administrator login known by the system after the step one.)}
+		\addnumberedsinglerow{C}{AdtPassword has its value attribute equal to the primitive string '7WXC1359' (which is the correct administrator password known by the system after the step one.)}
+
+
+		\addrowheading{Oracle Constraints}
+		\addnumberedsinglerow{OC}{the \msrcode{AMessage} value is expected to be equal to the primitive string 'You are logged ! Welcome ...'}
+		\addnumberedsinglerow{OC}{TheActor receives from system ieMessage(AMessage)}
+	\end{teststepmodel}
+	
+	
+	
+	
+	

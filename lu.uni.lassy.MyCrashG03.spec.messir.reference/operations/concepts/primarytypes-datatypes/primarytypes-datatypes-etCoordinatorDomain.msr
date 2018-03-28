@@ -1,0 +1,25 @@
+package icrash.operations.concepts.primarytypes.datatypes.etCoordinatorDomain { 
+	
+import lu.uni.lassy.messir.libraries.primitives
+
+Operation Model {
+			
+		operation: icrash.concepts.primarytypes.datatypes.etExpertiseDomain.is():ptBoolean{
+    postF{ 
+        let TheResult: ptBoolean in
+        ( if
+          ( self = regular
+            or self = light
+            or self = heavy
+            or self = mass
+          )
+          then (TheResult = true)
+          else (TheResult = false)
+          endif
+          result = TheResult
+        )
+    }
+    prolog{"src/Operations/Concepts/PrimaryTypesClasses/PrimaryTypesDatatypes-etExpertiseDomain-is.pl"}
+}
+}
+}

@@ -1,0 +1,27 @@
+package icrash.operations.concepts.primarytypes.datatypes.etPICategory{ 
+	
+import lu.uni.lassy.messir.libraries.primitives
+
+Operation Model {
+			
+		operation: icrash.concepts.primarytypes.datatypes.etPICategory.is():ptBoolean{
+    postF{ 
+        let TheResult: ptBoolean in
+        ( if
+          ( self = crash
+            or self = gas
+            or self = food
+            or self = music
+            or self = movie
+            or self = other
+          )
+          then (TheResult = true)
+          else (TheResult = false)
+          endif
+          result = TheResult
+        )
+    }
+    prolog{"src/Operations/Concepts/PrimaryTypesClasses/PrimaryTypesDatatypes-PICategory-is.pl"}
+}
+}
+}

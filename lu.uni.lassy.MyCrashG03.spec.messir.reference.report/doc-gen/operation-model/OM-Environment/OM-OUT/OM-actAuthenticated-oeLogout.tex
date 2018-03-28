@@ -1,0 +1,40 @@
+\subsection{Operation Model for oeLogout}
+
+\label{OM-oeLogout}
+
+
+The \msrcode{oeLogout} operation has the following properties:
+
+	\begin{operationmodel}
+	\addheading{Operation}
+	\adddoublerow{oeLogout}{sent to end the secured access to specific system operations.}
+
+
+	\addrowheading{Return type}
+	\addsinglerow{ptBoolean}
+
+	\addrowheading{Pre-Condition (protocol)}
+	\addnumberedsinglerow{PreP}{the system is started}
+	\addnumberedsinglerow{PreP}{the actor is currently logged in ! (i.e. the associated ctAuthenticated instance is considered logged)}
+		
+	\addrowheading{Pre-Condition (functional)}
+	\addnumberedsinglerow{PreF}{ }
+
+	\addrowheading{Post-Condition (functional)}
+	\addnumberedsinglerow{PostF}{a logout confirmation message is sent to the actor (n.b. the logged status is changed as a post-protocol condition)}
+
+	\addrowheading{Post-Condition (protocol)}
+	\addnumberedsinglerow{PostP}{the actor is known to be logged out ! (i.e. the associated ctAuthenticated instance with given login and password is considered logged out)}
+	\end{operationmodel}
+
+
+
+	
+	
+	
+	
+
+
+
+
+
