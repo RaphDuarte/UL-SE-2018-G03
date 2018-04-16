@@ -31,6 +31,9 @@ public class CtState implements Serializable {
 	/** The next available value for crisis id, this is retrieved from the database at moment of system and environment creation. */
 	public DtInteger nextValueForCrisisID;
 	
+	/** The next available value for PI id, this is retrieved from the database at moment of system and environment creation. */
+	public DtInteger nextValueForPIID;
+	
 	/** The current system date and time. */
 	public DtDateAndTime clock;
 	
@@ -51,6 +54,7 @@ public class CtState implements Serializable {
 	 *
 	 * @param aNextValueForAlertID The next index value available for the alert ID
 	 * @param aNextValueForCrisisID The next index value available for the crisis ID
+	 * @param aNextValueForPIID The next index value available for the PI ID
 	 * @param aClock The current system date and time
 	 * @param aCrisisReminderPeriod The set crisis reminder period, if a crisis hasn't been handled within the period, coordinators will be warned.
 	 * @param aMaxCrisisReminderPeriod The max crisis reminder period, if a crisis hasn't been handled within the period, coordinators will be warned.
@@ -58,7 +62,7 @@ public class CtState implements Serializable {
 	 * @param aVpStarted If the system has been started or not
 	 * @return Success of the initialisation
 	 */
-	public PtBoolean init(DtInteger aNextValueForAlertID, DtInteger aNextValueForCrisisID, 
+	public PtBoolean init(DtInteger aNextValueForAlertID, DtInteger aNextValueForCrisisID, DtInteger aNextValueForPIID, 
 						DtDateAndTime aClock, DtSecond aCrisisReminderPeriod, 
 						DtSecond aMaxCrisisReminderPeriod, DtDateAndTime aVpLastReminder, 
 						PtBoolean aVpStarted){
@@ -66,6 +70,7 @@ public class CtState implements Serializable {
 	
 				nextValueForAlertID = aNextValueForAlertID;
 				nextValueForCrisisID = aNextValueForCrisisID;
+				nextValueForPIID = aNextValueForPIID;
 				clock = aClock;
 				crisisReminderPeriod = aCrisisReminderPeriod;
 				maxCrisisReminderPeriod = aMaxCrisisReminderPeriod;

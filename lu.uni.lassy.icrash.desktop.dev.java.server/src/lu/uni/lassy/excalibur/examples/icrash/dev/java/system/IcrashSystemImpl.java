@@ -39,12 +39,14 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.db.DbComCompanies;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.db.DbCoordinators;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.db.DbCrises;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.db.DbHumans;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.db.DbPIs;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtAdministrator;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtAlert;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtAuthenticated;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtCoordinator;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtCrisis;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtHuman;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtPI;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtState;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtAlertID;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtComment;
@@ -52,12 +54,15 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCo
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCrisisID;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtGPSLocation;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLogin;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPIID;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPITitle;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPassword;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPhoneNumber;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtAlertStatus;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisStatus;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisType;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtHumanKind;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtPICategory;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.secondary.DtSMS;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtDate;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtDateAndTime;
@@ -103,6 +108,9 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 	
 	/**  A hashtable of the alerts in the system, stored by their ID as a key. */
 	Hashtable<String, CtAlert> cmpSystemCtAlert = new Hashtable<String, CtAlert>();
+	
+	/**  A hashtable of the PIs in the system, stored by their ID as a key.*/
+	Hashtable<String, CtPI> cmpSystemCtPI = new Hashtable<String, CtPI>();
 	
 	/**  A hashtable of the crises in the system, stored by their ID as a key. */
 	Hashtable<String, CtCrisis> cmpSystemCtCrisis = new Hashtable<String, CtCrisis>();
@@ -444,6 +452,18 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 	}
 	
 	/* (non-Javadoc)
+	 * @see lu.uni.lassy.excalibur.examples.icrash.dev.java.system.IcrashSystem#getAllCtPIs()
+	 */
+	public ArrayList<CtPI> getAllCtPIs() throws RemoteException {
+		ArrayList<CtPI> result = new ArrayList<CtPI>();
+		if (cmpSystemCtPI != null) {
+			for(CtPI pi : cmpSystemCtPI.values())
+				result.add(pi);
+		}
+		return result;
+	}
+	
+	/* (non-Javadoc)
 	 * @see lu.uni.lassy.excalibur.examples.icrash.dev.java.system.IcrashSystem#getAllCtHumans()
 	 */
 	public ArrayList <CtHuman> getAllCtHumans() throws java.rmi.RemoteException{
@@ -535,6 +555,10 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 			int nextValueForCrisisID = DbCrises.getMaxCrisisID() + 1;
 			DtInteger aNextValueForCrisisID = new DtInteger(new PtInteger(
 					nextValueForCrisisID));
+			int nextValueForPIID = DbPIs.getMaxPIID() + 1;
+			DtInteger aNextValueForPIID = new DtInteger(new PtInteger(
+					nextValueForPIID));
+			
 			PtBoolean aVpStarted = new PtBoolean(true);
 			ctState.init(aNextValueForAlertID, aNextValueForCrisisID, aClock,
 					aCrisisReminderPeriod, aMaxCrisisReminderPeriod, aClock,
@@ -594,6 +618,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 					ctAdmin);
 			// initialise relationships taking information from the DB
 			cmpSystemCtAlert = DbAlerts.getSystemAlerts();
+			cmpSystemCtPI = DbPIs.getSystemPIs();
 			cmpSystemCtCrisis = DbCrises.getSystemCrises();
 			cmpSystemCtHuman = DbHumans.getSystemHumans();
 			Hashtable<String, CtCoordinator> cmpSystemCtCoordinator = DbCoordinators.getSystemCoordinators();
@@ -819,6 +844,39 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 		}
 		return new PtBoolean(false);
 	}
+	
+	@Override
+	public PtBoolean oePI(EtHumanKind aEtHumanKind, DtDate aDtDate, DtTime aDtTime, DtGPSLocation aDtGPSLocation,
+			DtPITitle aDtPITitle, EtPICategory aDtPICategory) throws RemoteException {
+		try{
+			//PreP1
+			isSystemStarted();
+			DtDateAndTime aInstant = new DtDateAndTime(aDtDate, aDtTime);
+			int nextValueForPIID_at_pre = ctState.nextValueForPIID.value
+					.getValue();
+			
+			//PostF1				
+			ctState.nextValueForPIID.value = new PtInteger(
+					ctState.nextValueForPIID.value.getValue() + 1);
+	
+			//PostF2
+			CtPI aCtPI = new CtPI();
+			DtPIID aId = new DtPIID(new PtString(""
+					+ nextValueForPIID_at_pre));
+			
+			//DB: insert alert in the database
+			DbPIs.insertPI(aCtPI);
+			
+			// initialising and adding crisis was here (in alert)
+			
+			// initialising and adding human was here (in alert) but I should connect it to human from crisis/alert
+		}
+		catch(Exception e){
+			log.error("Exception in oePI..." + e);
+		}
+		return new PtBoolean(false);
+	}
+	
 	/* (non-Javadoc)
 	 * @see lu.uni.lassy.excalibur.examples.icrash.dev.java.system.IcrashSystem#oeSetCrisisType(lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCrisisID, lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisType)
 	 */
@@ -1360,4 +1418,5 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 			return new PtBoolean(false);
 		}
 	}
+
 }

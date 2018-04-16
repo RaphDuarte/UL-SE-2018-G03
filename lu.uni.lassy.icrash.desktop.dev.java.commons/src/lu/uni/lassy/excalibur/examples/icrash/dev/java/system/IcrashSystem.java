@@ -12,6 +12,7 @@
  ******************************************************************************/
 package lu.uni.lassy.excalibur.examples.icrash.dev.java.system;
 
+import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtAu
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtCoordinator;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtCrisis;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtHuman;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtPI;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtState;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtAlertID;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtComment;
@@ -34,12 +36,14 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCo
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCrisisID;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtGPSLocation;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLogin;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPITitle;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPassword;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPhoneNumber;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtAlertStatus;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisStatus;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisType;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtHumanKind;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtPICategory;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtDate;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtDateAndTime;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtTime;
@@ -172,6 +176,14 @@ public interface IcrashSystem extends Remote {
 	public ArrayList <CtAlert> getAllCtAlerts() throws RemoteException;
 	
 	/**
+	 * Gets a list of all class types Points of Interest in the system.
+	 * 
+	 * @return a list of all class type PIs
+	 * @throws RemoteException Thrown if the server is offline
+	 */
+	public ArrayList <CtPI> getAllCtPIs() throws RemoteException;
+	
+	/**
 	 * Gets a list of all class type humans in the system.
 	 *
 	 * @return A list of all class type humans
@@ -253,6 +265,23 @@ public interface IcrashSystem extends Remote {
 	 * @throws RemoteException Thrown if the server is offline
 	 */
 	public PtBoolean oeInvalidateAlert(DtAlertID aDtAlertID) throws RemoteException; 
+	
+	/**
+	 * Creates a Point of Interest (PI) in the system using the parameters passed
+	 * Uses the actor communication company for this method.
+	 * 
+	 * @param aEtHumanKind The kind of Human adding this PI
+	 * @param aDtDate The date when PI was created
+	 * @param aDtTime The time when PI was created
+	 * @param aDtGPSLocation Location of PI
+	 * @param aDtPITitle Title of PI
+	 * @param aDtPICategory Category of PI
+	 * @return The success of the method
+	 * @throws RemoteException Thrown if the server is offline
+	 */
+	public PtBoolean oePI(EtHumanKind aEtHumanKind, DtDate aDtDate,
+			DtTime aDtTime, DtGPSLocation aDtGPSLocation,
+			DtPITitle aDtPITitle, EtPICategory aDtPICategory) throws RemoteException;
 	
 	/**
 	 * Sets the crisis type to one passed.
