@@ -23,8 +23,10 @@ import java.util.List;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.IcrashSystem;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtComment;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtGPSLocation;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPITitle;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPhoneNumber;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtHumanKind;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtPICategory;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.secondary.DtSMS;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtDate;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtTime;
@@ -181,5 +183,12 @@ public class ActComCompanyImpl extends UnicastRemoteObject implements ActComComp
 		if (!this.getName().equals(aActComCompany.getName()))
 			return false;
 		return true;
+	}
+	
+	@Override
+	public PtBoolean oePI(EtHumanKind aEtHumanKind, DtDate aDtDate, DtTime aDtTime, DtGPSLocation aDtGPSLocation,
+			DtPITitle aDtPITitle, EtPICategory aDtPICategory) throws RemoteException, NotBoundException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

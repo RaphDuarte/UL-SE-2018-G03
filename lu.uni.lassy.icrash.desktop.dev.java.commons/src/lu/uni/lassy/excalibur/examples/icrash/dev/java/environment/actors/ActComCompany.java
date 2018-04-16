@@ -19,8 +19,10 @@ import java.rmi.RemoteException;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.design.JIntIsActor;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtComment;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtGPSLocation;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPITitle;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPhoneNumber;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtHumanKind;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtPICategory;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.secondary.DtSMS;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtDate;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtTime;
@@ -83,4 +85,21 @@ public interface ActComCompany extends java.rmi.Remote, Serializable, JIntIsActo
 	 * @throws NotBoundException Thrown if the server is not bound correctly in RMI settings
 	 */
 	public void removeListener(ActProxyComCompany aActProxyAuthenticated) throws RemoteException, NotBoundException;
+	
+	/**
+	 * Initiates point of interest creation on the server.
+	 * 
+	 * @param aEtHumanKind The type of human adding the point of interest
+	 * @param aDtDate The date when PI was added
+	 * @param aDtTime The time when PI was added
+	 * @param aDtGPSLocation The location of the point of interest
+	 * @param aDtPITitle The point of interest title
+	 * @param aDtPICategory The point of interest category
+	 * @return The success of the method
+	 * @throws RemoteException Thrown if the server is offline
+	 * @throws NotBoundException Thrown if the server is not bound correctly in RMI settings
+	 */
+	public PtBoolean oePI(EtHumanKind aEtHumanKind, DtDate aDtDate, DtTime aDtTime,
+			DtGPSLocation aDtGPSLocation, DtPITitle aDtPITitle, EtPICategory aDtPICategory) 
+					throws RemoteException, NotBoundException;
 }
