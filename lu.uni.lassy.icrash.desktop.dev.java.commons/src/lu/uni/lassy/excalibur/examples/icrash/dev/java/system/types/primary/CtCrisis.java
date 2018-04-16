@@ -47,6 +47,9 @@ public class CtCrisis implements Serializable {
 	/** The current status of the crisis. */
 	public EtCrisisStatus status;
 	
+	/** The type of domain of the crisis */
+	public EtCrisisDomain domain;
+	
 	/** The location of the accident that is associated to the crisis. */
 	public DtGPSLocation location;
 	
@@ -68,12 +71,13 @@ public class CtCrisis implements Serializable {
 	 * @return the success of the initialisation
 	 */
 	public PtBoolean init(DtCrisisID aId, EtCrisisType aType,
-			EtCrisisStatus aStatus, DtGPSLocation aLocation,
+			EtCrisisStatus aStatus, EtCrisisDomain aDomain, DtGPSLocation aLocation,
 			DtDateAndTime aInstant, DtComment aComment) {
 
 		id = aId;
 		type = aType;
 		status = aStatus;
+		domain = aDomain;
 		location = aLocation;
 		instant = aInstant;
 		comment = aComment;
@@ -135,7 +139,14 @@ public class CtCrisis implements Serializable {
 	 */
 	public PtBoolean isSentToCoordinator(ActCoordinator aActCoordinator) throws RemoteException {
 		
-		aActCoordinator.ieSendACrisis(this);
+		if(this.domain.equals(aActCoordinator)) {
+			aActCoordinator.ieSendACrisis(this);
+		} else {
+			if(this.domain.equals("regular")) {
+				aActCoordinator.ieSendACrisis(this);
+			}
+		}
+		
 		return new PtBoolean(true);
 	}
 	
@@ -205,6 +216,8 @@ public class CtCrisis implements Serializable {
 		if (aCtCrisis.location.longitude.value.getValue() != this.location.longitude.value.getValue())
 			return false;
 		if (!aCtCrisis.status.equals(this.status))
+			return false;
+		if (!aCtCrisis.domain.equals(this.domain))
 			return false;
 		if (!aCtCrisis.type.equals(this.type))
 			return false;

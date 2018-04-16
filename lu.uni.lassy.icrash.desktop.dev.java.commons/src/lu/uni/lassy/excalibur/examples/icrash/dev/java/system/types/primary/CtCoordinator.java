@@ -25,6 +25,9 @@ public class CtCoordinator extends CtAuthenticated {
 
 	/** The id of the coordinator. */
 	public DtCoordinatorID id;
+	
+	/** The domain of the coordinator. */
+	public EtCoordinatorDomain domain;
 		
 	/**
 	 * Initialises the coordinator.
@@ -32,11 +35,13 @@ public class CtCoordinator extends CtAuthenticated {
 	 * @param aId The ID of the coordinator
 	 * @param aLogin The username of the coordinator
 	 * @param aPwd The password of the coordinator
+	 * @param aDomain The domain of the coordinator
 	 * @return The success of the initialisation
 	 */
-	public PtBoolean init(DtCoordinatorID aId,DtLogin aLogin,DtPassword aPwd){
+	public PtBoolean init(DtCoordinatorID aId,DtLogin aLogin,DtPassword aPwd,EtCoordinatorDomain aDomain){
 			super.init(aLogin, aPwd);
 			id = aId;
+			domain = aDomain;
 			return new PtBoolean(true); 
 	}
 	
@@ -45,11 +50,13 @@ public class CtCoordinator extends CtAuthenticated {
 	 *
 	 * @param aLogin The value to change the login to
 	 * @param aPwd the value to change the password to 
+	 * @param aDomain The domain of the coordinator
 	 * @return the success of the update method
 	 */
-	public PtBoolean update(DtLogin aLogin,DtPassword aPwd){
+	public PtBoolean update(DtLogin aLogin,DtPassword aPwd,EtCoordinatorDomain aDomain){
 		login = aLogin;
 		pwd = aPwd;
+		domain = aDomain;
 		return new PtBoolean(true);
 	}
 	
