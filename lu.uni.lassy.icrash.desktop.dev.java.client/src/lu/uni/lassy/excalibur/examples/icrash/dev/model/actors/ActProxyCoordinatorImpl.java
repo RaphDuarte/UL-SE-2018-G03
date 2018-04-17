@@ -25,6 +25,7 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCo
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCrisisID;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtAlertStatus;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCoordinatorDomain;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisDomain;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisStatus;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisType;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtBoolean;
@@ -135,6 +136,17 @@ public class ActProxyCoordinatorImpl extends ActProxyAuthenticatedImpl
 		if (getServerSideActor() != null)
 			return ((ActCoordinator) getServerSideActor()).oeSetCrisisStatus(
 					aDtCrisisID, aEtCrisisStatus);
+		else
+			return new PtBoolean(false);
+	}
+	
+	synchronized public PtBoolean oeSetCrisisDomain(DtCrisisID aDtCrisisID,
+			EtCrisisDomain aEtCrisisDomain) throws RemoteException,
+			NotBoundException {
+
+		if (getServerSideActor() != null)
+			return ((ActCoordinator) getServerSideActor()).oeSetCrisisDomain(
+					aDtCrisisID, aEtCrisisDomain);
 		else
 			return new PtBoolean(false);
 	}

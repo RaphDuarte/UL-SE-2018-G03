@@ -162,31 +162,26 @@ public class CtCrisis implements Serializable {
 			aActCoordinator.ieSendACrisis(this);
 			return new PtBoolean(true);
 		}
-
 		if (this.domain.equals(EtCrisisDomain.fire)
 				&& aActCoordinator.oeGetCoordinatorDomain().equals(EtCoordinatorDomain.fire)) {
 			aActCoordinator.ieSendACrisis(this);
 			return new PtBoolean(true);
 		}
-
 		if (this.domain.equals(EtCrisisDomain.chemicalSubstance)
 				&& aActCoordinator.oeGetCoordinatorDomain().equals(EtCoordinatorDomain.chemicalSubstance)) {
 			aActCoordinator.ieSendACrisis(this);
 			return new PtBoolean(true);
 		}
-
 		if (this.domain.equals(EtCrisisDomain.unknownSubstance)
 				&& aActCoordinator.oeGetCoordinatorDomain().equals(EtCoordinatorDomain.unknownSubstance)) {
 			aActCoordinator.ieSendACrisis(this);
 			return new PtBoolean(true);
 		}
-
 		if (this.domain.equals(EtCrisisDomain.naturalCase)
 				&& aActCoordinator.oeGetCoordinatorDomain().equals(EtCoordinatorDomain.naturalCase)) {
 			aActCoordinator.ieSendACrisis(this);
 			return new PtBoolean(true);
 		}
-
 		System.out.println("This Crisis can't be sent to a Coordinator without the apropriate domain of expertise");
 		return new PtBoolean(true);
 	}

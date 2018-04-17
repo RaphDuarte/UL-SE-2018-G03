@@ -56,7 +56,8 @@ public class ActAdministratorImpl extends ActAuthenticatedImpl implements
 	 */
 	synchronized public PtBoolean oeAddCoordinator(
 			DtCoordinatorID aDtCoordinatorID, DtLogin aDtLogin,
-			DtPassword aDtPassword, EtCoordinatorDomain aEtCoordinatorDomain) throws RemoteException, NotBoundException {
+			DtPassword aDtPassword, EtCoordinatorDomain aEtCoordinatorDomain) 
+					throws RemoteException, NotBoundException {
 
 		Logger log = Log4JUtils.getInstance().getLogger();
 

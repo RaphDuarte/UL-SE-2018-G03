@@ -342,7 +342,8 @@ public class ActCoordinatorImpl extends ActAuthenticatedImpl implements ActCoord
 	}
 
 	@Override
-	synchronized public PtBoolean oeSetCrisisDomain(DtCrisisID aDtCrisisID, EtCrisisDomain aEtCrisisDomain) throws RemoteException, NotBoundException {
+	synchronized public PtBoolean oeSetCrisisDomain(DtCrisisID aDtCrisisID, EtCrisisDomain aEtCrisisDomain) 
+			throws RemoteException, NotBoundException {
 		
 		Logger log = Log4JUtils.getInstance().getLogger();
 	

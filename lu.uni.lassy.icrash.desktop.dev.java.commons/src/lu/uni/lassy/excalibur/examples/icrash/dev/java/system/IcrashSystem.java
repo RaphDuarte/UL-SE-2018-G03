@@ -246,7 +246,8 @@ public interface IcrashSystem extends Remote {
 	 * @throws RemoteException Thrown if the server is offline
 	 */
 	public PtBoolean oeAlert(EtHumanKind aEtHumanKind,DtDate aDtDate,
-				DtTime aDtTime,DtPhoneNumber aDtPhoneNumber,DtGPSLocation aDtGPSLocation,DtComment aDtComment, EtCrisisDomain aEtCrisisDomain) throws RemoteException; 
+				DtTime aDtTime,DtPhoneNumber aDtPhoneNumber,DtGPSLocation aDtGPSLocation,
+				DtComment aDtComment, EtCrisisDomain aEtCrisisDomain) throws RemoteException; 
 
 	/**
 	 * Validates an alert on the system
@@ -313,7 +314,8 @@ public interface IcrashSystem extends Remote {
 	 * @return The success of the method
 	 * @throws RemoteException Thrown if the server is offline
 	 */
-	public PtBoolean oeSetCrisisDomain(DtCrisisID aDtCrisisID, EtCrisisDomain aEtCrisisDomain) throws RemoteException; 
+	public PtBoolean oeSetCrisisDomain(DtCrisisID aDtCrisisID, EtCrisisDomain aEtCrisisDomain) 
+			throws RemoteException; 
 	
 	/**
 	 * Sets the current authenticating actor to be handling the crisis.
