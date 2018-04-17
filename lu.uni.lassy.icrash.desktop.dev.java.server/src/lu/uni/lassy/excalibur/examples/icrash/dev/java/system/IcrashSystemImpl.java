@@ -128,6 +128,12 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 	/**  A hashtable of the joint alerts and humans in the system, stored by their alert as a key. */
 	Hashtable<CtAlert, CtHuman> assCtAlertCtHuman = new Hashtable<CtAlert, CtHuman>();
 	
+	/**  A hashtable of the joint PIs and crises in the system, stored by their PI as a key. */
+	Hashtable<CtPI, CtCrisis> assCtPICtCrisis = new Hashtable<CtPI, CtCrisis>();
+	
+	/**  A hashtable of the joint PIs and humans in the system, stored by their PI as a key. */
+	Hashtable<CtPI, CtHuman> assCtPICtHuman = new Hashtable<CtPI, CtHuman>();
+	
 	/**  A hashtable of the joint class types and actors in the system, stored by their class type as a key. */
 	Hashtable<CtAuthenticated, ActAuthenticated> assCtAuthenticatedActAuthenticated = new Hashtable<CtAuthenticated, ActAuthenticated>();
 	
@@ -166,7 +172,25 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 
 		return listAlerts;
 	}
+	
+	/**
+	 * Gets the PIs by crisis.
+	 *
+	 * @param aCtCrisis The crisis to use to search for the associated PI
+	 * @return The PI(s) that are associated with crisis provided
+	 */
+	private List<CtPI> getPIsByCrisis(CtCrisis aCtCrisis) {
+		List<CtPI> listPIs = new ArrayList<CtPI>();
 
+		for (CtPI ctPI : assCtPICtCrisis.keySet()) {
+			if (assCtPICtCrisis.get(ctPI).id.value.getValue().equals(
+					aCtCrisis.id.value.getValue()))
+				listPIs.add(ctPI);
+		}
+
+		return listPIs;
+	}
+	
 	/**
 	 * Gets the class Authenticated (Of a coordinator type) that has the associated ID provided.
 	 *
@@ -560,9 +584,8 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 					nextValueForPIID));
 			
 			PtBoolean aVpStarted = new PtBoolean(true);
-			ctState.init(aNextValueForAlertID, aNextValueForCrisisID, aClock,
-					aCrisisReminderPeriod, aMaxCrisisReminderPeriod, aClock,
-					aVpStarted);
+			ctState.init(aNextValueForAlertID, aNextValueForCrisisID, aNextValueForPIID,
+					aClock, aCrisisReminderPeriod, aMaxCrisisReminderPeriod, aClock, aVpStarted);
 			/* ENV
 			PostF 2 the actMsrCreator actor instance is initiated (remember that since the
 			oeCreateSystemAndEnvironment is a special event, its role is to make consistent the post
@@ -631,6 +654,8 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 			}
 			assCtAlertCtCrisis = DbAlerts.getAssCtAlertCtCrisis();
 			assCtAlertCtHuman = DbAlerts.getAssCtAlertCtHuman();
+			assCtPICtCrisis = DbPIs.getAssCtPICtCrisis();
+			assCtPICtHuman = DbPIs.getAssCtPICtHuman();
 			assCtCrisisCtCoordinator = DbCrises.getAssCtCrisisCtCoordinator();
 			assCtHumanActComCompany = DbHumans.getAssCtHumanActComCompany(env.getActComCompanies());
 			/*
@@ -855,21 +880,44 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 			int nextValueForPIID_at_pre = ctState.nextValueForPIID.value
 					.getValue();
 			
-			//PostF1				
+			//Precondition - Existing Near Alert with Crisis! 
+			boolean existsNear = false;
+			CtCrisis aCtCrisis = new CtCrisis();
+			//check if there exists a reported Alert that is closer than 100 m. 
+			for (CtAlert existingCtAlert : assCtAlertCtCrisis.keySet()) {
+				existsNear = existingCtAlert.location.isNearTo(
+						aDtGPSLocation.latitude, aDtGPSLocation.longitude)
+						.getValue();
+				if (existsNear) {
+					aCtCrisis = assCtPICtCrisis.get(existingCtAlert);
+					break;
+				}
+			}
+			
+			// PI: TO DO! Human who is adding PI needs to be victim!
+			// PI: TO DO! connect PI to human
+			CtHuman aCtHuman = new CtHuman();
+			
+			//Create next ID for PI	
 			ctState.nextValueForPIID.value = new PtInteger(
 					ctState.nextValueForPIID.value.getValue() + 1);
 	
-			//PostF2
+			//Insert PI into the database
 			CtPI aCtPI = new CtPI();
 			DtPIID aId = new DtPIID(new PtString(""
 					+ nextValueForPIID_at_pre));
+			aCtPI.init(aId, aDtGPSLocation, aInstant, aDtPITitle, aDtPICategory);
+			DbPIs.insertPI(aCtPI); // DB
 			
-			//DB: insert alert in the database
-			DbPIs.insertPI(aCtPI);
+			//Update just inserted PI with its corresponding associated (near) crisis
+			assCtPICtCrisis.put(aCtPI, aCtCrisis);
+			DbPIs.bindPICrisis(aCtPI, aCtCrisis); //DB
 			
-			// initialising and adding crisis was here (in alert)
+			//Update just inserted PI with its human
+			assCtPICtHuman.put(aCtPI, aCtHuman);
+			DbPIs.bindPIHuman(aCtPI, aCtHuman);
 			
-			// initialising and adding human was here (in alert) but I should connect it to human from crisis/alert
+			
 		}
 		catch(Exception e){
 			log.error("Exception in oePI..." + e);

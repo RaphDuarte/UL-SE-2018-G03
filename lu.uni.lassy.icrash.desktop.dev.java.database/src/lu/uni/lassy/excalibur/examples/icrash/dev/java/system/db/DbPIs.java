@@ -11,6 +11,9 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtAlert;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtCrisis;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtHuman;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtPI;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtGPSLocation;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLatitude;
@@ -353,7 +356,102 @@ public class DbPIs extends DbAbstract {
 
 	}
 
-	// TO DO! Getting the PIs and their associated crises/humans and inserts them into a hashtable
+	/**
+	 * Gets the PIs and their associated crises and inserts them into a hashtable, using the PI as a key.
+	 *
+	 * @return the hashtable of the associated crises and PIs
+	 */
+	static public Hashtable<CtPI, CtCrisis> getAssCtPICtCrisis() {
+		// TO DO! Getting the PIs and their associated crises inserting them into a hashtable
+		return null;
+	}
+	
+	/**
+	 * Gets the PIs and their associated humans and inserts them into a hashtable, using the PI as a key.
+	 *
+	 * @return the hashtable of the associated humans and PIs
+	 */
+	static public Hashtable<CtPI, CtHuman> getAssCtPICtHuman() {
+		// TO DO! Getting the PIs and their associated crises inserting them into a hashtable
+		return null;
+	}
+	
+	// TO DO! Also finish this!
+	/**
+	 * Binds a crisis onto a PI in the database.
+	 *
+	 * @param aCtPI The PI to bind the crisis to
+	 * @param aCtCrisis The crisis to bind to to the PI
+	 */
+	static public void bindPICrisis(CtPI aCtPI, CtCrisis aCtCrisis) {
+		try {
+			conn = DriverManager
+					.getConnection(url + dbName, userName, password);
+			log.debug("Connected to the database");
+
+			/********************/
+			//Update
+
+			try {
+				String sql = "UPDATE " + dbName
+						+ ".pis SET crisis =? WHERE id = ?";
+				String id = aCtPI.id.value.getValue();
+				String crisiId = aCtCrisis.id.value.getValue();
+
+				PreparedStatement statement = conn.prepareStatement(sql);
+				statement.setString(1, crisiId);
+				statement.setString(2, id);
+				int rows = statement.executeUpdate();
+				log.debug(rows + " row affected");
+			} catch (SQLException s) {
+				log.error("SQL statement is not executed! " + s);
+			}
+
+			conn.close();
+			log.debug("Disconnected from database");
+		} catch (Exception e) {
+			logException(e);
+		}
+
+	}
+
+	/**
+	 * Binds a human onto a PI in the database.
+	 *
+	 * @param aCtAlert The PI to bind the human to
+	 * @param aCtHuman The human to bind to the PI
+	 */
+	static public void bindPIHuman(CtPI aCtPI, CtHuman aCtHuman) {
+		try {
+			conn = DriverManager
+					.getConnection(url + dbName, userName, password);
+			log.debug("Connected to the database");
+
+			/********************/
+			//Update
+
+			try {
+				String sql = "UPDATE " + dbName
+						+ ".pis SET human =? WHERE id = ?";
+				String id = aCtPI.id.value.getValue();
+				String humanPhone = aCtHuman.id.value.getValue();
+
+				PreparedStatement statement = conn.prepareStatement(sql);
+				statement.setString(1, humanPhone);
+				statement.setString(2, id);
+				int rows = statement.executeUpdate();
+				log.debug(rows + " row affected");
+			} catch (SQLException s) {
+				log.error("SQL statement is not executed! " + s);
+			}
+
+			conn.close();
+			log.debug("Disconnected from database");
+		} catch (Exception e) {
+			logException(e);
+		}
+
+	}
 
 	/**
 	 * Deletes a PI from the database, it will use the ID from the CtPI to delete it.

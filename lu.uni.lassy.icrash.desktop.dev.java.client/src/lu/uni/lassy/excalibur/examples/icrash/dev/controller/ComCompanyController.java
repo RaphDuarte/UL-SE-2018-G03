@@ -27,8 +27,10 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCo
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtGPSLocation;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLatitude;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLongitude;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPITitle;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPhoneNumber;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtHumanKind;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtPICategory;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtDate;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtDay;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtHour;
@@ -123,6 +125,63 @@ public class ComCompanyController implements HasListeners{
 			ht.put(aDtPhoneNumber, aDtPhoneNumber.value.getValue());
 			ht.put(aDtComment, aDtComment.value.getValue());
 			return aActProxyComCompany.oeAlert(aEtHumanKind, aDtDate, aDtTime, aDtPhoneNumber, aDtGPSLocation, aDtComment);
+		} catch (RemoteException e) {
+			Log4JUtils.getInstance().getLogger().error(e);
+			throw new ServerOfflineException();
+		} catch (NotBoundException e) {
+			Log4JUtils.getInstance().getLogger().error(e);
+			throw new ServerNotBoundException();
+		} catch (NumberFormatException e){
+			Log4JUtils.getInstance().getLogger().error(e);
+			throw new StringToNumberException("Longitude: " + longitude + " and latitude: " + latitude);
+		}
+	}
+	
+	/**
+	 * Checks the data passed is correct and if so, will create a PI in the system.
+	 * 
+	 * @param aEtHumanKind the et of human in the system
+	 * @param year is the year when PI was added
+	 * @param month is the month when PI was added
+	 * @param day is the day when PI was added
+	 * @param hour is the hour when PI was added
+	 * @param minute is the minute when PI was added
+	 * @param second is the second when PI was added
+	 * @param latitude of the location of PI
+	 * @param longitude of the location of PI
+	 * @param title of the PI
+	 * @param aEtPICategory is et of category of the PI
+	 * @return Returns a PtBoolean of true if done successfully, otherwise will return a false
+	 * @throws ServerOfflineException is an error that is thrown when the server is offline or not reachable
+	 * @throws InvalidHumanKindException is thrown when the enum type of HumanKind does not match the specification
+	 * @throws ServerNotBoundException is only thrown when attempting to access a server which has no current binding. This shouldn't happen, but you never know!
+	 * @throws IncorrectFormatException is thrown when a Dt/Et information type does not match the is() method specified in the specification
+	 * @throws StringToNumberException the string to number exception
+	 */
+	public PtBoolean oePI(EtHumanKind aEtHumanKind, int year, int month, int day, int hour, int minute, int second,
+			String latitude, String longitude, String title, EtPICategory aEtPICategory) throws ServerOfflineException, InvalidHumanKindException, ServerNotBoundException, IncorrectFormatException, StringToNumberException{
+		try {
+			if (aActProxyComCompany == null)
+				return new PtBoolean(false);
+			
+			// MAYBE DtPhoneNumber aDtPhoneNumber = new DtPhoneNumber(new PtString(phoneNumber));
+			DtDate aDtDate = new DtDate(new DtYear(new PtInteger(year)), new DtMonth(new PtInteger(month)), new DtDay(new PtInteger(day)));
+			DtTime aDtTime = new DtTime(new DtHour(new PtInteger(hour)), new DtMinute(new PtInteger(minute)), new DtSecond(new PtInteger(second)));
+			double dblLatitude = Double.parseDouble(latitude);
+			double dblLongitude = Double.parseDouble(longitude);
+			DtGPSLocation aDtGPSLocation = new DtGPSLocation(new DtLatitude(new PtReal(dblLatitude)), new DtLongitude(new PtReal(dblLongitude)));
+			DtPITitle aDtPITitle = new DtPITitle(new PtString(title));
+			
+			Hashtable<JIntIs, String> ht = new Hashtable<JIntIs, String>();
+			// MAYBE ht.put(aDtPhoneNumber, aDtPhoneNumber.value.getValue());
+			ht.put(aEtHumanKind, aEtHumanKind.name());
+			ht.put(aDtGPSLocation.latitude, Double.toString(aDtGPSLocation.latitude.value.getValue()));
+			ht.put(aDtGPSLocation.longitude, Double.toString(aDtGPSLocation.longitude.value.getValue()));
+			ht.put(aDtPITitle, aDtPITitle.value.getValue());
+			ht.put(aEtPICategory, aEtPICategory.name());
+			
+			return aActProxyComCompany.oePI(aEtHumanKind, aDtDate, aDtTime, aDtGPSLocation, aDtPITitle, aEtPICategory);
+			
 		} catch (RemoteException e) {
 			Log4JUtils.getInstance().getLogger().error(e);
 			throw new ServerOfflineException();

@@ -20,8 +20,10 @@ import java.rmi.RemoteException;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.design.JIntIsActor;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtComment;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtGPSLocation;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPITitle;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPhoneNumber;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtHumanKind;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtPICategory;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.secondary.DtSMS;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtDate;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtTime;
@@ -56,6 +58,22 @@ public interface ActProxyComCompany extends Remote, JIntIsActor {
 	public PtBoolean oeAlert(EtHumanKind aEtHumanKind,DtDate aDtDate,
 			DtTime aDtTime,DtPhoneNumber aDtPhoneNumber,
 			DtGPSLocation aDtGPSLocation,DtComment aDtComment) throws RemoteException, NotBoundException;
+	
+	/**
+	 * Contacts the server actor and initiates a PI creation.
+	 * 
+	 * @param aEtHumanKind The type of human reporting the accident
+	 * @param aDtDate The date when PI was created
+	 * @param aDtTime The time when PI was created
+	 * @param aDtGPSLocation The location of the PI
+	 * @param aDtPITitle The title of PI
+	 * @param aEtPICategory The category of PI
+	 * @return The success of method
+	 * @throws RemoteException Thrown if the server is offline
+	 * @throws NotBoundException Thrown if the server is not bound correctly in RMI settings
+	 */
+	public PtBoolean oePI(EtHumanKind aEtHumanKind, DtDate aDtDate, DtTime aDtTime,
+			DtGPSLocation aDtGPSLocation, DtPITitle aDtPITitle, EtPICategory aEtPICategory) throws RemoteException, NotBoundException;
 
 	/**
 	 * Receives a message from the server side actor with details of if the alert was logged or not.

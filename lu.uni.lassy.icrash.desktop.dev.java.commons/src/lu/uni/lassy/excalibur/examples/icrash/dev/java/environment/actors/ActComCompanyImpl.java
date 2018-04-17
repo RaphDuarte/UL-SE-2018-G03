@@ -185,10 +185,29 @@ public class ActComCompanyImpl extends UnicastRemoteObject implements ActComComp
 		return true;
 	}
 	
-	@Override
-	public PtBoolean oePI(EtHumanKind aEtHumanKind, DtDate aDtDate, DtTime aDtTime, DtGPSLocation aDtGPSLocation,
+	/* (non-Javadoc)
+	 * @see lu.uni.lassy.excalibur.examples.icrash.dev.java.environment.actors.ActComCompany#oePI(lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtHumanKind, lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtDate, lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtTime, lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPhoneNumber, lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtGPSLocation, lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtComment)
+	 */
+	synchronized public PtBoolean oePI(EtHumanKind aEtHumanKind, DtDate aDtDate, DtTime aDtTime, DtGPSLocation aDtGPSLocation,
 			DtPITitle aDtPITitle, EtPICategory aDtPICategory) throws RemoteException, NotBoundException {
-		// TODO Auto-generated method stub
-		return null;
+		Logger log = Log4JUtils.getInstance().getLogger();
+
+		Registry registry = LocateRegistry.getRegistry(RmiUtils.getInstance().getHost(),RmiUtils.getInstance().getPort());
+
+		//Gathering the remote object as it was published into the registry
+		IcrashSystem iCrashSys_Server = (IcrashSystem) registry
+				.lookup("iCrashServer");
+
+		//set up ComCompany instance that performs the request
+		iCrashSys_Server.setCurrentConnectedComCompany(this);
+
+		log.info("message ActComCompany.oePI sent to system");
+		PtBoolean res = iCrashSys_Server.oePI(aEtHumanKind, aDtDate,
+				aDtTime, aDtGPSLocation, aDtPITitle, aDtPICategory);
+
+		if (res.getValue() == true)
+			log.info("operation oeAlert successfully executed by the system");
+
+		return res;
 	}
 }
