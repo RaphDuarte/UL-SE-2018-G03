@@ -59,6 +59,8 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPI
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPassword;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPhoneNumber;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtAlertStatus;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCoordinatorDomain;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisDomain;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisStatus;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisType;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtHumanKind;
@@ -692,7 +694,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 	 */
 	public  synchronized PtBoolean oeAlert(EtHumanKind aEtHumanKind, DtDate aDtDate,
 			DtTime aDtTime, DtPhoneNumber aDtPhoneNumber,
-			DtGPSLocation aDtGPSLocation, DtComment aDtComment)
+			DtGPSLocation aDtGPSLocation, DtComment aDtComment, EtCrisisDomain aEtCrisisDomain)
 			throws RemoteException {
 		try{
 			//PreP1
@@ -711,7 +713,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 			DtAlertID aId = new DtAlertID(new PtString(""
 					+ nextValueForAlertID_at_pre));
 			EtAlertStatus aStatus = EtAlertStatus.pending;
-			aCtAlert.init(aId, aStatus, aDtGPSLocation, aInstant, aDtComment);
+			aCtAlert.init(aId, aStatus, aDtGPSLocation, aInstant, aDtComment, aEtCrisisDomain);
 			//DB: insert alert in the database
 			DbAlerts.insertAlert(aCtAlert);
 	
@@ -739,7 +741,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 				EtCrisisStatus acStatus = EtCrisisStatus.pending;
 				DtComment acComment = new DtComment(new PtString(
 						"no report defined, yet"));
-				aCtCrisis.init(acId, acType, acStatus, aDtGPSLocation, aInstant,
+				aCtCrisis.init(acId, acType, acStatus, aEtCrisisDomain, aDtGPSLocation, aInstant,
 						acComment);
 	
 				//DB: insert crisis in the database
@@ -972,6 +974,32 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 				theCrisis.status = aEtCrisisStatus;
 				DbCrises.updateCrisis(theCrisis);
 				PtString aMessage = new PtString("The crisis status has been updated !");
+				theActCoordinator.ieMessage(aMessage);
+	
+				return new PtBoolean(true);
+			}
+		}
+		catch (Exception e){
+			log.error("Exception in oeSetCrisisStatus..." + e);
+		}
+		return new PtBoolean(false);
+	}
+	
+	public  synchronized PtBoolean oeSetCrisisDomain(DtCrisisID aDtCrisisID,
+			EtCrisisDomain aEtCrisisDomain) throws RemoteException {
+		try{
+			//PreP1
+			isSystemStarted();
+			//PreP2
+			isUserLoggedIn();
+			CtCrisis theCrisis = cmpSystemCtCrisis.get(aDtCrisisID.value
+					.getValue());
+			if (currentRequestingAuthenticatedActor instanceof ActCoordinator) {
+				ActCoordinator theActCoordinator = (ActCoordinator) currentRequestingAuthenticatedActor;
+				//PostF1
+				theCrisis.domain = aEtCrisisDomain;
+				DbCrises.updateCrisis(theCrisis);
+				PtString aMessage = new PtString("The crisis domain has been updated !");
 				theActCoordinator.ieMessage(aMessage);
 	
 				return new PtBoolean(true);
@@ -1295,7 +1323,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 	/* (non-Javadoc)
 	 * @see lu.uni.lassy.excalibur.examples.icrash.dev.java.system.IcrashSystem#oeAddCoordinator(lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCoordinatorID, lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLogin, lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPassword)
 	 */
-	public PtBoolean oeAddCoordinator(DtCoordinatorID aDtCoordinatorID,
+	public PtBoolean oeAddCoordinator(DtCoordinatorID aDtCoordinatorID, EtCoordinatorDomain aEtCoordinatorDomain,
 			DtLogin aDtLogin, DtPassword aDtPassword) throws RemoteException {
 		try {
 			//PreP1
@@ -1311,7 +1339,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 
 			//PostF2
 			CtCoordinator ctCoordinator = new CtCoordinator();
-			ctCoordinator.init(aDtCoordinatorID, aDtLogin, aDtPassword);
+			ctCoordinator.init(aDtCoordinatorID, aDtLogin, aDtPassword, aEtCoordinatorDomain);
 			DbCoordinators.insertCoordinator(ctCoordinator);
 			
 			
@@ -1379,8 +1407,8 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 			if (ctAuth != null && ctAuth instanceof CtCoordinator){
 				CtCoordinator aCtCoordinator = (CtCoordinator)ctAuth;
 				CtCoordinator oldCoordinator = new CtCoordinator();
-				oldCoordinator.init(aCtCoordinator.id, aCtCoordinator.login, aCtCoordinator.pwd);
-				aCtCoordinator.update(aDtLogin, aDtPassword);
+				oldCoordinator.init(aCtCoordinator.id, aCtCoordinator.login, aCtCoordinator.pwd, aCtCoordinator.domain);
+				aCtCoordinator.update(aDtLogin, aDtPassword, aCtCoordinator.domain);
 				if (DbCoordinators.updateCoordinator(aCtCoordinator).getValue()){
 					cmpSystemCtAuthenticated.remove(oldCoordinator.login.value.getValue());
 					cmpSystemCtAuthenticated.put(aCtCoordinator.login.value.getValue(), aCtCoordinator);
@@ -1389,7 +1417,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 					return new PtBoolean(true);
 				}
 				else
-					aCtCoordinator.update(oldCoordinator.login, oldCoordinator.pwd);
+					aCtCoordinator.update(oldCoordinator.login, oldCoordinator.pwd, oldCoordinator.domain);
 			}
 			return new PtBoolean(false);
 		} catch (Exception e) {

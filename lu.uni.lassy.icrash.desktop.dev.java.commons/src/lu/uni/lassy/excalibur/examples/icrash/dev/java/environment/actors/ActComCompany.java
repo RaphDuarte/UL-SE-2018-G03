@@ -21,6 +21,7 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCo
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtGPSLocation;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPITitle;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPhoneNumber;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisDomain;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtHumanKind;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtPICategory;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.secondary.DtSMS;
@@ -50,13 +51,14 @@ public interface ActComCompany extends java.rmi.Remote, Serializable, JIntIsActo
 	 * @param aDtPhoneNumber The phone number of the human associated with the accident
 	 * @param aDtGPSLocation The location of the accident
 	 * @param aDtComment The message sent by the human associated with the accident
+	 * @param aEtCrisisDomain The domain of expertise of the accident
 	 * @return The success of the method
 	 * @throws RemoteException Thrown if the server is offline
 	 * @throws NotBoundException Thrown if the server is not bound correctly in RMI settings
 	 */
 	public PtBoolean oeAlert(EtHumanKind aEtHumanKind,DtDate aDtDate,
 			DtTime aDtTime,DtPhoneNumber aDtPhoneNumber,
-			DtGPSLocation aDtGPSLocation,DtComment aDtComment) throws RemoteException, NotBoundException;
+			DtGPSLocation aDtGPSLocation,DtComment aDtComment, EtCrisisDomain aEtCrisisDomain) throws RemoteException, NotBoundException;
 
 	/**
 	 * Sends a message to the client side actor with details of if the alert was logged or not.

@@ -34,6 +34,7 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLa
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLongitude;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPhoneNumber;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtAlertStatus;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisDomain;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisStatus;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisType;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtHumanKind;
@@ -183,6 +184,20 @@ public class DbAlerts extends DbAbstract {
 						aStatus = EtAlertStatus.invalid;
 					if (theStatus.equals(EtAlertStatus.valid.name()))
 						aStatus = EtAlertStatus.valid;
+					
+					//alert's domain -> [regular, fire, chemicalSubstance, naturalCase, unknownSubstance]
+					String theDomain = res.getString("domain");
+					EtCrisisDomain aDomain = null;
+					if (theDomain.equals(EtCrisisDomain.regular.name()))
+						aDomain = EtCrisisDomain.regular;
+					if (theDomain.equals(EtCrisisDomain.fire.name()))
+						aDomain = EtCrisisDomain.fire;
+					if (theDomain.equals(EtCrisisDomain.chemicalSubstance.name()))
+						aDomain = EtCrisisDomain.chemicalSubstance;
+					if (theDomain.equals(EtCrisisDomain.naturalCase.name()))
+						aDomain = EtCrisisDomain.naturalCase;
+					if (theDomain.equals(EtCrisisDomain.unknownSubstance.name()))
+						aDomain = EtCrisisDomain.unknownSubstance;
 
 					//alert's location
 					DtLatitude aDtLatitude = new DtLatitude(new PtReal(
@@ -212,7 +227,7 @@ public class DbAlerts extends DbAbstract {
 							res.getString("comment")));
 
 					aCtAlert.init(aId, aStatus, aDtGPSLocation, aInstant,
-							aDtComment);
+							aDtComment, aDomain);
 
 				}
 
@@ -314,6 +329,20 @@ public class DbAlerts extends DbAbstract {
 					if (theStatus.equals(EtAlertStatus.valid.name()))
 						aStatus = EtAlertStatus.valid;
 
+					//alert's domain -> [regular, fire, chemicalSubstance, naturalCase, unknownSubstance]
+					String theDomain = res.getString("domain");
+					EtCrisisDomain aDomain = null;
+					if (theDomain.equals(EtCrisisDomain.regular.name()))
+						aDomain = EtCrisisDomain.regular;
+					if (theDomain.equals(EtCrisisDomain.fire.name()))
+						aDomain = EtCrisisDomain.fire;
+					if (theDomain.equals(EtCrisisDomain.chemicalSubstance.name()))
+						aDomain = EtCrisisDomain.chemicalSubstance;
+					if (theDomain.equals(EtCrisisDomain.naturalCase.name()))
+						aDomain = EtCrisisDomain.naturalCase;
+					if (theDomain.equals(EtCrisisDomain.unknownSubstance.name()))
+						aDomain = EtCrisisDomain.unknownSubstance;
+					
 					//alert's location
 					DtLatitude aDtLatitude = new DtLatitude(new PtReal(
 							res.getDouble("latitude")));
@@ -343,7 +372,7 @@ public class DbAlerts extends DbAbstract {
 
 					//init aCtAlert instance
 					aCtAlert.init(aId, aStatus, aDtGPSLocation, aInstant,
-							aDtComment);
+							aDtComment, aDomain);
 
 					//add instance to the hash
 					cmpSystemCtAlert
@@ -409,6 +438,20 @@ public class DbAlerts extends DbAbstract {
 						aStatus = EtAlertStatus.invalid;
 					if (theStatus.equals(EtAlertStatus.valid.name()))
 						aStatus = EtAlertStatus.valid;
+					
+					//alert's domain -> [regular, fire, chemicalSubstance, naturalCase, unknownSubstance]
+					String theDomain = res.getString("domain");
+					EtCrisisDomain aDomain = null;
+					if (theDomain.equals(EtCrisisDomain.regular.name()))
+						aDomain = EtCrisisDomain.regular;
+					if (theDomain.equals(EtCrisisDomain.fire.name()))
+						aDomain = EtCrisisDomain.fire;
+					if (theDomain.equals(EtCrisisDomain.chemicalSubstance.name()))
+						aDomain = EtCrisisDomain.chemicalSubstance;
+					if (theDomain.equals(EtCrisisDomain.naturalCase.name()))
+						aDomain = EtCrisisDomain.naturalCase;
+					if (theDomain.equals(EtCrisisDomain.unknownSubstance.name()))
+						aDomain = EtCrisisDomain.unknownSubstance;
 
 					//alert's location
 					DtLatitude aDtLatitude = new DtLatitude(new PtReal(
@@ -439,7 +482,7 @@ public class DbAlerts extends DbAbstract {
 
 					//init aCtAlert instance
 					aCtAlert.init(aId, aStatus, aDtGPSLocation, aInstant,
-							aDtComment);
+							aDtComment, aDomain);
 
 					//*************************************
 					aCtCrisis = new CtCrisis();
@@ -468,6 +511,20 @@ public class DbAlerts extends DbAbstract {
 						aCrisisStatus = EtCrisisStatus.solved;
 					if (theCrisisStatus.equals(EtCrisisStatus.closed.name()))
 						aCrisisStatus = EtCrisisStatus.closed;
+					
+					//crisis's domain -> [regular, fire, chemicalSubstance, naturalCase, unknownSubstance]
+					String theCrisisDomain = res.getString("domain");
+					EtCrisisDomain aCrisisDomain = null;
+					if (theCrisisDomain.equals(EtCrisisDomain.regular.name()))
+						aCrisisDomain = EtCrisisDomain.regular;
+					if (theCrisisDomain.equals(EtCrisisDomain.fire.name()))
+						aCrisisDomain = EtCrisisDomain.fire;
+					if (theCrisisDomain.equals(EtCrisisDomain.chemicalSubstance.name()))
+						aCrisisDomain = EtCrisisDomain.chemicalSubstance;
+					if (theCrisisDomain.equals(EtCrisisDomain.naturalCase.name()))
+						aCrisisDomain = EtCrisisDomain.naturalCase;
+					if (theCrisisDomain.equals(EtCrisisDomain.unknownSubstance.name()))
+						aCrisisDomain = EtCrisisDomain.unknownSubstance;
 
 					//crisis's location
 					DtLatitude aCrisisDtLatitude = new DtLatitude(new PtReal(
@@ -496,7 +553,7 @@ public class DbAlerts extends DbAbstract {
 					DtComment aCrisisDtComment = new DtComment(new PtString(
 							res.getString("crises.comment")));
 
-					aCtCrisis.init(aCrisisId, aCrisisType, aCrisisStatus,
+					aCtCrisis.init(aCrisisId, aCrisisType, aCrisisStatus, aCrisisDomain,
 							aCrisisDtGPSLocation, aCrisisInstant,
 							aCrisisDtComment);
 
@@ -564,6 +621,20 @@ public class DbAlerts extends DbAbstract {
 					if (theStatus.equals(EtAlertStatus.valid.name()))
 						aStatus = EtAlertStatus.valid;
 
+					//alert's domain -> [regular, fire, chemicalSubstance, naturalCase, unknownSubstance]
+					String theDomain = res.getString("domain");
+					EtCrisisDomain aDomain = null;
+					if (theDomain.equals(EtCrisisDomain.regular.name()))
+						aDomain = EtCrisisDomain.regular;
+					if (theDomain.equals(EtCrisisDomain.fire.name()))
+						aDomain = EtCrisisDomain.fire;
+					if (theDomain.equals(EtCrisisDomain.chemicalSubstance.name()))
+						aDomain = EtCrisisDomain.chemicalSubstance;
+					if (theDomain.equals(EtCrisisDomain.naturalCase.name()))
+						aDomain = EtCrisisDomain.naturalCase;
+					if (theDomain.equals(EtCrisisDomain.unknownSubstance.name()))
+						aDomain = EtCrisisDomain.unknownSubstance;
+					
 					//alert's location
 					DtLatitude aDtLatitude = new DtLatitude(new PtReal(
 							res.getDouble("alerts.latitude")));
@@ -593,7 +664,7 @@ public class DbAlerts extends DbAbstract {
 
 					//init aCtAlert instance
 					aCtAlert.init(aId, aStatus, aDtGPSLocation, aInstant,
-							aDtComment);
+							aDtComment, aDomain);
 
 					//*************************************
 					aCtHuman = new CtHuman();

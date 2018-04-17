@@ -24,6 +24,7 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCo
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtGPSLocation;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPITitle;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPhoneNumber;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisDomain;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtHumanKind;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtPICategory;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.secondary.DtSMS;
@@ -93,12 +94,12 @@ public class ActProxyComCompanyImpl extends UnicastRemoteObject implements
 	 */
 	synchronized public PtBoolean oeAlert(EtHumanKind aEtHumanKind,
 			DtDate aDtDate, DtTime aDtTime, DtPhoneNumber aDtPhoneNumber,
-			DtGPSLocation aDtGPSLocation, DtComment aDtComment)
+			DtGPSLocation aDtGPSLocation, DtComment aDtComment, EtCrisisDomain aEtCrisisDomain)
 			throws RemoteException, NotBoundException {
 
 		if (serverSideActor != null)
 			return serverSideActor.oeAlert(aEtHumanKind, aDtDate, aDtTime,
-					aDtPhoneNumber, aDtGPSLocation, aDtComment);
+					aDtPhoneNumber, aDtGPSLocation, aDtComment, aEtCrisisDomain);
 		else
 			return new PtBoolean(false);
 	}

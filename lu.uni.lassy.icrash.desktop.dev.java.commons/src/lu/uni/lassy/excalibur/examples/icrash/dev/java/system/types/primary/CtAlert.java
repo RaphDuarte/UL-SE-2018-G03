@@ -41,6 +41,9 @@ public class CtAlert implements Serializable {
 	
 	/** The comment associated with the alert. */
 	public DtComment comment;
+	
+	/** The domain associatd wit te alert*/
+	public EtCrisisDomain domain;
 
 	/**
 	 * Initialises the alert.
@@ -53,13 +56,14 @@ public class CtAlert implements Serializable {
 	 * @return the success of the initialisation of the alert
 	 */
 	public PtBoolean init(DtAlertID aId, EtAlertStatus aStatus,
-			DtGPSLocation aLocation, DtDateAndTime aInstant, DtComment aComment) {
+			DtGPSLocation aLocation, DtDateAndTime aInstant, DtComment aComment, EtCrisisDomain aDomain) {
 			
 		id = aId;
 		status = aStatus;
 		location = aLocation;
 		instant = aInstant;
 		comment = aComment;
+		domain = aDomain;
 		return new PtBoolean(true);
 	}
 
@@ -102,6 +106,8 @@ public class CtAlert implements Serializable {
 		if (aCtAlert.location.latitude.value.getValue() != this.location.latitude.value.getValue()) 
 			return false;
 		if (aCtAlert.location.longitude.value.getValue() != this.location.longitude.value.getValue()) 
+			return false;
+		if (!(aCtAlert.domain.equals(this.domain)))
 			return false;
 		return true;
 	}

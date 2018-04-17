@@ -23,6 +23,7 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtCo
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCoordinatorID;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLogin;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPassword;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCoordinatorDomain;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtBoolean;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtString;
 
@@ -102,12 +103,14 @@ public class DbCoordinators extends DbAbstract{
 					aCtCoordinator = new CtCoordinator();
 					//coordinator's id
 					DtCoordinatorID aId = new DtCoordinatorID(new PtString(res.getString("id")));
+					//coordinator's domain
+					EtCoordinatorDomain aDomain = EtCoordinatorDomain.none;
 					//coordinator's login
 					DtLogin aLogin = new DtLogin(new PtString(res.getString("login")));
 					//coordinator's pwd
 					DtPassword aPwd = new DtPassword(new PtString(res.getString("pwd")));
 
-					aCtCoordinator.init(aId, aLogin,aPwd);
+					aCtCoordinator.init(aId, aLogin, aPwd, aDomain);
 					
 				}
 								
@@ -230,10 +233,11 @@ public class DbCoordinators extends DbAbstract{
 					//alert's id
 					DtCoordinatorID aId = new DtCoordinatorID(new PtString(
 							res.getString("id")));
+					EtCoordinatorDomain aDomain = EtCoordinatorDomain.none;
 					DtLogin aLogin = new DtLogin(new PtString(res.getString("login")));
 					DtPassword aPwd = new DtPassword(new PtString(res.getString("pwd")));
 					//init aCtAlert instance
-					aCtCoord.init(aId, aLogin, aPwd);
+					aCtCoord.init(aId, aLogin, aPwd, aDomain);
 					
 					//add instance to the hash
 					cmpSystemCtCoord

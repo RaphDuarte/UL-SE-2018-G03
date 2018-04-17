@@ -40,39 +40,46 @@ public class CtCrisis implements Serializable {
 
 	/** The id of the crisis. */
 	public DtCrisisID id;
-	
+
 	/** The type of the crisis. */
 	public EtCrisisType type;
-	
+
 	/** The current status of the crisis. */
 	public EtCrisisStatus status;
-	
+
 	/** The type of domain of the crisis */
 	public EtCrisisDomain domain;
-	
+
 	/** The location of the accident that is associated to the crisis. */
 	public DtGPSLocation location;
-	
+
 	/** The date and time of the accident that is associated to the crisis. */
 	public DtDateAndTime instant;
-	
+
 	/** The comment associated with the crisis. Often refered to as the report. */
 	public DtComment comment;
 
 	/**
 	 * Initialises the crisis.
 	 *
-	 * @param aId the id of the crisis
-	 * @param aType the type of the crisis
-	 * @param aStatus the status of the crisis
-	 * @param aLocation the location of the accident associated with the crisis
-	 * @param aInstant the date and time of the accident associated with the crisis
-	 * @param aComment the comment of the crisis
+	 * @param aId
+	 *            the id of the crisis
+	 * @param aType
+	 *            the type of the crisis
+	 * @param aStatus
+	 *            the status of the crisis
+	 * @param aDomain
+	 *            the domain of the crisis
+	 * @param aLocation
+	 *            the location of the accident associated with the crisis
+	 * @param aInstant
+	 *            the date and time of the accident associated with the crisis
+	 * @param aComment
+	 *            the comment of the crisis
 	 * @return the success of the initialisation
 	 */
-	public PtBoolean init(DtCrisisID aId, EtCrisisType aType,
-			EtCrisisStatus aStatus, EtCrisisDomain aDomain, DtGPSLocation aLocation,
-			DtDateAndTime aInstant, DtComment aComment) {
+	public PtBoolean init(DtCrisisID aId, EtCrisisType aType, EtCrisisStatus aStatus, EtCrisisDomain aDomain,
+			DtGPSLocation aLocation, DtDateAndTime aInstant, DtComment aComment) {
 
 		id = aId;
 		type = aType;
@@ -85,101 +92,140 @@ public class CtCrisis implements Serializable {
 		return new PtBoolean(true);
 
 	}
-	
+
 	/**
-	 * If this crisis is still in the pending status and the system time minus the last reminder time
-	 * is greater than the standard crisis reminder period then we return true.
+	 * If this crisis is still in the pending status and the system time minus the
+	 * last reminder time is greater than the standard crisis reminder period then
+	 * we return true.
 	 *
-	 * @return If the time since last handled is greater than the standard reminder period, return true
-	 * @throws RemoteException Thrown if the server is offline
-	 * @throws NotBoundException Thrown if the server is not bound
+	 * @return If the time since last handled is greater than the standard reminder
+	 *         period, return true
+	 * @throws RemoteException
+	 *             Thrown if the server is offline
+	 * @throws NotBoundException
+	 *             Thrown if the server is not bound
 	 */
 	public PtBoolean handlingDelayPassed() throws RemoteException, NotBoundException {
-		if(status.toString().equals(EtCrisisStatus.pending.toString())){
-		
-			Registry registry = LocateRegistry.getRegistry(RmiUtils.getInstance().getHost(),RmiUtils.getInstance().getPort());
-	        IcrashSystem iCrashSys_Server = (IcrashSystem)registry.lookup("iCrashServer");
+		if (status.toString().equals(EtCrisisStatus.pending.toString())) {
+
+			Registry registry = LocateRegistry.getRegistry(RmiUtils.getInstance().getHost(),
+					RmiUtils.getInstance().getPort());
+			IcrashSystem iCrashSys_Server = (IcrashSystem) registry.lookup("iCrashServer");
 			CtState ctState = iCrashSys_Server.getCtState();
 			double currentClockSecondsQty = ctState.clock.toSecondsQty().getValue();
 			double vpLastReminderSecondsQty = ctState.vpLastReminder.toSecondsQty().getValue();
-			if((currentClockSecondsQty - vpLastReminderSecondsQty)>ctState.crisisReminderPeriod.value.getValue())
+			if ((currentClockSecondsQty - vpLastReminderSecondsQty) > ctState.crisisReminderPeriod.value.getValue())
 				return new PtBoolean(true);
 		}
 
 		return new PtBoolean(false);
 	}
-	
+
 	/**
-	 * If this crisis is still in the pending status and the system time minus the last reminder time
-	 * is greater than the max standard crisis reminder period then we return true.
+	 * If this crisis is still in the pending status and the system time minus the
+	 * last reminder time is greater than the max standard crisis reminder period
+	 * then we return true.
 	 *
-	 * @return If the time since last handled is greater than the max standard reminder period, return true
-	 * @throws RemoteException Thrown if the server is offline
-	 * @throws NotBoundException Thrown if the server is not bound
+	 * @return If the time since last handled is greater than the max standard
+	 *         reminder period, return true
+	 * @throws RemoteException
+	 *             Thrown if the server is offline
+	 * @throws NotBoundException
+	 *             Thrown if the server is not bound
 	 */
 	public PtBoolean maxHandlingDelayPassed() throws RemoteException, NotBoundException {
-		if(status.toString().equals(EtCrisisStatus.pending.toString())){
-			Registry registry = LocateRegistry.getRegistry(RmiUtils.getInstance().getHost(),RmiUtils.getInstance().getPort());
-	        IcrashSystem iCrashSys_Server = (IcrashSystem)registry.lookup("iCrashServer");
+		if (status.toString().equals(EtCrisisStatus.pending.toString())) {
+			Registry registry = LocateRegistry.getRegistry(RmiUtils.getInstance().getHost(),
+					RmiUtils.getInstance().getPort());
+			IcrashSystem iCrashSys_Server = (IcrashSystem) registry.lookup("iCrashServer");
 			CtState ctState = iCrashSys_Server.getCtState();
 			double currentClockSecondsQty = ctState.clock.toSecondsQty().getValue();
 			double crisisInstantSecondsQty = instant.toSecondsQty().getValue();
-			if((currentClockSecondsQty - crisisInstantSecondsQty)>ctState.maxCrisisReminderPeriod.value.getValue())
+			if ((currentClockSecondsQty - crisisInstantSecondsQty) > ctState.maxCrisisReminderPeriod.value.getValue())
 				return new PtBoolean(true);
 		}
 		return new PtBoolean(false);
 	}
-	
+
 	/**
 	 * Used to provide a given coordinator with current alert information.
 	 *
-	 * @param aActCoordinator the actor coordinator to send the information to
+	 * @param aActCoordinator
+	 *            the actor coordinator to send the information to
 	 * @return the success of the method
-	 * @throws RemoteException Thrown if the remote destination is unreachable
+	 * @throws RemoteException
+	 *             Thrown if the remote destination is unreachable
 	 */
 	public PtBoolean isSentToCoordinator(ActCoordinator aActCoordinator) throws RemoteException {
-		
-		if(this.domain.equals(aActCoordinator)) {
+
+		if (this.domain.equals(EtCrisisDomain.regular)) {
 			aActCoordinator.ieSendACrisis(this);
-		} else {
-			if(this.domain.equals("regular")) {
-				aActCoordinator.ieSendACrisis(this);
-			}
+			return new PtBoolean(true);
 		}
-		
+
+		if (this.domain.equals(EtCrisisDomain.fire)
+				&& aActCoordinator.oeGetCoordinatorDomain().equals(EtCoordinatorDomain.fire)) {
+			aActCoordinator.ieSendACrisis(this);
+			return new PtBoolean(true);
+		}
+
+		if (this.domain.equals(EtCrisisDomain.chemicalSubstance)
+				&& aActCoordinator.oeGetCoordinatorDomain().equals(EtCoordinatorDomain.chemicalSubstance)) {
+			aActCoordinator.ieSendACrisis(this);
+			return new PtBoolean(true);
+		}
+
+		if (this.domain.equals(EtCrisisDomain.unknownSubstance)
+				&& aActCoordinator.oeGetCoordinatorDomain().equals(EtCoordinatorDomain.unknownSubstance)) {
+			aActCoordinator.ieSendACrisis(this);
+			return new PtBoolean(true);
+		}
+
+		if (this.domain.equals(EtCrisisDomain.naturalCase)
+				&& aActCoordinator.oeGetCoordinatorDomain().equals(EtCoordinatorDomain.naturalCase)) {
+			aActCoordinator.ieSendACrisis(this);
+			return new PtBoolean(true);
+		}
+
+		System.out.println("This Crisis can't be sent to a Coordinator without the apropriate domain of expertise");
 		return new PtBoolean(true);
 	}
-	
+
 	/**
-	 * Used to allocate a crisis to a coordinator if any or to alert the administrator of crisis waiting to be handled.
+	 * Used to allocate a crisis to a coordinator if any or to alert the
+	 * administrator of crisis waiting to be handled.
 	 *
 	 * @return the success of the method
-	 * @throws RemoteException  Thrown if the remote destination is unreachable
-	 * @throws NotBoundException Thrown if the remote destination hasn't been bound
+	 * @throws RemoteException
+	 *             Thrown if the remote destination is unreachable
+	 * @throws NotBoundException
+	 *             Thrown if the remote destination hasn't been bound
 	 */
-	public PtBoolean isAllocatedIfPossible() throws RemoteException, NotBoundException  {
+	public PtBoolean isAllocatedIfPossible() throws RemoteException, NotBoundException {
 		Logger log = Log4JUtils.getInstance().getLogger();
-		Registry registry = LocateRegistry.getRegistry(RmiUtils.getInstance().getHost(), RmiUtils.getInstance().getPort());
-	    IcrashSystem iCrashSys_Server = (IcrashSystem)registry.lookup("iCrashServer");
-   		IcrashEnvironment env = (IcrashEnvironment)registry.lookup("iCrashEnvironment");
+		Registry registry = LocateRegistry.getRegistry(RmiUtils.getInstance().getHost(),
+				RmiUtils.getInstance().getPort());
+		IcrashSystem iCrashSys_Server = (IcrashSystem) registry.lookup("iCrashServer");
+		IcrashEnvironment env = (IcrashEnvironment) registry.lookup("iCrashEnvironment");
 		CtState ctState = iCrashSys_Server.getCtState();
-		
+
 		double currentClockSecondsQty = ctState.clock.toSecondsQty().getValue();
 		double crisisInstantSecondsQty = instant.toSecondsQty().getValue();
-		
-		if((currentClockSecondsQty - crisisInstantSecondsQty)>ctState.maxCrisisReminderPeriod.value.getValue()){
+
+		if ((currentClockSecondsQty - crisisInstantSecondsQty) > ctState.maxCrisisReminderPeriod.value.getValue()) {
 			CtCoordinator theCoordinator = iCrashSys_Server.getRandomCtCoordinator();
-			if(theCoordinator != null){			
-				iCrashSys_Server.bindCtCrisisCtCoordinator(this,theCoordinator);
+			if (theCoordinator != null) {
+				iCrashSys_Server.bindCtCrisisCtCoordinator(this, theCoordinator);
 				status = EtCrisisStatus.handled;
 				String crisisId = this.id.value.getValue().toString();
-				PtString aMessage = new PtString("You are now considered as handling the crisis having ID: '"+crisisId+"'");
+				PtString aMessage = new PtString(
+						"You are now considered as handling the crisis having ID: '" + crisisId + "'");
 				ActCoordinator theCoordinatorActor = env.getActCoordinator(theCoordinator.login.value.getValue());
 				log.info("Message being sent to " + theCoordinator.login.value.getValue());
 				theCoordinatorActor.ieMessage(aMessage);
-			}else{
+			} else {
 				PtString aMessage = new PtString("Please add new coordinators to handle pending crisis !");
-				for(ActAdministrator admin:iCrashSys_Server.getAllActAdministrators()){
+				for (ActAdministrator admin : iCrashSys_Server.getAllActAdministrators()) {
 					admin.ieMessage(aMessage);
 				}
 			}
@@ -188,23 +234,27 @@ public class CtCrisis implements Serializable {
 		return new PtBoolean(false);
 
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
-	public String toString(){
+	public String toString() {
 		return this.id.value.getValue();
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj){
+	public boolean equals(Object obj) {
 		if (!(obj instanceof CtCrisis))
 			return false;
-		CtCrisis aCtCrisis = (CtCrisis)obj;
+		CtCrisis aCtCrisis = (CtCrisis) obj;
 		if (!aCtCrisis.id.value.getValue().equals(this.id.value.getValue()))
 			return false;
 		if (!aCtCrisis.comment.value.getValue().equals(this.comment.value.getValue()))
@@ -223,12 +273,14 @@ public class CtCrisis implements Serializable {
 			return false;
 		return true;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
-	public int hashCode(){
+	public int hashCode() {
 		return this.id.value.getValue().length();
 	}
 }

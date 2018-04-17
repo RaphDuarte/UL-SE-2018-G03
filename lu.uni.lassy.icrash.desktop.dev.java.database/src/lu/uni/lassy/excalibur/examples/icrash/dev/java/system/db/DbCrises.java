@@ -32,6 +32,8 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLa
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLogin;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLongitude;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPassword;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCoordinatorDomain;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisDomain;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisStatus;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisType;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtDate;
@@ -161,6 +163,20 @@ public class DbCrises extends DbAbstract {
 						aStatus = EtCrisisStatus.solved;
 					if (theStatus.equals(EtCrisisStatus.closed.name()))
 						aStatus = EtCrisisStatus.closed;
+					
+					//crisis's domain -> [regular, fire, chemicalSubstance, naturalCase, unknownSubstance]
+					String theCrisisDomain = res.getString("domain");
+					EtCrisisDomain aDomain = null;
+					if (theCrisisDomain.equals(EtCrisisDomain.regular.name()))
+						aDomain = EtCrisisDomain.regular;
+					if (theCrisisDomain.equals(EtCrisisDomain.fire.name()))
+						aDomain = EtCrisisDomain.fire;
+					if (theCrisisDomain.equals(EtCrisisDomain.chemicalSubstance.name()))
+						aDomain = EtCrisisDomain.chemicalSubstance;
+					if (theCrisisDomain.equals(EtCrisisDomain.naturalCase.name()))
+						aDomain = EtCrisisDomain.naturalCase;
+					if (theCrisisDomain.equals(EtCrisisDomain.unknownSubstance.name()))
+						aDomain = EtCrisisDomain.unknownSubstance;
 
 					//crisis's location
 					DtLatitude aDtLatitude = new DtLatitude(new PtReal(
@@ -189,7 +205,7 @@ public class DbCrises extends DbAbstract {
 					DtComment aDtComment = new DtComment(new PtString(
 							res.getString("comment")));
 
-					aCtCrisis.init(aId, aType, aStatus, aDtGPSLocation,
+					aCtCrisis.init(aId, aType, aStatus, aDomain, aDtGPSLocation,
 							aInstant, aDtComment);
 
 				}
@@ -308,6 +324,20 @@ public class DbCrises extends DbAbstract {
 						aStatus = EtCrisisStatus.solved;
 					if (theStatus.equals(EtCrisisStatus.closed.name()))
 						aStatus = EtCrisisStatus.closed;
+					
+					//crisis's domain -> [regular, fire, chemicalSubstance, naturalCase, unknownSubstance]
+					String theCrisisDomain = res.getString("domain");
+					EtCrisisDomain aDomain = null;
+					if (theCrisisDomain.equals(EtCrisisDomain.regular.name()))
+						aDomain = EtCrisisDomain.regular;
+					if (theCrisisDomain.equals(EtCrisisDomain.fire.name()))
+						aDomain = EtCrisisDomain.fire;
+					if (theCrisisDomain.equals(EtCrisisDomain.chemicalSubstance.name()))
+						aDomain = EtCrisisDomain.chemicalSubstance;
+					if (theCrisisDomain.equals(EtCrisisDomain.naturalCase.name()))
+						aDomain = EtCrisisDomain.naturalCase;
+					if (theCrisisDomain.equals(EtCrisisDomain.unknownSubstance.name()))
+						aDomain = EtCrisisDomain.unknownSubstance;
 
 					//crisis' location
 					DtLatitude aDtLatitude = new DtLatitude(new PtReal(
@@ -336,7 +366,7 @@ public class DbCrises extends DbAbstract {
 					DtComment aDtComment = new DtComment(new PtString(
 							res.getString("comment")));
 
-					aCtCrisis.init(aId, aType, aStatus, aDtGPSLocation,
+					aCtCrisis.init(aId, aType, aStatus, aDomain, aDtGPSLocation,
 							aInstant, aDtComment);
 
 					//*************************************
@@ -344,6 +374,8 @@ public class DbCrises extends DbAbstract {
 					//coordinator's id
 					DtCoordinatorID aId1 = new DtCoordinatorID(new PtString(
 							res.getString("coordiantor")));
+					//coordinator's domain
+					EtCoordinatorDomain aCoordinatorDomain = EtCoordinatorDomain.none;
 					//coordinator's login
 					DtLogin aLogin = new DtLogin(new PtString(
 							res.getString("login")));
@@ -351,7 +383,7 @@ public class DbCrises extends DbAbstract {
 					DtPassword aPwd = new DtPassword(new PtString(
 							res.getString("pwd")));
 
-					aCtCoordinator.init(aId1, aLogin, aPwd);
+					aCtCoordinator.init(aId1, aLogin, aPwd, aCoordinatorDomain);
 
 					//add instances to the hash
 					assCtCrisisCtCoordinator.put(aCtCrisis, aCtCoordinator);
@@ -425,6 +457,20 @@ public class DbCrises extends DbAbstract {
 						aStatus = EtCrisisStatus.solved;
 					if (theStatus.equals(EtCrisisStatus.closed.name()))
 						aStatus = EtCrisisStatus.closed;
+					
+					//crisis's domain -> [regular, fire, chemicalSubstance, naturalCase, unknownSubstance]
+					String theCrisisDomain = res.getString("domain");
+					EtCrisisDomain aDomain = null;
+					if (theCrisisDomain.equals(EtCrisisDomain.regular.name()))
+						aDomain = EtCrisisDomain.regular;
+					if (theCrisisDomain.equals(EtCrisisDomain.fire.name()))
+						aDomain = EtCrisisDomain.fire;
+					if (theCrisisDomain.equals(EtCrisisDomain.chemicalSubstance.name()))
+						aDomain = EtCrisisDomain.chemicalSubstance;
+					if (theCrisisDomain.equals(EtCrisisDomain.naturalCase.name()))
+						aDomain = EtCrisisDomain.naturalCase;
+					if (theCrisisDomain.equals(EtCrisisDomain.unknownSubstance.name()))
+						aDomain = EtCrisisDomain.unknownSubstance;
 
 					//crisis' location
 					DtLatitude aDtLatitude = new DtLatitude(new PtReal(
@@ -453,7 +499,7 @@ public class DbCrises extends DbAbstract {
 					DtComment aDtComment = new DtComment(new PtString(
 							res.getString("comment")));
 
-					aCtCrisis.init(aId, aType, aStatus, aDtGPSLocation,
+					aCtCrisis.init(aId, aType, aStatus, aDomain, aDtGPSLocation,
 							aInstant, aDtComment);
 
 					//add instance to the hash

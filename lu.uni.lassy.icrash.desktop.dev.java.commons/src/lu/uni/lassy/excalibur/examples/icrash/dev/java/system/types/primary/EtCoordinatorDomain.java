@@ -16,7 +16,7 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.design.JIntI
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtBoolean;
 
 /**
- * The Enum EtCrisisDomain which holds the different domains that could be set as a crisis domain.
+ * The Enum EtCoordinatorDomain which holds the different domains that could be set as a coordinator's domain of expertise.
  */
 public enum EtCoordinatorDomain implements JIntIs {
 	

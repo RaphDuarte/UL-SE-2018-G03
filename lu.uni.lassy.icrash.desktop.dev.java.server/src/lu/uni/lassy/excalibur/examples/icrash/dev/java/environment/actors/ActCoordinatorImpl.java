@@ -25,6 +25,8 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCo
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCrisisID;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLogin;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtAlertStatus;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCoordinatorDomain;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisDomain;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisStatus;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisType;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtBoolean;
@@ -330,6 +332,36 @@ public class ActCoordinatorImpl extends ActAuthenticatedImpl implements ActCoord
 		PtBoolean res = iCrashSys_Server.oeGetAlertsSet(aEtAlertStatus);
 		if(res.getValue() == true)
 			log.info("operation oeGetAlertsSet successfully executed by the system");
+		return res;
+	}
+
+	@Override
+	synchronized public EtCoordinatorDomain oeGetCoordinatorDomain() {
+		// Unsure how to create this
+		return null;
+	}
+
+	@Override
+	synchronized public PtBoolean oeSetCrisisDomain(DtCrisisID aDtCrisisID, EtCrisisDomain aEtCrisisDomain) throws RemoteException, NotBoundException {
+		
+		Logger log = Log4JUtils.getInstance().getLogger();
+	
+		Registry registry = LocateRegistry.getRegistry(RmiUtils.getInstance().getHost(),RmiUtils.getInstance().getPort());
+
+			 	
+		//Gathering the remote object as it was published into the registry
+	    IcrashSystem iCrashSys_Server = (IcrashSystem)registry.lookup("iCrashServer");
+		//set up ActAuthenticated instance that performs the request
+		iCrashSys_Server.setCurrentRequestingAuthenticatedActor(this);
+
+		log.info("message ActCoordinator.oeSetCrisisStatus sent to system");
+		PtBoolean res = iCrashSys_Server.oeSetCrisisDomain(aDtCrisisID, aEtCrisisDomain);
+			
+			
+		if(res.getValue() == true)
+			log.info("operation oeSetCrisisStatus successfully executed by the system");
+
+
 		return res;
 	}
 }

@@ -22,6 +22,7 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.IcrashSystem;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCoordinatorID;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLogin;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPassword;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCoordinatorDomain;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtBoolean;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.utils.Log4JUtils;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.utils.RmiUtils;
@@ -55,7 +56,7 @@ public class ActAdministratorImpl extends ActAuthenticatedImpl implements
 	 */
 	synchronized public PtBoolean oeAddCoordinator(
 			DtCoordinatorID aDtCoordinatorID, DtLogin aDtLogin,
-			DtPassword aDtPassword) throws RemoteException, NotBoundException {
+			DtPassword aDtPassword, EtCoordinatorDomain aEtCoordinatorDomain) throws RemoteException, NotBoundException {
 
 		Logger log = Log4JUtils.getInstance().getLogger();
 
@@ -70,7 +71,7 @@ public class ActAdministratorImpl extends ActAuthenticatedImpl implements
 
 		log.info("message ActAdministrator.oeAddCoordinator sent to system");
 		PtBoolean res = iCrashSys_Server.oeAddCoordinator(aDtCoordinatorID,
-				aDtLogin, aDtPassword);
+				aEtCoordinatorDomain, aDtLogin, aDtPassword);
 
 		if (res.getValue() == true)
 			log.info("operation oeAddCoordinator successfully executed by the system");

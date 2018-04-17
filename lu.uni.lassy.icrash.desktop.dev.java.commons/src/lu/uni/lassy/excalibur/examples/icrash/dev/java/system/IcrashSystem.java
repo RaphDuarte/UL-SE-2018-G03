@@ -12,7 +12,6 @@
  ******************************************************************************/
 package lu.uni.lassy.excalibur.examples.icrash.dev.java.system;
 
-import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -40,6 +39,8 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPI
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPassword;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPhoneNumber;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtAlertStatus;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCoordinatorDomain;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisDomain;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisStatus;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisType;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtHumanKind;
@@ -240,11 +241,12 @@ public interface IcrashSystem extends Remote {
 	 * @param aDtPhoneNumber The phone number of the human reporting the accident
 	 * @param aDtGPSLocation The location of the accident
 	 * @param aDtComment The message sent by the user
+	 * @param aEtCrisisDomain The domain of expertise of the alert
 	 * @return The success of the method
 	 * @throws RemoteException Thrown if the server is offline
 	 */
 	public PtBoolean oeAlert(EtHumanKind aEtHumanKind,DtDate aDtDate,
-				DtTime aDtTime,DtPhoneNumber aDtPhoneNumber,DtGPSLocation aDtGPSLocation,DtComment aDtComment) throws RemoteException; 
+				DtTime aDtTime,DtPhoneNumber aDtPhoneNumber,DtGPSLocation aDtGPSLocation,DtComment aDtComment, EtCrisisDomain aEtCrisisDomain) throws RemoteException; 
 
 	/**
 	 * Validates an alert on the system
@@ -304,6 +306,16 @@ public interface IcrashSystem extends Remote {
 	public PtBoolean oeSetCrisisStatus(DtCrisisID aDtCrisisID, EtCrisisStatus aEtCrisisStatus) throws RemoteException; 		
 	
 	/**
+	 * Sets the crisis domain to the one passed.
+	 *
+	 * @param aDtCrisisID The ID of the crisis to change
+	 * @param aEtCrisisDomain The domain to change the crisis to
+	 * @return The success of the method
+	 * @throws RemoteException Thrown if the server is offline
+	 */
+	public PtBoolean oeSetCrisisDomain(DtCrisisID aDtCrisisID, EtCrisisDomain aEtCrisisDomain) throws RemoteException; 
+	
+	/**
 	 * Sets the current authenticating actor to be handling the crisis.
 	 *
 	 * @param aDtCrisisID The ID of the crisis to change
@@ -330,6 +342,7 @@ public interface IcrashSystem extends Remote {
 	 * @throws RemoteException Thrown if the server is offline
 	 */
 	public PtBoolean oeGetCrisisSet(EtCrisisStatus aEtCrisisStatus) throws RemoteException; 
+	 
 	
 	/**
 	 * Gets the alerts with the status specified.
@@ -372,12 +385,13 @@ public interface IcrashSystem extends Remote {
 	 * Adds a coordinator with the details specified.
 	 *
 	 * @param aDtCoordinatorID The ID to create the coordinator with
+	 * @param aEtCoordinatorDomain The domain of the coordinator to create
 	 * @param aDtLogin The username of the coordinator to create
 	 * @param aDtPassword The password of the coordinator to create
 	 * @return The success of the method
 	 * @throws RemoteException Thrown if the server is offline
 	 */
-	public PtBoolean oeAddCoordinator(DtCoordinatorID aDtCoordinatorID,DtLogin aDtLogin,DtPassword aDtPassword) throws RemoteException; 	
+	public PtBoolean oeAddCoordinator(DtCoordinatorID aDtCoordinatorID, EtCoordinatorDomain aEtCoordinatorDomain, DtLogin aDtLogin,DtPassword aDtPassword) throws RemoteException; 	
 	
 	/**
 	 * Deletes a coordinator with the details specified.
@@ -403,6 +417,7 @@ public interface IcrashSystem extends Remote {
 	 * @return The success of the method
 	 * @throws RemoteException Thrown if the server is offline
 	 */
-	public PtBoolean oeSetClock(DtDateAndTime aCurrentClock) throws RemoteException; 
+	public PtBoolean oeSetClock(DtDateAndTime aCurrentClock) throws RemoteException;
+
 
 }
