@@ -50,7 +50,7 @@ import lu.uni.lassy.messir.libraries.calendar
 				attribute status: etCrisisStatus
 				attribute location:dtGPSLocation
 				attribute instant:dtDateAndTime
-				attribute domain:etExpertiseDomain
+				attribute domain:etCrisisDomain
 				attribute comment:dtComment
 				
 				operation init(
@@ -59,7 +59,7 @@ import lu.uni.lassy.messir.libraries.calendar
 										Astatus:etCrisisStatus ,
 										Alocation:dtGPSLocation ,
 										Ainstant:dtDateAndTime ,
-										Adomain:etExpertiseDomain ,
+										Adomain:etCrisisDomain ,
 										Acomment:dtComment ):ptBoolean
 										
 				operation handlingDelayPassed():ptBoolean
@@ -100,12 +100,12 @@ import lu.uni.lassy.messir.libraries.calendar
 					extends ctAuthenticated{
 			
 				attribute id:dtCoordinatorID
-				attribute domain:etExpertiseDomain
+				attribute domain:etCoordinatorDomain
 				
 				operation init(
 										Aid:dtCoordinatorID ,
 										Alogin:dtLogin ,
-										Adomain:etExpertiseDomain ,
+										Adomain:etCoordinatorDomain ,
 										Apwd:dtPassword ):ptBoolean
 			}
 
@@ -117,6 +117,10 @@ import lu.uni.lassy.messir.libraries.calendar
 				operation init(
 										Alogin:dtLogin ,
 										Apwd:dtPassword ):ptBoolean
+			}
+		datatype etCoordinatorDomain {
+			}
+		datatype etCrisisDomain {
 			}
 		}
 	}
