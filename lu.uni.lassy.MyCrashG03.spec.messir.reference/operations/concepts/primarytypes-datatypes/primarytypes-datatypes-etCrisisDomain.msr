@@ -1,14 +1,14 @@
-package icrash.operations.concepts.primarytypes.datatypes.etCoordinatorDomain { 
+package icrash.operations.concepts.primarytypes.datatypes.etCrisisDomain{ 
 	
 import lu.uni.lassy.messir.libraries.primitives
 
 Operation Model {
 			
-		operation: icrash.concepts.primarytypes.datatypes.etCoordinatorDomain.is():ptBoolean{
+		operation: icrash.concepts.primarytypes.datatypes.etCrisisDomain.is():ptBoolean{
     postF{ 
         let TheResult: ptBoolean in
         ( if
-          ( self = none
+          ( self = regular
             or self = fire
             or self = chemicalSubstance
             or self = naturalCase
@@ -20,7 +20,7 @@ Operation Model {
           result = TheResult
         )
     }
-    prolog{"src/Operations/Concepts/PrimaryTypesClasses/PrimaryTypesDatatypes-etCoordinatorDomain-is.pl"}
+    prolog{"src/Operations/Concepts/PrimaryTypesClasses/PrimaryTypesDatatypes-etCrisisDomain-is.pl"}
 }
 }
 }

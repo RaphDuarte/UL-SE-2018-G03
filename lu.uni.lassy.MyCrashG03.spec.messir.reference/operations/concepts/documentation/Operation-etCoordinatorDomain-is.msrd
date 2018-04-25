@@ -5,12 +5,12 @@
 
 
 @@Operation
-icrash.concepts.primarytypes.datatypes.etExpertiseDomain.is
+icrash.concepts.primarytypes.datatypes.etCoordinatorDomain.is
 @description
 "used to determine which literal belongs to the enumeration."
 //postFunctional descriptions
 @postF 
-"true iff the value is equal to one of the following values: \msrcode{regular, light, heavy, mass}."
+"true iff the value is equal to one of the following values: \msrcode{none, fire, chemcialSubstance, naturalCase, unknownSubstance}."
 
 @endPostF
 //example

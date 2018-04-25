@@ -1,11 +1,11 @@
-@@Primary Type
-Enumeration icrash.concepts.primarytypes.datatypes.etCoordinatorDomain
+@@Primary Type Enumeration icrash.concepts.primarytypes.datatypes.etCoordinatorDomain
 @description
 "this enum represents the different options that a coordinator can have as its domain of expertise. 
-Regular is for a standard incident, 
-Light is for a smaller incident, 
-Heavy is for a extreme incident and 
-Mass is in rare cases of a mass incident were more than 10 vehicles are involved."
-@operation icrash.concepts.primarytypes.datatypes.etExpertiseDomain.is
+none is for coordinators that have no current domain, 
+fire is for coordinators that have knowledge of flammable substances, 
+chemicalSubstance is for coordinators that have knowledge of chemical substances, 
+naturalCase is for coordinators that have knowledge of events that happen because of natural events and 
+unknownSubstance is for coordinators that have knowledge of how to detect what substance could be involved in a crisis"
+@operation icrash.concepts.primarytypes.datatypes.etCoordinatorDomain.is
 ""
 @endOperations
