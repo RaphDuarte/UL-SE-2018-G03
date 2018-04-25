@@ -53,6 +53,7 @@ public class CtAlert implements Serializable {
 	 * @param aLocation the location of the alert
 	 * @param aInstant the date and time of the accident the alert is associated with
 	 * @param aComment the comment associated with the alert.
+	 * @param aDomain the domain associated with the alert.
 	 * @return the success of the initialisation of the alert
 	 */
 	public PtBoolean init(DtAlertID aId, EtAlertStatus aStatus,
