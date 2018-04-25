@@ -1,0 +1,24 @@
+/*
+@author sacha
+@date Wed Mar 21 06:14:51 CET 2018
+*/
+
+
+@@Use Case Subfunction icrash.usecases.subfunctions.oeSendCode
+@description "Send a code to the User by SMS"
+@protocolCondition
+"
+"
+@endProtocolConditions
+@preCondition
+"
+"
+@endPreConditions
+@postCondition
+"
+"
+@endPostConditions
+@additionalInformation
+"
+none
+"

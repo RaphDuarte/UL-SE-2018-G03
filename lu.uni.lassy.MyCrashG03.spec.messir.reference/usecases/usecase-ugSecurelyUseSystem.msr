@@ -12,14 +12,21 @@ use case system usergoal
 
 	reuse oeLogin[1..1]
 	reuse oeLogout[1..1]
+	reuse oeSendCode[1..1]
+	reuse oeInputCode[1..1]
 
 	step a: actAuthenticated 
 	     executes oeLogin
-	step b: actAuthenticated 
+	step b : actComCompany
+		 executes oeSendCode
+	step c : actAuthenticated
+		 executes oeInputCode
+	step d: actAuthenticated 
 	     executes oeLogout
 	
 	ordering constraint 
-	 "step (a) must always precede step (b)."
+	 "step (a) must always be followed by step (b), then step (c) and finish with step (d)."
 		}
+	
 	}
 }
