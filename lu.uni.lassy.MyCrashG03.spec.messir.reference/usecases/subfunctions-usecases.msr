@@ -135,6 +135,16 @@ import icrash.environment
       ieMessage(AMessage) returned to actCoordinator
     }
   }
-  }
+  use case system subfunction oeSendCode() {
+			actor actComCompany[primary, active]
+			actor actAuthenticated[secondary, passive]
+			returned messages {
+				ieMessage(AMessage) returned to actAuthenticated
+			}
+		}
+	use case system subfunction oeInputCode() {
+			actor actAuthenticated[primary, active]
+		}
+	}
 
 }

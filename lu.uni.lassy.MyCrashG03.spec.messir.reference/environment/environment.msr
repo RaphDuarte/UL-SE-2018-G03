@@ -93,12 +93,18 @@ import lu.uni.lassy.messir.libraries.calendar
 										AdtGPSLocation:dtGPSLocation , 
 										AdtComment:dtComment 
 										):ptBoolean
+				operation oeSendCode(AdtPhoneNumber:dtPhoneNumber ,
+														AdtSMS:dtSMS
+														):ptBoolean
+										
+				
+
 			}
 			
 			input interface inactComCompany{
 				operation ieSmsSend(AdtPhoneNumber:dtPhoneNumber , 
 														AdtSMS:dtSMS 
-														):ptBoolean
+														):ptBoolean										
 	 		}
 		}
 
@@ -109,6 +115,7 @@ import lu.uni.lassy.messir.libraries.calendar
 			output interface outactAuthenticated{
 				operation oeLogin(AdtLogin:dtLogin , AdtPassword:dtPassword ):ptBoolean
 				operation oeLogout():ptBoolean
+				operation oeInputCode():ptBoolean
 			}
 			
 			input interface inactAuthenticated{
