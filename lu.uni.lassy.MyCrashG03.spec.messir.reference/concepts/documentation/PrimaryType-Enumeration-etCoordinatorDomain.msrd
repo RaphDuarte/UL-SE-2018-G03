@@ -7,5 +7,5 @@ chemicalSubstance is for coordinators that have knowledge of chemical substances
 naturalCase is for coordinators that have knowledge of events that happen because of natural events and 
 unknownSubstance is for coordinators that have knowledge of how to detect what substance could be involved in a crisis"
 @operation icrash.concepts.primarytypes.datatypes.etCoordinatorDomain.is
-""
+"used to determine which domain belongs to the enumeration."
 @endOperations

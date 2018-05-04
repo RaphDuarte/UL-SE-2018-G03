@@ -1,0 +1,23 @@
+@@Use Case Subfunction icrash.usecases.subfunctions.oeSetCrisisDomain hidden
+@description
+"goal is to define the domain of a specific crisis.
+"
+@parameter icrash.usecases.subfunctions.oeSetCrisisDomain.AdtCrisisID ""
+@parameter icrash.usecases.subfunctions.oeSetCrisisDomain.AetCrisisDomain ""
+@endParameters
+@protocolCondition
+"
+"
+@endProtocolConditions
+@preCondition
+"
+"
+@endPreConditions
+@postCondition
+"
+"
+@endPostConditions
+@additionalInformation
+"
+none
+"

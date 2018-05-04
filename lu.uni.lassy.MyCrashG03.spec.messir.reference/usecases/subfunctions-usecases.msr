@@ -119,6 +119,13 @@ import icrash.environment
     }
   }
 //----------------------------------------------------
+  use case system subfunction oeSetCrisisDomain(AdtCrisisID:dtCrisisID ,AetCrisisDomain:etCrisisDomain) {
+    actor actCoordinator[primary,active]
+    returned messages {
+      ieMessage(AMessage) returned to actCoordinator
+    }
+  }
+//----------------------------------------------------
   use case system subfunction oeSollicitateCrisisHandling() {
     actor actActivator[primary,proactive]
     actor actCoordinator[secondary,passive,multiple]
