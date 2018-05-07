@@ -11,6 +11,7 @@ Operation Model {
 	operation: icrash.concepts.primarytypes.classes.ctState.init(
 		AnextValueForAlertID: dtInteger, 
 		AnextValueForCrisisID: dtInteger , 
+		AnextValueForPIID: dtInteger , 
 		dtAclock:dtDateAndTime,
 		AcrisisReminderPeriod: dtSecond, 
 		AmaxCrisisReminderPeriod: dtSecond ,
