@@ -107,10 +107,11 @@ public class ActProxyComCompanyImpl extends UnicastRemoteObject implements
 	/* (non-Javadoc)
 	 * @see lu.uni.lassy.excalibur.examples.icrash.dev.java.environment.actors.ActProxyComCompany#oePI(lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtHumanKind, lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtDate, lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtTime, lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPhoneNumber, lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtGPSLocation, lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtComment)
 	 */
-	synchronized public PtBoolean oePI(EtHumanKind aEtHumanKind, DtDate aDtDate, DtTime aDtTime, DtGPSLocation aDtGPSLocation,
+	synchronized public PtBoolean oePI(EtHumanKind aEtHumanKind, DtPhoneNumber aDtPhoneNumber, DtDate aDtDate, DtTime aDtTime, DtGPSLocation aDtGPSLocation,
 			DtPITitle aDtPITitle, EtPICategory aEtPICategory) throws RemoteException, NotBoundException {
+		
 		if (serverSideActor != null)
-			return serverSideActor.oePI(aEtHumanKind, aDtDate, aDtTime,
+			return serverSideActor.oePI(aEtHumanKind, aDtPhoneNumber, aDtDate, aDtTime,
 					aDtGPSLocation, aDtPITitle, aEtPICategory);
 		else
 			return new PtBoolean(false);
