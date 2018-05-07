@@ -13,6 +13,7 @@ import lu.uni.lassy.messir.libraries.calendar
 			state class ctState {
 				attribute nextValueForAlertID:dtInteger
 				attribute nextValueForCrisisID:dtInteger
+				attribute nextValueForPIID:dtInteger
 				attribute clock:dtDateAndTime
 				attribute crisisReminderPeriod:dtSecond
 				attribute maxCrisisReminderPeriod:dtSecond
@@ -33,14 +34,31 @@ import lu.uni.lassy.messir.libraries.calendar
 				attribute status: etAlertStatus
 				attribute location:dtGPSLocation
 				attribute instant:dtDateAndTime
+				attribute domain:etCrisisDomain
 				attribute comment:dtComment
 				
 				operation init(     	Aid:dtAlertID ,
 										Astatus:etAlertStatus ,
 										Alocation:dtGPSLocation ,
 										Ainstant:dtDateAndTime ,
+										Adomain:etCrisisDomain ,
 										Acomment:dtComment ):ptBoolean
 				operation isSentToCoordinator(AactCoordinator:actCoordinator ):ptBoolean
+			 
+			}
+			
+			class ctPI role rnctPI cardinality [0..*]{
+				attribute id:dtPIID
+				attribute location:dtGPSLocation
+				attribute instant:dtDateAndTime
+				attribute title:dtPITitle
+				attribute category:etPICategory
+				
+				operation init(     	Aid:dtAlertID ,
+										Alocation:dtGPSLocation ,
+										Ainstant:dtDateAndTime ,
+										Atitle:dtPITitle ,
+										Acategory:etPICategory ):ptBoolean
 			 
 			}
 			

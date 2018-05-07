@@ -67,6 +67,10 @@ import lu.uni.lassy.messir.libraries.calendar
 											AdtCrisisID:dtCrisisID ,
 											AetCrisisStatus:etCrisisStatus 
 											):ptBoolean
+				operation oeSetCrisisDomain(
+											AdtCrisisID:dtCrisisID ,
+											AetCrisisDomain:etCrisisDomain 
+											):ptBoolean
 				operation oeSetCrisisType(
                                           AdtCrisisID:dtCrisisID ,
                                           AetCrisisType:etCrisisType
@@ -93,9 +97,19 @@ import lu.uni.lassy.messir.libraries.calendar
 										AdtGPSLocation:dtGPSLocation , 
 										AdtComment:dtComment 
 										):ptBoolean
-				operation oeSendCode(AdtPhoneNumber:dtPhoneNumber ,
-														AdtSMS:dtSMS
-														):ptBoolean
+				operation oePI(
+										AetHumanKind:etHumanKind , 
+										AdtPhoneNumber:dtPhoneNumber ,
+										AdtDate:dtDate , 
+										AdtTime:dtTime , 
+										AdtGPSLocation:dtGPSLocation , 
+										AdtTitle:dtPITitle ,
+										AdtCategory:etPICategory 
+										):ptBoolean
+				operation oeSendCode(
+										AdtPhoneNumber:dtPhoneNumber ,
+										AdtSMS:dtSMS
+										):ptBoolean
 										
 				
 

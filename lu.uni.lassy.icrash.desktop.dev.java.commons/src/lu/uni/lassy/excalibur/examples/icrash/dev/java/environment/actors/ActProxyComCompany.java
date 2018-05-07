@@ -64,6 +64,7 @@ public interface ActProxyComCompany extends Remote, JIntIsActor {
 	 * Contacts the server actor and initiates a PI creation.
 	 * 
 	 * @param aEtHumanKind The type of human reporting the accident
+	 * @param aDtPhoneNumber The phone number of human adding this PI
 	 * @param aDtDate The date when PI was created
 	 * @param aDtTime The time when PI was created
 	 * @param aDtGPSLocation The location of the PI
@@ -73,7 +74,7 @@ public interface ActProxyComCompany extends Remote, JIntIsActor {
 	 * @throws RemoteException Thrown if the server is offline
 	 * @throws NotBoundException Thrown if the server is not bound correctly in RMI settings
 	 */
-	public PtBoolean oePI(EtHumanKind aEtHumanKind, DtDate aDtDate, DtTime aDtTime,
+	public PtBoolean oePI(EtHumanKind aEtHumanKind, DtPhoneNumber aDtPhoneNumber, DtDate aDtDate, DtTime aDtTime,
 			DtGPSLocation aDtGPSLocation, DtPITitle aDtPITitle, EtPICategory aEtPICategory) throws RemoteException, NotBoundException;
 
 	/**

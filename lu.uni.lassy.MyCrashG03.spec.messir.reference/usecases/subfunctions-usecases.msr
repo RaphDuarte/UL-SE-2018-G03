@@ -14,7 +14,7 @@ import icrash.environment
   Use Case Model {
     
 //----------------------------------------------------
-  use case system subfunction oeAddCoordinator(AdtCoordinatorID:dtCoordinatorID, AdtLogin:dtLogin, AdtPassword:dtPassword){
+  use case system subfunction oeAddCoordinator(AdtCoordinatorID:dtCoordinatorID, AdtLogin:dtLogin, AdtPassword:dtPassword, AetCoordinatorDomain:etCoordinatorDomain){
     actor actAdministrator[primary,active]
     returned messages {
       ieCoordinatorAdded() returned to actAdministrator
@@ -40,6 +40,20 @@ import icrash.environment
     returned messages {
       ieMessage(AMessage) returned to actCoordinator
 		}
+  }
+  //----------------------------------------------------
+  use case system subfunction oePI(
+                                   AetKind:etHumanKind,
+                                   AdtPhoneNumber:dtPhoneNumber,
+                                   AdtMyDate:dtDate,
+                                   AdtTime:dtTime,
+                                   AdtGPSLocation:dtGPSLocation,
+                                   AdtTitle:dtPITitle,
+                                   AdtCategory:etPICategory) {
+    actor actComCompany[primary,active]
+    returned messages {
+      ieSmsSend(AdtPhoneNumber,AdtSMS) returned to actComCompany
+ 		}
   }
 //----------------------------------------------------
   use case system subfunction oeCloseCrisis(AdtCrisisID:dtCrisisID) {
@@ -113,6 +127,13 @@ import icrash.environment
   }    
 //----------------------------------------------------
   use case system subfunction oeSetCrisisStatus(AdtCrisisID:dtCrisisID ,AetCrisisStatus:etCrisisStatus) {
+    actor actCoordinator[primary,active]
+    returned messages {
+      ieMessage(AMessage) returned to actCoordinator
+    }
+  }
+//----------------------------------------------------
+  use case system subfunction oeSetCrisisDomain(AdtCrisisID:dtCrisisID ,AetCrisisDomain:etCrisisDomain) {
     actor actCoordinator[primary,active]
     returned messages {
       ieMessage(AMessage) returned to actCoordinator

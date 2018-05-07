@@ -7,6 +7,8 @@ icrash.concepts.primarytypes.classes.ctCoordinator.init
 "used to initialize the login field"
 @parameter icrash.concepts.primarytypes.classes.ctCoordinator.init.Apwd
 "used to initialize the password field"
+@parameter icrash.concepts.primarytypes.classes.ctCoordinator.init.Adomain
+"used to initialize the domain field"
 @endParameters
 @description
 "used to initialize the current object as a new instance of the ctCoordinator type."

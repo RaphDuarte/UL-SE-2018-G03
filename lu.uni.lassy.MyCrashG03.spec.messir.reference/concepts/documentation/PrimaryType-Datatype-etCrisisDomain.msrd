@@ -1,0 +1,13 @@
+/*
+@author dgrap
+@date Mon May 07 12:10:37 CEST 2018
+*/
+
+
+@@Primary Type Datatype icrash.concepts.primarytypes.classes.etCrisisDomain
+@description "this enum represents the different options that a coordinator can have as its domain of expertise. 
+regular means a crisis with no special involvements, 
+fire means a crisis being influenced by flammable substances, 
+chemicalSubstance means a crisis being influenced by chemical substances, 
+naturalCase means a crisis being influenced by natural events and 
+unknownSubstance means a crisis being influenced by some unknown substance"
