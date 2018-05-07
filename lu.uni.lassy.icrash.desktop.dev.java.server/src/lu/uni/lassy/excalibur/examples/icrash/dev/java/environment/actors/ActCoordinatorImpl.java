@@ -337,8 +337,7 @@ public class ActCoordinatorImpl extends ActAuthenticatedImpl implements ActCoord
 
 	@Override
 	synchronized public EtCoordinatorDomain oeGetCoordinatorDomain() {
-		// Unsure how to create this
-		return null;
+		return this.oeGetCoordinatorDomain();
 	}
 
 	@Override
@@ -355,12 +354,12 @@ public class ActCoordinatorImpl extends ActAuthenticatedImpl implements ActCoord
 		//set up ActAuthenticated instance that performs the request
 		iCrashSys_Server.setCurrentRequestingAuthenticatedActor(this);
 
-		log.info("message ActCoordinator.oeSetCrisisStatus sent to system");
+		log.info("message ActCoordinator.oeSetCrisisDomain sent to system");
 		PtBoolean res = iCrashSys_Server.oeSetCrisisDomain(aDtCrisisID, aEtCrisisDomain);
 			
 			
 		if(res.getValue() == true)
-			log.info("operation oeSetCrisisStatus successfully executed by the system");
+			log.info("operation oeSetCrisisDomain successfully executed by the system");
 
 
 		return res;

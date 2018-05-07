@@ -26,6 +26,7 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtAl
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtComment;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCrisisID;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtAlertStatus;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisDomain;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisStatus;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtBoolean;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtString;
@@ -73,6 +74,27 @@ public class CoordinatorController extends AbstractUserController {
 				Log4JUtils.getInstance().getLogger().error(e);
 				throw new ServerNotBoundException();
 			}
+		}
+		return new PtBoolean(false);
+	}
+	/**
+	 * Takes an crisis that exists in the system and will change it's domain to the one specified.
+	 *
+	 * @param crisisID The ID of the crisis to change the status of
+	 * @param domain The EtCrisisDomain type to set the crisis domain to
+	 * @return Returns a PtBoolean of true if done successfully, otherwise will return a false
+	 * @throws ServerNotBoundException is only thrown when attempting to access a server which has no current binding. This shouldn't happen, but you never know!
+	 * @throws ServerOfflineException is an error that is thrown when the server is offline or not reachable
+	 * @throws IncorrectFormatException is thrown when a Dt/Et information type does not match the is() method specified in the specification
+	 */
+	public PtBoolean changeCrisisDomain(String crisisID, EtCrisisDomain domain) throws ServerNotBoundException, ServerOfflineException, IncorrectFormatException, RemoteException, NotBoundException{
+		DtCrisisID aDtCrisisID = new DtCrisisID(new PtString(crisisID));
+		Hashtable<JIntIs, String> ht = new Hashtable<JIntIs, String>();
+		ht.put(aDtCrisisID, aDtCrisisID.value.getValue());
+		ht.put(domain, domain.name());
+		if (this.getUserType() == UserType.Coordinator){
+			ActProxyCoordinator actCoord = (ActProxyCoordinator)this.getAuth();
+			return actCoord.oeSetCrisisDomain(aDtCrisisID, domain);
 		}
 		return new PtBoolean(false);
 	}

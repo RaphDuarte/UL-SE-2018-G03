@@ -53,19 +53,18 @@ public interface ActCoordinator extends ActAuthenticated {
 	public PtBoolean oeGetAlertsSet(EtAlertStatus aEtAlertStatus) throws RemoteException, NotBoundException;
 	
 	/**
+	 * @return the domain of type EtCoordinatorDomain
+	 */
+	public EtCoordinatorDomain oeGetCoordinatorDomain();
+	
+	/**
 	 * Sets the crisis' handler, with the ID passed, as the current user.
 	 *
 	 * @param aDtCrisisID The ID of the crisis to change the handler of
 	 * @return The success of the method
 	 * @throws RemoteException Thrown if the server is offline
 	 * @throws NotBoundException Thrown if the server has not been bound correctly in the RMI settings
-	 */
-	
-	/**
-	 * @return the domain of type EtCoordinatorDomain
-	 */
-	public EtCoordinatorDomain oeGetCoordinatorDomain();
-	
+	 */	
 	public PtBoolean oeSetCrisisHandler(DtCrisisID aDtCrisisID) throws RemoteException, NotBoundException;
 	
 	/**

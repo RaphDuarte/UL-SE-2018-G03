@@ -105,6 +105,10 @@ public class DbCoordinators extends DbAbstract{
 					DtCoordinatorID aId = new DtCoordinatorID(new PtString(res.getString("id")));
 					//coordinator's domain
 					EtCoordinatorDomain aDomain = EtCoordinatorDomain.none;
+					if(res.getString("domain").equals("fire")) { aDomain = EtCoordinatorDomain.fire;}
+					if(res.getString("domain").equals("chemicalSubstance")) { aDomain = EtCoordinatorDomain.chemicalSubstance;}
+					if(res.getString("domain").equals("naturalCase")) { aDomain = EtCoordinatorDomain.naturalCase;}
+					if(res.getString("domain").equals("unknownSubstance")) { aDomain = EtCoordinatorDomain.unknownSubstance;}
 					//coordinator's login
 					DtLogin aLogin = new DtLogin(new PtString(res.getString("login")));
 					//coordinator's pwd

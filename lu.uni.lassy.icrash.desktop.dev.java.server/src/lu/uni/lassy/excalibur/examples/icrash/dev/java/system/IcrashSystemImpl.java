@@ -694,7 +694,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 	 */
 	public  synchronized PtBoolean oeAlert(EtHumanKind aEtHumanKind, DtDate aDtDate,
 			DtTime aDtTime, DtPhoneNumber aDtPhoneNumber,
-			DtGPSLocation aDtGPSLocation, DtComment aDtComment, EtCrisisDomain aEtCrisisDomain)
+			DtGPSLocation aDtGPSLocation, DtComment aDtComment, EtCrisisDomain aEtAlertDomain)
 			throws RemoteException {
 		try{
 			//PreP1
@@ -713,7 +713,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 			DtAlertID aId = new DtAlertID(new PtString(""
 					+ nextValueForAlertID_at_pre));
 			EtAlertStatus aStatus = EtAlertStatus.pending;
-			aCtAlert.init(aId, aStatus, aDtGPSLocation, aInstant, aDtComment, aEtCrisisDomain);
+			aCtAlert.init(aId, aStatus, aDtGPSLocation, aInstant, aDtComment, aEtAlertDomain);
 			//DB: insert alert in the database
 			DbAlerts.insertAlert(aCtAlert);
 	
@@ -741,7 +741,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 				EtCrisisStatus acStatus = EtCrisisStatus.pending;
 				DtComment acComment = new DtComment(new PtString(
 						"no report defined, yet"));
-				aCtCrisis.init(acId, acType, acStatus, aEtCrisisDomain, aDtGPSLocation, aInstant,
+				aCtCrisis.init(acId, acType, acStatus, aEtAlertDomain, aDtGPSLocation, aInstant,
 						acComment);
 	
 				//DB: insert crisis in the database
@@ -1006,7 +1006,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 			}
 		}
 		catch (Exception e){
-			log.error("Exception in oeSetCrisisStatus..." + e);
+			log.error("Exception in oeSetCrisisDomain..." + e);
 		}
 		return new PtBoolean(false);
 	}
@@ -1397,7 +1397,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 	 * It is worth noticing that such system operation is not used anywhere for the moment (not even included in the class' interface)
 	 * 
 	 * */
-	public PtBoolean oeUpdateCoordinator(DtCoordinatorID aDtCoordinatorID,DtLogin aDtLogin,DtPassword aDtPassword) throws java.rmi.RemoteException{
+	public PtBoolean oeUpdateCoordinator(DtCoordinatorID aDtCoordinatorID,DtLogin aDtLogin,DtPassword aDtPassword, EtCoordinatorDomain aEtCoordinatorDomain) throws java.rmi.RemoteException{
 		try {
 			//PreP1
 			isSystemStarted();
@@ -1408,7 +1408,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 				CtCoordinator aCtCoordinator = (CtCoordinator)ctAuth;
 				CtCoordinator oldCoordinator = new CtCoordinator();
 				oldCoordinator.init(aCtCoordinator.id, aCtCoordinator.login, aCtCoordinator.pwd, aCtCoordinator.domain);
-				aCtCoordinator.update(aDtLogin, aDtPassword, aCtCoordinator.domain);
+				aCtCoordinator.update(aDtLogin, aDtPassword, aEtCoordinatorDomain);
 				if (DbCoordinators.updateCoordinator(aCtCoordinator).getValue()){
 					cmpSystemCtAuthenticated.remove(oldCoordinator.login.value.getValue());
 					cmpSystemCtAuthenticated.put(aCtCoordinator.login.value.getValue(), aCtCoordinator);

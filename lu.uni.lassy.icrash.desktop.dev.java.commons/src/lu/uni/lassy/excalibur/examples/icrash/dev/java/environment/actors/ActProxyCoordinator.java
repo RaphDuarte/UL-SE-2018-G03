@@ -23,6 +23,7 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCo
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCrisisID;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtAlertStatus;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCoordinatorDomain;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisDomain;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisStatus;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisType;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtBoolean;
@@ -148,5 +149,16 @@ public interface ActProxyCoordinator extends ActProxyAuthenticated {
 	 * @throws RemoteException Thrown if the server is offline
 	 */
 	public PtBoolean ieSendAnAlert(CtAlert aCtAlert) throws RemoteException;
+
+	/**
+	 * Sets the crisis' status, with the ID passed, to the status passed.
+	 *
+	 * @param aDtCrisisID The ID of the crisis to change the status of
+	 * @param aEtCrisisDomain The status to change the domain of the crisis to
+	 * @return The success of the method
+	 * @throws RemoteException Thrown if the server is offline
+	 * @throws NotBoundException Thrown if the server has not been bound correctly in RMI settings
+	 */
+	public PtBoolean oeSetCrisisDomain(DtCrisisID aDtCrisisID, EtCrisisDomain domain) throws RemoteException, NotBoundException;
 
 }

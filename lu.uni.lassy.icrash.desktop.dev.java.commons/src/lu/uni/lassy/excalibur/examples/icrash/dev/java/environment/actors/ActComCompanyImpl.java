@@ -83,7 +83,7 @@ public class ActComCompanyImpl extends UnicastRemoteObject implements ActComComp
 	 */
 	synchronized public PtBoolean oeAlert(EtHumanKind aEtHumanKind,
 			DtDate aDtDate, DtTime aDtTime, DtPhoneNumber aDtPhoneNumber,
-			DtGPSLocation aDtGPSLocation, DtComment aDtComment, EtCrisisDomain aEtCrisisDomain)
+			DtGPSLocation aDtGPSLocation, DtComment aDtComment, EtCrisisDomain aEtAlertDomain)
 			throws RemoteException, NotBoundException {
 
 		Logger log = Log4JUtils.getInstance().getLogger();
@@ -99,7 +99,7 @@ public class ActComCompanyImpl extends UnicastRemoteObject implements ActComComp
 
 		log.info("message ActComCompany.oeAlert sent to system");
 		PtBoolean res = iCrashSys_Server.oeAlert(aEtHumanKind, aDtDate,
-				aDtTime, aDtPhoneNumber, aDtGPSLocation, aDtComment, aEtCrisisDomain);
+				aDtTime, aDtPhoneNumber, aDtGPSLocation, aDtComment, aEtAlertDomain);
 
 		if (res.getValue() == true)
 			log.info("operation oeAlert successfully executed by the system");

@@ -141,8 +141,7 @@ public class ActProxyCoordinatorImpl extends ActProxyAuthenticatedImpl
 	}
 	
 	synchronized public PtBoolean oeSetCrisisDomain(DtCrisisID aDtCrisisID,
-			EtCrisisDomain aEtCrisisDomain) throws RemoteException,
-			NotBoundException {
+			EtCrisisDomain aEtCrisisDomain) throws RemoteException, NotBoundException {
 
 		if (getServerSideActor() != null)
 			return ((ActCoordinator) getServerSideActor()).oeSetCrisisDomain(
