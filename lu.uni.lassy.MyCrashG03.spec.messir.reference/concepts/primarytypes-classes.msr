@@ -54,7 +54,7 @@ import lu.uni.lassy.messir.libraries.calendar
 				attribute title:dtPITitle
 				attribute category:etPICategory
 				
-				operation init(     	Aid:dtAlertID ,
+				operation init(     	Aid:dtPIID ,
 										Alocation:dtGPSLocation ,
 										Ainstant:dtDateAndTime ,
 										Atitle:dtPITitle ,
