@@ -873,7 +873,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 	}
 	
 	@Override
-	public PtBoolean oePI(EtHumanKind aEtHumanKind, DtDate aDtDate, DtTime aDtTime, DtGPSLocation aDtGPSLocation,
+	public PtBoolean oePI(EtHumanKind aEtHumanKind, DtPhoneNumber aDtPhoneNumber, DtDate aDtDate, DtTime aDtTime, DtGPSLocation aDtGPSLocation,
 			DtPITitle aDtPITitle, EtPICategory aDtPICategory) throws RemoteException {
 		try{
 			//PreP1
@@ -915,6 +915,15 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 				//Update just inserted PI with its corresponding associated (near) crisis
 				assCtPICtCrisis.put(aCtPI, aCtCrisis);
 				DbPIs.bindPICrisis(aCtPI, aCtCrisis); //DB
+				
+				//send SMS
+				DtSMS sms = new DtSMS(new PtString(	"Your point of interest has been added."));
+				currentConnectedComCompany.ieSmsSend(aDtPhoneNumber, sms);
+				
+				//update Messir composition
+				cmpSystemCtPI.put(aCtPI.id.value.getValue(), aCtPI);
+				return new PtBoolean(true);
+				
 			} else {
 				log.error("There is no crisis or human is not victim");
 			}

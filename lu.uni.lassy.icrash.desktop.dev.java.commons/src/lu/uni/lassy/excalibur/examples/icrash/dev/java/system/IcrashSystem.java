@@ -282,7 +282,7 @@ public interface IcrashSystem extends Remote {
 	 * @return The success of the method
 	 * @throws RemoteException Thrown if the server is offline
 	 */
-	public PtBoolean oePI(EtHumanKind aEtHumanKind, DtDate aDtDate,
+	public PtBoolean oePI(EtHumanKind aEtHumanKind, DtPhoneNumber aDtPhoneNumber, DtDate aDtDate,
 			DtTime aDtTime, DtGPSLocation aDtGPSLocation,
 			DtPITitle aDtPITitle, EtPICategory aDtPICategory) throws RemoteException;
 	
