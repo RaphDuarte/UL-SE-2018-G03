@@ -191,7 +191,7 @@ public class ComCompanyController implements HasListeners{
 			ht.put(aDtPITitle, aDtPITitle.value.getValue());
 			ht.put(aEtPICategory, aEtPICategory.name());
 			
-			return aActProxyComCompany.oePI(aEtHumanKind, aDtDate, aDtTime, aDtGPSLocation, aDtPITitle, aEtPICategory);
+			return aActProxyComCompany.oePI(aEtHumanKind, aDtPhoneNumber, aDtDate, aDtTime, aDtGPSLocation, aDtPITitle, aEtPICategory);
 			
 		} catch (RemoteException e) {
 			Log4JUtils.getInstance().getLogger().error(e);
