@@ -5,6 +5,7 @@
 @parameter icrash.usecases.subfunctions.oeAddCoordinator.AdtCoordinatorID ""
 @parameter icrash.usecases.subfunctions.oeAddCoordinator.AdtLogin ""
 @parameter icrash.usecases.subfunctions.oeAddCoordinator.AdtPassword ""
+@parameter icrash.usecases.subfunctions.oeAddCoordinator.AetCoordinatorDomain ""
 @endParameters
 @protocolCondition
 "
