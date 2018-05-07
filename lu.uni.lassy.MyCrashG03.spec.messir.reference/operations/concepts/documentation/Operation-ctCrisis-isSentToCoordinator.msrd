@@ -9,6 +9,6 @@ icrash.concepts.primarytypes.classes.ctCrisis.isSentToCoordinator
 
 //postFunctional descriptions
 @postF 
-" true iff the message ieSendACrisis is sent by the simulator to the input interface of the given coordinator actor with the current crisis as parameter value.
+" true iff the message ieSendACrisis is sent by the simulator to the input interface of the given a valid (domain) coordinator actor with the current crisis as parameter value.
 "
 @endPostF

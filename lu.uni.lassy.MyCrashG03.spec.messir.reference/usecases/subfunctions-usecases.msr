@@ -14,7 +14,7 @@ import icrash.environment
   Use Case Model {
     
 //----------------------------------------------------
-  use case system subfunction oeAddCoordinator(AdtCoordinatorID:dtCoordinatorID, AdtLogin:dtLogin, AdtPassword:dtPassword){
+  use case system subfunction oeAddCoordinator(AdtCoordinatorID:dtCoordinatorID, AdtLogin:dtLogin, AdtPassword:dtPassword, AetCoordinatorDomain:etCoordinatorDomain){
     actor actAdministrator[primary,active]
     returned messages {
       ieCoordinatorAdded() returned to actAdministrator

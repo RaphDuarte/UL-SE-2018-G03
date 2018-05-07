@@ -91,19 +91,22 @@ test step ts03oeLogin order 03{
             AdtCoordinatorID : dtCoordinatorID
             AdtLogin:dtLogin
             AdtPassword:dtPassword
+            AetCoordinatorDomain:etCoordinatorDomain
           }
         constraints{
             TheActor = TheSystem.rnactAdministrator->any2(true) 
             AdtCoordinatorID.value.eq('1')
             AdtLogin.value.eq('steve')
             AdtPassword.value.eq('pwdMessirExcalibur2017')
+            AetCoordinatorDomain.value.eq('fire')
           }
         test message{
           out:TheActor 
           sends to system actAdministrator.outactAdministrator.oeAddCoordinator
                                                                 (AdtCoordinatorID,
                                                                  AdtLogin,
-                                                                 AdtPassword)
+                                                                 AdtPassword,
+                                                                 AetCoordinatorDomain)
         }
         oracle{
           constraints{
@@ -165,6 +168,7 @@ test step ts03oeLogin order 03{
             AdtTime:dtTime
             AdtPhoneNumber:dtPhoneNumber
             AdtGPSLocation:dtGPSLocation
+            AetAlertDomain:etCrisisDomain
             AdtComment:dtComment
           }
         constraints{
@@ -179,7 +183,8 @@ test step ts03oeLogin order 03{
             AdtPhoneNumber.value = '+3524666445252' 
             AdtGPSLocation.latitude.value = 49.627675
             AdtGPSLocation.longitude.value = 6.159590
-            AdtComment.value = '3 cars involved in an accident.'
+            AetAlertDomain.value = fire
+            AdtComment.value = '3 cars involved in an accident. 1 car is on fire'
           }
         test message{
           out:TheActor 
@@ -188,6 +193,7 @@ test step ts03oeLogin order 03{
                                                                   AdtTime, 
                                                                   AdtPhoneNumber, 
                                                                   AdtGPSLocation, 
+                                                                  AetAlertDomain,
                                                                   AdtComment)
         }
         oracle{
@@ -408,6 +414,7 @@ test step ts03oeLogin order 03{
             AdtTime:dtTime
             AdtPhoneNumber:dtPhoneNumber
             AdtGPSLocation:dtGPSLocation
+            AetAlertDomain:etCrisisDomain
             AdtComment:dtComment
           }
         constraints{
@@ -422,6 +429,7 @@ test step ts03oeLogin order 03{
             AdtPhoneNumber.value = '+3524666445000' 
             AdtGPSLocation.latitude.value = 49.627095
             AdtGPSLocation.longitude.value = 6.160251
+            AetAlertDomain.value = regular
             AdtComment.value = 'A car crash just happened.'
           }
         test message{
@@ -430,7 +438,8 @@ test step ts03oeLogin order 03{
                                                                   AdtDate, 
                                                                   AdtTime, 
                                                                   AdtPhoneNumber, 
-                                                                  AdtGPSLocation, 
+                                                                  AdtGPSLocation,
+                                                                  AetAlertDomain, 
                                                                   AdtComment)
         }
         oracle{
