@@ -29,6 +29,8 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLa
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLongitude;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPITitle;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPhoneNumber;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCoordinatorDomain;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisDomain;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtHumanKind;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtPICategory;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtDate;
@@ -98,6 +100,7 @@ public class ComCompanyController implements HasListeners{
 	 * @param phoneNumber is the contact phone number of the person reporting the accident to the iCrashSystem.
 	 * @param latitude is the latitude point of where the accident happened
 	 * @param longitude is the longitude point of where the accident happened
+	 * @param domain is the domain of the accident
 	 * @param comment is the information conveyed in the received SMS sent by the human (victim, witness, or anonymous)
 	 * @return Returns a PtBoolean of true if done successfully, otherwise will return a false
 	 * @throws ServerOfflineException is an error that is thrown when the server is offline or not reachable
@@ -107,7 +110,7 @@ public class ComCompanyController implements HasListeners{
 	 * @throws StringToNumberException the string to number exception
 	 */
 	public PtBoolean oeAlert(EtHumanKind aEtHumanKind, int year, int month, int day, int hour, int minute, int second,
-			String phoneNumber, String latitude, String longitude, String comment) throws ServerOfflineException, InvalidHumanKindException, ServerNotBoundException, IncorrectFormatException, StringToNumberException{
+			String phoneNumber, String latitude, String longitude, String domain, String comment) throws ServerOfflineException, InvalidHumanKindException, ServerNotBoundException, IncorrectFormatException, StringToNumberException{
 		try {
 			if (aActProxyComCompany == null)
 				return new PtBoolean(false);
@@ -118,13 +121,20 @@ public class ComCompanyController implements HasListeners{
 			DtComment aDtComment = new DtComment(new PtString(comment));
 			DtDate aDtDate = new DtDate(new DtYear(new PtInteger(year)), new DtMonth(new PtInteger(month)), new DtDay(new PtInteger(day)));
 			DtTime aDtTime = new DtTime(new DtHour(new PtInteger(hour)), new DtMinute(new PtInteger(minute)), new DtSecond(new PtInteger(second)));
+			EtCrisisDomain aEtDomain = EtCrisisDomain.regular;
+			PtString aDomain = new PtString("regular");
+			if(domain.equals("fire")) { aEtDomain = EtCrisisDomain.fire; aDomain = new PtString("none");}
+			if(domain.equals("chemicalSubstance")) { aEtDomain = EtCrisisDomain.chemicalSubstance; aDomain = new PtString("chemicalSubstance");}
+			if(domain.equals("naturalCase")) { aEtDomain = EtCrisisDomain.naturalCase; aDomain = new PtString("naturalCase");}
+			if(domain.equals("unknownSubstance")) { aEtDomain = EtCrisisDomain.unknownSubstance; aDomain = new PtString("unknownSubstance");}
 			Hashtable<JIntIs, String> ht = new Hashtable<JIntIs, String>();
 			ht.put(aDtGPSLocation.latitude, Double.toString(aDtGPSLocation.latitude.value.getValue()));
 			ht.put(aDtGPSLocation.longitude, Double.toString(aDtGPSLocation.longitude.value.getValue()));
 			ht.put(aEtHumanKind, aEtHumanKind.name());
 			ht.put(aDtPhoneNumber, aDtPhoneNumber.value.getValue());
 			ht.put(aDtComment, aDtComment.value.getValue());
-			return aActProxyComCompany.oeAlert(aEtHumanKind, aDtDate, aDtTime, aDtPhoneNumber, aDtGPSLocation, aDtComment);
+			ht.put(aEtDomain, aDomain.getValue());
+			return aActProxyComCompany.oeAlert(aEtHumanKind, aDtDate, aDtTime, aDtPhoneNumber, aDtGPSLocation, aDtComment, aEtDomain);
 		} catch (RemoteException e) {
 			Log4JUtils.getInstance().getLogger().error(e);
 			throw new ServerOfflineException();
@@ -141,6 +151,7 @@ public class ComCompanyController implements HasListeners{
 	 * Checks the data passed is correct and if so, will create a PI in the system.
 	 * 
 	 * @param aEtHumanKind the et of human in the system
+	 * @param phoneNumber the phone number of the person adding point of interest
 	 * @param year is the year when PI was added
 	 * @param month is the month when PI was added
 	 * @param day is the day when PI was added
@@ -158,13 +169,13 @@ public class ComCompanyController implements HasListeners{
 	 * @throws IncorrectFormatException is thrown when a Dt/Et information type does not match the is() method specified in the specification
 	 * @throws StringToNumberException the string to number exception
 	 */
-	public PtBoolean oePI(EtHumanKind aEtHumanKind, int year, int month, int day, int hour, int minute, int second,
+	public PtBoolean oePI(EtHumanKind aEtHumanKind, String phoneNumber, int year, int month, int day, int hour, int minute, int second,
 			String latitude, String longitude, String title, EtPICategory aEtPICategory) throws ServerOfflineException, InvalidHumanKindException, ServerNotBoundException, IncorrectFormatException, StringToNumberException{
 		try {
 			if (aActProxyComCompany == null)
 				return new PtBoolean(false);
 			
-			// MAYBE DtPhoneNumber aDtPhoneNumber = new DtPhoneNumber(new PtString(phoneNumber));
+			DtPhoneNumber aDtPhoneNumber = new DtPhoneNumber(new PtString(phoneNumber));
 			DtDate aDtDate = new DtDate(new DtYear(new PtInteger(year)), new DtMonth(new PtInteger(month)), new DtDay(new PtInteger(day)));
 			DtTime aDtTime = new DtTime(new DtHour(new PtInteger(hour)), new DtMinute(new PtInteger(minute)), new DtSecond(new PtInteger(second)));
 			double dblLatitude = Double.parseDouble(latitude);
@@ -173,14 +184,14 @@ public class ComCompanyController implements HasListeners{
 			DtPITitle aDtPITitle = new DtPITitle(new PtString(title));
 			
 			Hashtable<JIntIs, String> ht = new Hashtable<JIntIs, String>();
-			// MAYBE ht.put(aDtPhoneNumber, aDtPhoneNumber.value.getValue());
+			ht.put(aDtPhoneNumber, aDtPhoneNumber.value.getValue());
 			ht.put(aEtHumanKind, aEtHumanKind.name());
 			ht.put(aDtGPSLocation.latitude, Double.toString(aDtGPSLocation.latitude.value.getValue()));
 			ht.put(aDtGPSLocation.longitude, Double.toString(aDtGPSLocation.longitude.value.getValue()));
 			ht.put(aDtPITitle, aDtPITitle.value.getValue());
 			ht.put(aEtPICategory, aEtPICategory.name());
 			
-			return aActProxyComCompany.oePI(aEtHumanKind, aDtDate, aDtTime, aDtGPSLocation, aDtPITitle, aEtPICategory);
+			return aActProxyComCompany.oePI(aEtHumanKind, aDtPhoneNumber, aDtDate, aDtTime, aDtGPSLocation, aDtPITitle, aEtPICategory);
 			
 		} catch (RemoteException e) {
 			Log4JUtils.getInstance().getLogger().error(e);

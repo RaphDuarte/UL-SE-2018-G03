@@ -25,6 +25,7 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.design.JIntI
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCoordinatorID;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLogin;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPassword;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCoordinatorDomain;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtBoolean;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtString;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.utils.Log4JUtils;
@@ -50,23 +51,31 @@ public class AdminController extends AbstractUserController {
 	 * @param coordinatorID The ID of the coordinator to create, the user specifies the ID, not the system in the creation process
 	 * @param login The logon of the user to create. This is the username they will use at point of logon at the client front end
 	 * @param password The password of the user to create. This is the password they will use at point of logon at the client front end
+	 * @param domain The domain of the user to create, the user specifies the domain, not the system in the creation process.
 	 * @return Returns a PtBoolean true if the user was created, otherwise will return false
 	 * @throws ServerOfflineException is an error that is thrown when the server is offline or not reachable
 	 * @throws ServerNotBoundException is only thrown when attempting to access a server which has no current binding. This shouldn't happen, but you never know!
 	 * @throws IncorrectFormatException is thrown when a Dt/Et information type does not match the is() method specified in the specification
 	 */
-	public PtBoolean oeAddCoordinator(String coordinatorID, String login, String password) throws ServerOfflineException, ServerNotBoundException, IncorrectFormatException{
+	public PtBoolean oeAddCoordinator(String coordinatorID, String login, String password, String domain) throws ServerOfflineException, ServerNotBoundException, IncorrectFormatException{
 		if (getUserType() == UserType.Admin){
 			ActProxyAdministratorImpl actorAdmin = (ActProxyAdministratorImpl)getAuth();
 			DtCoordinatorID aDtCoordinatorID = new DtCoordinatorID(new PtString(coordinatorID));
 			DtLogin aDtLogin = new DtLogin(new PtString(login));
 			DtPassword aDtPassword = new DtPassword(new PtString(password));
+			EtCoordinatorDomain aEtDomain = EtCoordinatorDomain.none;
+			PtString aDomain = new PtString("none");
+			if(domain.equals("fire")) { aEtDomain = EtCoordinatorDomain.fire; aDomain = new PtString("none");}
+			if(domain.equals("chemicalSubstance")) { aEtDomain = EtCoordinatorDomain.chemicalSubstance; aDomain = new PtString("chemicalSubstance");}
+			if(domain.equals("naturalCase")) { aEtDomain = EtCoordinatorDomain.naturalCase; aDomain = new PtString("naturalCase");}
+			if(domain.equals("unknownSubstance")) { aEtDomain = EtCoordinatorDomain.unknownSubstance; aDomain = new PtString("unknownSubstance");}
 			Hashtable<JIntIs, String> ht = new Hashtable<JIntIs, String>();
 			ht.put(aDtCoordinatorID, aDtCoordinatorID.value.getValue());
 			ht.put(aDtLogin, aDtLogin.value.getValue());
 			ht.put(aDtPassword, aDtPassword.value.getValue());
+			ht.put(aEtDomain, aDomain.getValue());
 			try {
-				return actorAdmin.oeAddCoordinator(aDtCoordinatorID, aDtLogin, aDtPassword);
+				return actorAdmin.oeAddCoordinator(aDtCoordinatorID, aDtLogin, aDtPassword, aEtDomain);
 			} catch (RemoteException e) {
 				Log4JUtils.getInstance().getLogger().error(e);
 				throw new ServerOfflineException();

@@ -51,19 +51,6 @@ public class CtPI implements Serializable {
 		return new PtBoolean(true);
 	}
 	
-	/*
-	 * Allows for receiving a requested ctPI instance.
-	 *
-	 * @param aActCoordinator the actor coordinator that should recieve the alert
-	 * @return the success of the method
-	 * @throws RemoteException If the server is offline, this exception is thrown
-	 
-	public PtBoolean isSentToCoordinator(ActCoordinator aActCoordinator) throws RemoteException {
-		aActCoordinator.ieSendAnAlert(this);
-		return new PtBoolean(true);
-	}
-	*/
-	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */

@@ -1,0 +1,12 @@
+@@Operation
+icrash.concepts.primarytypes.datatypes.dtPITitle.is
+
+@description
+"used to determine which strings are considered as valid titles."
+//postFunctional descriptions
+@postF 
+"true iff the length of the string value is not more than 14 characters."
+@endPostF
+
+//example
+@example""

@@ -1,0 +1,26 @@
+@@Primary Type Class icrash.concepts.primarytypes.classes.ctPI
+
+@description
+"Used to model point of interest sent by human - victim using communication companies belonging to the system's environment"
+
+@attribute icrash.concepts.primarytypes.classes.ctPI.id
+"the unique identification information of point of interest."
+
+@attribute icrash.concepts.primarytypes.classes.ctPI.location
+"the position of the point of interest"
+
+@attribute icrash.concepts.primarytypes.classes.ctPI.instant
+"the date and time at which the PI has been sent."
+
+@attribute icrash.concepts.primarytypes.classes.ctPI.title
+"a textual title of point of interest"
+
+@attribute icrash.concepts.primarytypes.classes.ctPI.category
+"category of point of interest"
+
+@endAttributes
+
+@operation icrash.concepts.primarytypes.classes.ctAlert.init
+"used to initialize the current object as a new instance of the ctPI type."
+
+@endOperations

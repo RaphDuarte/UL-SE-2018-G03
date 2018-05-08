@@ -1,0 +1,21 @@
+@@Operation
+icrash.concepts.primarytypes.classes.ctPI.init
+//parameters
+@parameter icrash.concepts.primarytypes.classes.ctPI.init.Aid
+"used to initialize the id field"
+@parameter icrash.concepts.primarytypes.classes.ctPI.init.Alocation
+"used to initialize the location field"
+@parameter icrash.concepts.primarytypes.classes.ctPI.init.Ainstant
+"used to initialize the instant field"
+@parameter icrash.concepts.primarytypes.classes.ctPI.init.Atitle
+"used to initialize the title field"
+@parameter icrash.concepts.primarytypes.classes.ctPI.init.Acategory
+"used to initialize the category field"
+@endParameters
+@description
+" used to initialize the current object as a new instance of the ctPI type."
+//postFunctional descriptions
+@postF 
+"true iff the system poststate includes the current object as a new ctPI instance having its attributes equal to the ones provided as parameters. 
+"
+@endPostF

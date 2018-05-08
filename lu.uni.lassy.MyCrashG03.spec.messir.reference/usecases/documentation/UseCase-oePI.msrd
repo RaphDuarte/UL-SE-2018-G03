@@ -1,0 +1,30 @@
+@@Use Case Subfunction icrash.usecases.subfunctions.oePI hidden
+@description
+"goal is to add point of interest.
+"
+@parameter icrash.usecases.subfunctions.oePI.AdtPhoneNumber ""
+@parameter icrash.usecases.subfunctions.oePI.AdtMyDate ""
+@parameter icrash.usecases.subfunctions.oePI.AdtTime ""
+@parameter icrash.usecases.subfunctions.oePI.AdtGPSLocation ""
+@parameter icrash.usecases.subfunctions.oePI.AdtTitle ""
+@parameter icrash.usecases.subfunctions.oePI.AdtCategory ""
+@endParameters
+@protocolCondition
+"system is started and initialized.
+"
+@endProtocolConditions
+@preCondition
+" the date and time the PI is declared is supposed to be in the past with respect to the current time known by the system."
+@endPreConditions
+@postCondition
+" the system must record the new PI received together with all the transmitted data.
+"
+@postCondition
+"if there exist no already registered alert with crisis near to the PI currently declared
+then PI is not recorded."
+
+@endPostConditions
+@additionalInformation
+"
+none
+"

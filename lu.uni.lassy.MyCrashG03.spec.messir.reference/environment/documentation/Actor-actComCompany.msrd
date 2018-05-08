@@ -12,4 +12,6 @@
 //output events
 @outputEvent icrash.environment.actComCompany.outactComCompany.oeAlert
 "sent to alert of a potential crisis situation."
+@outputEvent icrash.environment.actComCompany.outactComCompany.oePI
+"sent to add new point of interest."
 @endOutputEvents

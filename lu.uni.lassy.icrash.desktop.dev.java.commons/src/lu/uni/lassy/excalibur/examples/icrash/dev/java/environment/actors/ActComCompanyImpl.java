@@ -83,7 +83,7 @@ public class ActComCompanyImpl extends UnicastRemoteObject implements ActComComp
 	 */
 	synchronized public PtBoolean oeAlert(EtHumanKind aEtHumanKind,
 			DtDate aDtDate, DtTime aDtTime, DtPhoneNumber aDtPhoneNumber,
-			DtGPSLocation aDtGPSLocation, DtComment aDtComment, EtCrisisDomain aEtCrisisDomain)
+			DtGPSLocation aDtGPSLocation, DtComment aDtComment, EtCrisisDomain aEtAlertDomain)
 			throws RemoteException, NotBoundException {
 
 		Logger log = Log4JUtils.getInstance().getLogger();
@@ -99,7 +99,7 @@ public class ActComCompanyImpl extends UnicastRemoteObject implements ActComComp
 
 		log.info("message ActComCompany.oeAlert sent to system");
 		PtBoolean res = iCrashSys_Server.oeAlert(aEtHumanKind, aDtDate,
-				aDtTime, aDtPhoneNumber, aDtGPSLocation, aDtComment, aEtCrisisDomain);
+				aDtTime, aDtPhoneNumber, aDtGPSLocation, aDtComment, aEtAlertDomain);
 
 		if (res.getValue() == true)
 			log.info("operation oeAlert successfully executed by the system");
@@ -189,7 +189,7 @@ public class ActComCompanyImpl extends UnicastRemoteObject implements ActComComp
 	/* (non-Javadoc)
 	 * @see lu.uni.lassy.excalibur.examples.icrash.dev.java.environment.actors.ActComCompany#oePI(lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtHumanKind, lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtDate, lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtTime, lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPhoneNumber, lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtGPSLocation, lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtComment)
 	 */
-	synchronized public PtBoolean oePI(EtHumanKind aEtHumanKind, DtDate aDtDate, DtTime aDtTime, DtGPSLocation aDtGPSLocation,
+	synchronized public PtBoolean oePI(EtHumanKind aEtHumanKind, DtPhoneNumber aDtPhoneNumber, DtDate aDtDate, DtTime aDtTime, DtGPSLocation aDtGPSLocation,
 			DtPITitle aDtPITitle, EtPICategory aDtPICategory) throws RemoteException, NotBoundException {
 		Logger log = Log4JUtils.getInstance().getLogger();
 
@@ -203,11 +203,11 @@ public class ActComCompanyImpl extends UnicastRemoteObject implements ActComComp
 		iCrashSys_Server.setCurrentConnectedComCompany(this);
 
 		log.info("message ActComCompany.oePI sent to system");
-		PtBoolean res = iCrashSys_Server.oePI(aEtHumanKind, aDtDate,
+		PtBoolean res = iCrashSys_Server.oePI(aEtHumanKind, aDtPhoneNumber, aDtDate,
 				aDtTime, aDtGPSLocation, aDtPITitle, aDtPICategory);
 
 		if (res.getValue() == true)
-			log.info("operation oeAlert successfully executed by the system");
+			log.info("operation oePI successfully executed by the system");
 
 		return res;
 	}

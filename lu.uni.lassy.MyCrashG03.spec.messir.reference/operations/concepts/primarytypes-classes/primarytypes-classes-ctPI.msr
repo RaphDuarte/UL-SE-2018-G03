@@ -1,0 +1,36 @@
+package icrash.operations.concepts.primarytypes.classes.ctPI{ 
+	
+import lu.uni.lassy.messir.libraries.primitives
+import lu.uni.lassy.messir.libraries.calendar
+
+import icrash.concepts.primarytypes.datatypes
+import icrash.concepts.primarytypes.classes
+
+import icrash.environment
+
+Operation Model {
+	
+operation: icrash.concepts.primarytypes.classes.ctPI.init(Aid:dtPIID , Alocation:dtGPSLocation , Ainstant:dtDateAndTime , Atitle:dtPITitle , Acategory:dtPICategory 
+):ptBoolean{
+postF{
+if
+(
+/* Post F01 */
+let Self:ctPI in
+Self.id = Aid
+and Self.location = Alocation
+and Self.instant = Ainstant
+and Self.title = Atitle
+and Self.category = Acategory
+/* Post F02 */
+and (Self.oclIsNew and self = Self)
+)
+then (result = true)
+else (result = false)
+endif
+}
+prolog{"src/Operations/Concepts/PrimaryTypesClasses/PrimaryTypesClasses-ctPI-init.pl"}
+}
+
+}
+}
