@@ -120,10 +120,6 @@ import lu.uni.lassy.messir.libraries.calendar
 										Alogin:dtLogin ,
 										Apwd:dtPassword ):ptBoolean
 			}
-		datatype etCoordinatorDomain {
-			}
-		datatype etCrisisDomain {
-			}
 		}
 	}
 }
