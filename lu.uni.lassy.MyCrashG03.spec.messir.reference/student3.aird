@@ -695,6 +695,12 @@
   <semanticResources>usecases/documentation/UseCase-oeSendCode.msrd</semanticResources>
   <semanticResources>usecases/documentation/UseCase-oeSetCrisisDomain.msrd</semanticResources>
   <semanticResources>documentation/View-tci-instance01.msrd</semanticResources>
+  <semanticResources>concepts/documentation/PrimaryType-Class-ctPI.msrd</semanticResources>
+  <semanticResources>operations/concepts/documentation/Operation-ctPI-init.msrd</semanticResources>
+  <semanticResources>operations/concepts/documentation/Operation-dtPITitle-is.msrd</semanticResources>
+  <semanticResources>operations/concepts/documentation/Operation-etPICategory-is.msrd</semanticResources>
+  <semanticResources>operations/concepts/primarytypes-classes/primarytypes-classes-ctPI.msr</semanticResources>
+  <semanticResources>usecases/documentation/UseCase-oePI.msrd</semanticResources>
   <ownedViews xmi:type="viewpoint:DView" xmi:id="_WzMfgPWqEeSOM9Kfym77Zg">
     <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/lu.uni.lassy.excalibur.ui.viewer/description/excalibur_models.odesign#//@ownedViewpoints[name='msr-viewpoint']"/>
   </ownedViews>
