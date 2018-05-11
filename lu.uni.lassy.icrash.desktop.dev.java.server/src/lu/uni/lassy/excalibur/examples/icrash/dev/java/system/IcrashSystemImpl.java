@@ -925,7 +925,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 				return new PtBoolean(true);
 				
 			} else {
-				log.error("There is no crisis or human is not victim");
+				log.error("Point of interest failed to be added");
 			}
 			
 		}
