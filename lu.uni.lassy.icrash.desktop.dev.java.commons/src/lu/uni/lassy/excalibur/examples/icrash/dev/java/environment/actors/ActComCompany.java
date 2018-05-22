@@ -15,8 +15,11 @@ package lu.uni.lassy.excalibur.examples.icrash.dev.java.environment.actors;
 import java.io.Serializable;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.List;
 
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.design.JIntIsActor;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtCrisis;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtPI;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtComment;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtGPSLocation;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPITitle;
@@ -104,4 +107,12 @@ public interface ActComCompany extends java.rmi.Remote, Serializable, JIntIsActo
 	public PtBoolean oePI(EtHumanKind aEtHumanKind, DtPhoneNumber aDtPhoneNumber, DtDate aDtDate, DtTime aDtTime,
 			DtGPSLocation aDtGPSLocation, DtPITitle aDtPITitle, EtPICategory aDtPICategory) 
 					throws RemoteException, NotBoundException;
+	
+	/**
+	 * Gets list of near points of interests
+	 * 
+	 * @param aCtCrisis near crisis
+	 * @return list of points of interests
+	 */
+	public PtBoolean oeNearPIs(DtPhoneNumber aDtPhoneNumber, DtGPSLocation aDtGPSLocation) throws RemoteException, NotBoundException;
 }

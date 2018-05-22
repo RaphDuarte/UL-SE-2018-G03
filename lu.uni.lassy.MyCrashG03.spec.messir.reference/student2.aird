@@ -703,6 +703,8 @@
     <semanticResources>operations/concepts/primarytypes-classes/primarytypes-classes-ctPI.msr</semanticResources>
     <semanticResources>usecases/documentation/UseCase-oePI.msrd</semanticResources>
     <semanticResources>operations/environment/environment-actComCompany-oePI.msr</semanticResources>
+    <semanticResources>operations/environment/environment-actComCompany-oeSendCode.msr</semanticResources>
+    <semanticResources>operations/environment/environment-actComCompany-oeNearPIs.msr</semanticResources>
     <ownedViews xmi:type="viewpoint:DView" xmi:id="_VxVZ4PWqEeSOM9Kfym77Zg">
       <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/lu.uni.lassy.excalibur.ui.viewer/description/excalibur_models.odesign#//@ownedViewpoints[name='msr-viewpoint']"/>
       <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" xmi:id="_EHXNsCzHEeijwPbwEObBNg" name="uc-oeSendCode" repPath="#_EHIkMCzHEeijwPbwEObBNg">

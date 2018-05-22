@@ -110,15 +110,19 @@ import lu.uni.lassy.messir.libraries.calendar
 										AdtPhoneNumber:dtPhoneNumber ,
 										AdtSMS:dtSMS
 										):ptBoolean
-										
-				
-
+				operation oeNearPIs(
+										AdtPhoneNumber:dtPhoneNumber ,
+										AdtGPSLocation:dtGPSLocation
+										):ptBoolean
+			
 			}
 			
 			input interface inactComCompany{
-				operation ieSmsSend(AdtPhoneNumber:dtPhoneNumber , 
-														AdtSMS:dtSMS 
-														):ptBoolean										
+				operation ieSmsSend(
+										AdtPhoneNumber:dtPhoneNumber , 
+										AdtSMS:dtSMS
+										):ptBoolean
+				
 	 		}
 		}
 
