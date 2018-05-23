@@ -5,11 +5,28 @@ import lu.uni.lassy.messir.libraries.math
 import lu.uni.lassy.messir.libraries.string
 import lu.uni.lassy.messir.libraries.calendar
 import icrash.concepts.primarytypes.datatypes
+import icrash.concepts.primarytypes.classes
 import icrash.environment
 
 Operation Model {
 
 operation: actCoordinator.outactCoordinator.oeGetCrisisSet(AetCrisisStatus:etCrisisStatus):ptBoolean{
+
+postF{ 
+let Self:ctCrisis in
+and self.ACrisisStatus = AetCrisisStatus
+
+  if(self.Adomain = EtCrisisDomain.regular)
+  then (AactCoordinator.rnInterfaceIN.    ieSendACrisis(self))
+  else 
+  (
+  	if(AactCoordinator.Adomain = self.Adomain)
+  	then (AactCoordinator.rnInterfaceIN.ieSendACrisis(self))
+  	else (result = false)
+  	endif)
+  endif
+  }	
+	
 prolog{"src/Operations/Environment/OUT/outactCoordinator-oeGetCrisisSet.pl"}
 }
 }

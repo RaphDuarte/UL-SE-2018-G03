@@ -671,6 +671,23 @@
   <semanticResources>usecases/usecase-ugManageCrisisWithDomain.msr</semanticResources>
   <semanticResources>concepts/documentation/PrimaryType-Datatype-etCoordinatorDomain.msrd</semanticResources>
   <semanticResources>concepts/documentation/PrimaryType-Datatype-etCrisisDomain.msrd</semanticResources>
+  <semanticResources>operations/concepts/primarytypes-datatypes/primarytypes-datatypes-etCrisisDomain.msr</semanticResources>
+  <semanticResources>operations/environment/environment-actCoordinator-oeSetCrisisDomain.msr</semanticResources>
+  <semanticResources>operations/concepts/documentation/Operation-etCoordinatorDomain-is.msrd</semanticResources>
+  <semanticResources>operations/concepts/documentation/Operation-etCrisisDomain-is.msrd</semanticResources>
+  <semanticResources>operations/environment/documentation/Operation-actCoordinator-outactCoordinator-oeSetCrisisDomain.msrd</semanticResources>
+  <semanticResources>usecases/documentation/UseCase-oeSendCode.msrd</semanticResources>
+  <semanticResources>usecases/documentation/UseCase-oeSetCrisisDomain.msrd</semanticResources>
+  <semanticResources>documentation/View-tci-instance01.msrd</semanticResources>
+  <semanticResources>concepts/documentation/PrimaryType-Class-ctPI.msrd</semanticResources>
+  <semanticResources>operations/concepts/documentation/Operation-ctPI-init.msrd</semanticResources>
+  <semanticResources>operations/concepts/documentation/Operation-dtPITitle-is.msrd</semanticResources>
+  <semanticResources>operations/concepts/documentation/Operation-etPICategory-is.msrd</semanticResources>
+  <semanticResources>operations/concepts/primarytypes-classes/primarytypes-classes-ctPI.msr</semanticResources>
+  <semanticResources>usecases/documentation/UseCase-oePI.msrd</semanticResources>
+  <semanticResources>operations/environment/environment-actComCompany-oePI.msr</semanticResources>
+  <semanticResources>operations/environment/environment-actComCompany-oeSendCode.msr</semanticResources>
+  <semanticResources>operations/environment/environment-actComCompany-oeNearPIs.msr</semanticResources>
   <ownedViews xmi:type="viewpoint:DView" xmi:id="_UmILAPWqEeSOM9Kfym77Zg">
     <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/lu.uni.lassy.excalibur.ui.viewer/description/excalibur_models.odesign#//@ownedViewpoints[name='msr-viewpoint']"/>
   </ownedViews>

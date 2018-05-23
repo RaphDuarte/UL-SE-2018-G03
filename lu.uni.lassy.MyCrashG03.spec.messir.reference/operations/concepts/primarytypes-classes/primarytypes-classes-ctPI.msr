@@ -10,7 +10,7 @@ import icrash.environment
 
 Operation Model {
 	
-operation: icrash.concepts.primarytypes.classes.ctPI.init(Aid:dtPIID , Alocation:dtGPSLocation , Ainstant:dtDateAndTime , Atitle:dtPITitle , Acategory:dtPICategory 
+operation: icrash.concepts.primarytypes.classes.ctPI.init(Aid:dtPIID , Alocation:dtGPSLocation , Ainstant:dtDateAndTime , Atitle:dtPITitle , Acategory:etPICategory 
 ):ptBoolean{
 postF{
 if

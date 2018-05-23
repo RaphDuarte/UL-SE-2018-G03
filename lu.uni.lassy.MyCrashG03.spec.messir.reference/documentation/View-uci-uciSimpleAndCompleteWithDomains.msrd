@@ -1,0 +1,10 @@
+/*
+@author dgrap
+@date Mon May 14 15:53:47 CEST 2018
+*/
+
+
+@@view uci-uciSimpleAndCompleteWithDomains
+@instance Use-Case icrash.usecases.suDeployAndRun.uciSimpleAndCompleteWithDomains 
+@description ""
+@caption ""

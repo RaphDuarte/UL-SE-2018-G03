@@ -59,6 +59,7 @@ Test Model {
         AdtCoordinatorID : testcase01.ts04oeAddCoordinator.AdtCoordinatorID = "1"
         AdtLogin :testcase01.ts04oeAddCoordinator.AdtLogin= "steve"
         AdtPassword : testcase01.ts04oeAddCoordinator.AdtPassword = "pwdMessirExcalibur2017"
+        AetCoordinatorDomain : testcase01.ts04oeAddCoordinator.AetCoordinatorDomain= "fire"
       }
       oracle {
          satisfaction = "true"
@@ -102,7 +103,8 @@ Test Model {
         AdtTime : testcase01.ts07oeAlert1.AdtTime = "10:10:16"
         AdtPhoneNumber : testcase01.ts07oeAlert1.AdtPhoneNumber = "+3524666445252"
         AdtGPSLocation : testcase01.ts07oeAlert1.AdtGPSLocation = "49.627675:6.159590"
-        AdtComment : testcase01.ts07oeAlert1.AdtComment = "3 cars involved in an accident."
+        AetAlertDomain : testcase01.ts07oeAlert1.AetAlertDomain= "Fire"
+        AdtComment : testcase01.ts07oeAlert1.AdtComment = "3 cars involved in an accident. 1 is on fire"
        }
       oracle {
          satisfaction = "true"
@@ -236,6 +238,7 @@ Test Model {
         AdtTime : testcase01.ts15oeAlert2.AdtTime= "10:20:00"
         AdtPhoneNumber : testcase01.ts15oeAlert2.AdtPhoneNumber= "+3524666445000"
         AdtGPSLocation : testcase01.ts15oeAlert2.AdtGPSLocation= "49.627095:6.160251"
+        AetAlertDomain : testcase01.ts15oeAlert2.AetAlertDomain= "regular"
         AdtComment : testcase01.ts15oeAlert2.AdtComment= "A car crash just happened."
       }
       message {
@@ -287,7 +290,7 @@ Test Model {
       variables {
         reuse tsi09.steve as testcase01.ts18oeReportOnCrisis.TheActor 
         AdtCrisisID : testcase01.ts18oeReportOnCrisis.AdtCrisisID = "1"
-        AdtComment : testcase01.ts18oeReportOnCrisis.AdtComment= "3 victims sent to hospital, 2 cars evacuated and 4 rescue unit mobilized"
+        AdtComment : testcase01.ts18oeReportOnCrisis.AdtComment= "Fire is out, 3 victims sent to hospital, 2 cars evacuated and 4 rescue unit mobilized"
       }
       oracle {
          satisfaction = "true"

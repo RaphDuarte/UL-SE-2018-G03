@@ -17,6 +17,8 @@ icrash.environment.actCoordinator.outactCoordinator.oeSetCrisisHandler
 //preFunctional descriptions
 @preF
 " there exist one crisis having the given id in the pre-state."
+@preF
+" to use this, the crisis must have the same domain as the coordinator or be of the domain 'regular'"
 @endPreF
 
 //postFunctional descriptions

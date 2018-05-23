@@ -1,0 +1,10 @@
+/*
+@author dgrap
+@date Tue May 08 19:04:56 CEST 2018
+*/
+
+
+@@view uc-ugManageCrisisWithDomain
+@model Use-Case icrash.usecases.ugManageCrisisWithDomain.ugManageCrisisWithDomain 
+@description ""
+@caption ""

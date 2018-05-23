@@ -94,17 +94,8 @@ postF{
 if 
 (
 /* Post F01 */
-// Add a constrain that only Coordinators with the domain receive a crisis
-  if(self.Adomain = EtCrisisDomain.none)
-  then (AactCoordinator.rnInterfaceIN.ieSendACrisis(self))
-  else 
-  (
-  	if(AactCoordinator.Adomain = self.Adomain)
-  	then (AactCoordinator.rnInterfaceIN.ieSendACrisis(self))
-  	else (result = false)
-  	endif)
-  endif)
-
+AactCoordinator.rnInterfaceIN.ieSendACrisis(self)
+)
 then (result = true)
 else (result = false)
 endif}
