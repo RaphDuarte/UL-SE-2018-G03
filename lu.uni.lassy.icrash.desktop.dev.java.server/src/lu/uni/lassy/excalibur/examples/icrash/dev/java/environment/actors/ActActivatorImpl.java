@@ -33,6 +33,7 @@ public class ActActivatorImpl extends UnicastRemoteObject implements
 		ActActivator {
 
 	/** The Constant serialVersionUID. */
+	
 	private static final long serialVersionUID = 227L;
 
 	/**
