@@ -110,23 +110,29 @@ public class ComCompanyController implements HasListeners{
 	 * @throws StringToNumberException the string to number exception
 	 */
 	public PtBoolean oeAlert(EtHumanKind aEtHumanKind, int year, int month, int day, int hour, int minute, int second,
-			String phoneNumber, String latitude, String longitude, String domain, String comment) throws ServerOfflineException, InvalidHumanKindException, ServerNotBoundException, IncorrectFormatException, StringToNumberException{
+			String phoneNumber, String latitude, String longitude, String domain, String comment) 
+			throws ServerOfflineException, InvalidHumanKindException, ServerNotBoundException, IncorrectFormatException, StringToNumberException{
 		try {
 			if (aActProxyComCompany == null)
 				return new PtBoolean(false);
 			double dblLatitude = Double.parseDouble(latitude);
 			double dblLongitude = Double.parseDouble(longitude);
-			DtGPSLocation aDtGPSLocation = new DtGPSLocation(new DtLatitude(new PtReal(dblLatitude)), new DtLongitude(new PtReal(dblLongitude)));
+			DtGPSLocation aDtGPSLocation = new DtGPSLocation(new DtLatitude(new PtReal(dblLatitude)), 
+					new DtLongitude(new PtReal(dblLongitude)));
 			DtPhoneNumber aDtPhoneNumber = new DtPhoneNumber(new PtString(phoneNumber));
 			DtComment aDtComment = new DtComment(new PtString(comment));
-			DtDate aDtDate = new DtDate(new DtYear(new PtInteger(year)), new DtMonth(new PtInteger(month)), new DtDay(new PtInteger(day)));
-			DtTime aDtTime = new DtTime(new DtHour(new PtInteger(hour)), new DtMinute(new PtInteger(minute)), new DtSecond(new PtInteger(second)));
+			DtDate aDtDate = new DtDate(new DtYear(new PtInteger(year)), new DtMonth(new PtInteger(month)), 
+					new DtDay(new PtInteger(day)));
+			DtTime aDtTime = new DtTime(new DtHour(new PtInteger(hour)), new DtMinute(new PtInteger(minute)), 
+					new DtSecond(new PtInteger(second)));
 			EtCrisisDomain aEtDomain = EtCrisisDomain.regular;
 			PtString aDomain = new PtString("regular");
 			if(domain.equals("fire")) { aEtDomain = EtCrisisDomain.fire; aDomain = new PtString("none");}
-			if(domain.equals("chemicalSubstance")) { aEtDomain = EtCrisisDomain.chemicalSubstance; aDomain = new PtString("chemicalSubstance");}
+			if(domain.equals("chemicalSubstance")) { aEtDomain = EtCrisisDomain.chemicalSubstance; 
+			aDomain = new PtString("chemicalSubstance");}
 			if(domain.equals("naturalCase")) { aEtDomain = EtCrisisDomain.naturalCase; aDomain = new PtString("naturalCase");}
-			if(domain.equals("unknownSubstance")) { aEtDomain = EtCrisisDomain.unknownSubstance; aDomain = new PtString("unknownSubstance");}
+			if(domain.equals("unknownSubstance")) { aEtDomain = EtCrisisDomain.unknownSubstance; 
+			aDomain = new PtString("unknownSubstance");}
 			Hashtable<JIntIs, String> ht = new Hashtable<JIntIs, String>();
 			ht.put(aDtGPSLocation.latitude, Double.toString(aDtGPSLocation.latitude.value.getValue()));
 			ht.put(aDtGPSLocation.longitude, Double.toString(aDtGPSLocation.longitude.value.getValue()));

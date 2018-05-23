@@ -52,6 +52,8 @@ public interface ActCoordinator extends ActAuthenticated {
 	 */
 	public PtBoolean oeGetAlertsSet(EtAlertStatus aEtAlertStatus) throws RemoteException, NotBoundException;
 	
+	
+	
 	/**
 	 * @return the domain of type EtCoordinatorDomain
 	 */

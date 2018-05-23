@@ -22,7 +22,7 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtBoolean;
 public enum EtCoordinatorDomain implements JIntIs {
 
 	/** A domain is set as none when the coordinator has no domain. */
-	none,
+	none, /** regular for the Crisis/Alert Domains*/
 	/** A domain is set as fire if a coordinator's speciality involved fire. */
 	fire,
 	/**
