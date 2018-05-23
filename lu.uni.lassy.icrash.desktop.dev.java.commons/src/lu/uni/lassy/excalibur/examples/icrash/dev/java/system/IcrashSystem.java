@@ -421,5 +421,12 @@ public interface IcrashSystem extends Remote {
 	 */
 	public PtBoolean oeSetClock(DtDateAndTime aCurrentClock) throws RemoteException;
 
+	/**
+	 * Gets list of near points of interest
+	 * @param aCtCrisis near crisis
+	 * @return list of points of interests
+	 */
+	public List<CtPI> oeNearPIs(DtPhoneNumber aDtPhoneNumber, DtGPSLocation aDtGPSLocation);
+
 
 }

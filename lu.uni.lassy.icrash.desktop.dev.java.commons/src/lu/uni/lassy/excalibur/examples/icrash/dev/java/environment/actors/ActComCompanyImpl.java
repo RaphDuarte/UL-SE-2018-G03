@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.IcrashSystem;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtCrisis;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtPI;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtComment;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtGPSLocation;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPITitle;
@@ -210,5 +212,38 @@ public class ActComCompanyImpl extends UnicastRemoteObject implements ActComComp
 			log.info("operation oePI successfully executed by the system");
 
 		return res;
+	}
+	
+	@Override
+	public PtBoolean oeNearPIs(DtPhoneNumber aDtPhoneNumber, DtGPSLocation aDtGPSLocation) throws RemoteException, NotBoundException {
+		Logger log = Log4JUtils.getInstance().getLogger();
+		boolean res = true;
+		
+		Registry registry = LocateRegistry.getRegistry(RmiUtils.getInstance().getHost(),RmiUtils.getInstance().getPort());
+
+		//Gathering the remote object as it was published into the registry
+		IcrashSystem iCrashSys_Server = (IcrashSystem) registry
+				.lookup("iCrashServer");
+
+		//set up ComCompany instance that performs the request
+		iCrashSys_Server.setCurrentConnectedComCompany(this);
+		
+		log.info("message ActComCompany.getPIsByCrisis sent to system");
+		List<CtPI> nearPIs = iCrashSys_Server.oeNearPIs(aDtPhoneNumber, aDtGPSLocation);
+		
+		for (CtPI nearPI : nearPIs) {
+			PtBoolean sent = ieSmsSend(aDtPhoneNumber, nearPI.toSMS());
+			
+			if (sent.getValue() == false) {
+				res = false;
+			}
+		}
+		if (res) {
+			log.info("sms sent");
+			return new PtBoolean(true);
+		} else {
+			log.info("one or more sms not sent");
+			return new PtBoolean(false);
+		}
 	}
 }

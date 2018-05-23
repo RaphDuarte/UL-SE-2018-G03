@@ -181,16 +181,44 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 	 * @param aCtCrisis The crisis to use to search for the associated PI
 	 * @return The PI(s) that are associated with crisis provided
 	 */
-	private List<CtPI> getPIsByCrisis(CtCrisis aCtCrisis) {
+	public List<CtPI> oeNearPIs(DtPhoneNumber aDtPhoneNumber, DtGPSLocation aDtGPSLocation) {
 		List<CtPI> listPIs = new ArrayList<CtPI>();
+		
+		try{
+			//PreP1
+			isSystemStarted();
+			
+			//Precondition - Existing Near Alert with Crisis!
+			boolean existsNear = false;
+			CtCrisis aCtCrisis = new CtCrisis();
+			//check if there exists a reported Alert that is closer than 100 m. 
+			for (CtAlert existingCtAlert : assCtAlertCtCrisis.keySet()) {
+				existsNear = existingCtAlert.location.isNearTo(
+						aDtGPSLocation.latitude, aDtGPSLocation.longitude)
+						.getValue();
+				if (existsNear) {
+					aCtCrisis = assCtAlertCtCrisis.get(existingCtAlert);
+					break;
+				}
+			}
+			
+			if (existsNear) {
+				for (CtPI ctPI : assCtPICtCrisis.keySet()) {
+					if (assCtPICtCrisis.get(ctPI).id.value.getValue().equals(
+							aCtCrisis.id.value.getValue()))
+						listPIs.add(ctPI);
+				}
+			} else {
+				log.error("List of PI faileed to load");
+			}
 
-		for (CtPI ctPI : assCtPICtCrisis.keySet()) {
-			if (assCtPICtCrisis.get(ctPI).id.value.getValue().equals(
-					aCtCrisis.id.value.getValue()))
-				listPIs.add(ctPI);
+			return listPIs;
+			
 		}
-
-		return listPIs;
+		catch(Exception e){
+			log.error("Exception in oePI..." + e);
+		}
+		return new ArrayList<CtPI>();
 	}
 	
 	/**
@@ -925,7 +953,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 				return new PtBoolean(true);
 				
 			} else {
-				log.error("There is no crisis or human is not victim");
+				log.error("Point of interest failed to be added");
 			}
 			
 		}

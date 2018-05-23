@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.environment.actors.ActCoordinator;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.secondary.DtSMS;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtDateAndTime;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtBoolean;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtString;
 
 /**
  * The Class CtPI, that hold details about the Point of Interest (PI) instance.
@@ -57,6 +59,14 @@ public class CtPI implements Serializable {
 	@Override
 	public String toString(){
 		return this.id.value.getValue();
+	}
+	
+	public DtSMS toSMS() {
+		PtString message = new PtString("PI: " + this.title.toString() +
+										". Category: " + this.category.toString() +
+										". Location:" + this.location.latitude.toString());
+		DtSMS sms = new DtSMS(message);
+		return sms;
 	}
 	
 	/* (non-Javadoc)

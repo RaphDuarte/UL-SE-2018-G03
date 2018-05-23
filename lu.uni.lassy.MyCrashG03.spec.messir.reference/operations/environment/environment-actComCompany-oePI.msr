@@ -1,0 +1,86 @@
+package icrash.environment.operations.actComCompany.outactComCompany.oePI {
+
+import lu.uni.lassy.messir.libraries.primitives
+import lu.uni.lassy.messir.libraries.math
+import lu.uni.lassy.messir.libraries.string
+import lu.uni.lassy.messir.libraries.calendar
+
+	Operation Model {
+
+		operation: icrash.environment.actComCompany.outactComCompany.oePI(
+			AetHumanKind:etHumanKind,
+			AdtPhoneNumber:dtPhoneNumber,
+			AdtDate:null, AdtTime:null,
+			AdtGPSLocation:dtGPSLocation,
+			AdtTitle:dtPITitle,
+			AetCategory:etPICategory
+		):ptBoolean{
+			preP{
+  				let TheSystem: ctState in
+  				self.rnActor.rnSystem = TheSystem
+				/* PreP01 */
+  				and TheSystem.vpStarted = true
+			}
+			preF{ 
+  				let TheSystem: ctState in
+  				self.rnActor.rnSystem = TheSystem
+				/* PreF01 */
+ 				and (TheSystem.clock.date.gt(AdtDate)
+					or (TheSystem.clock.date.eq(AdtDate)
+           				and TheSystem.clock.time.gt(AdtTime)))
+           		
+           		// there is nearby alert
+           		and TheSystem.rnctAlert.select(location.isNearTo(AdtGPSLocation)) = ColctAlertsNearBy
+				and ColctAlertsNearBy->size()>0
+				
+				// human is victim
+				and AetHumanKind.eq(etHumanKind.victim)
+           	}
+
+			postF{
+ 				let TheSystem: ctState in
+  
+				let  TheactComCompany:actComCompany in
+				let  ActPI:ctPI in
+				let  APIInstant:dtDateAndTime in
+				let  ActAlertNearBy:ctAlert in
+				let  ActCrisis:ctCrisis in
+				let  AdtSMS:dtSMS in
+				let  AdtPIID:dtPIID in
+ 
+					self.rnActor.rnSystem = TheSystem
+					and self.rnActor = TheactComCompany
+				
+				//Create next ID for PI
+				TheSystem.nextValueForPIID=PrenextValueForPIID
+				and PrenextValueForAlertID.add(1) = PostnextValueForPIID
+				and TheSystem@post.nextValueForPIID = PostnextValueForPIID
+
+				//Create PI
+				and APIInstant.date=AdtDate
+				and APInstant.time=AdtTime
+				and TheSystem.nextValueForPIID.todtString().eq(AdtPIID)
+				and ActPI.init(
+					AdtPIID,
+					APIInstant,
+                	AdtGPSLocation,
+                	AdtTitle,
+                	AetCategory)
+                
+                // Add crisis
+                and ColctAlertsNearBy.rnTheCrisis->msrAny(true) = ActCrisis
+                and ActAlert@post.rnTheCrisis = ActCrisis
+
+				AdtSMS.value = 'Your point of interest has been added.'
+				and TheactComCompany.rnInterfaceIN^ieSmsSend(AdtPhoneNumber,AdtSMS)
+				
+			}
+		
+		/* Post Protocol:*/
+		/* PostP01 */
+		postP{true}
+		prolog{"src/Operations/Environment/OUT/outactComCompany-oeAlert.pl"}
+		}
+		
+	}
+}

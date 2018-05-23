@@ -1,0 +1,39 @@
+package icrash.environment.operations.actComCompany.outactComCompany.oeNearPIs {
+
+import lu.uni.lassy.messir.libraries.primitives
+import lu.uni.lassy.messir.libraries.math
+import lu.uni.lassy.messir.libraries.string
+import lu.uni.lassy.messir.libraries.calendar
+
+	Operation Model {
+
+		operation: icrash.environment.actComCompany.outactComCompany.oeNearPIs(
+			AdtPhoneNumber:dtPhoneNumber,
+			AdtGPSLocation:dtGPSLocation
+		):ptBoolean{
+		preF{ 
+  				let TheSystem: ctState in
+  				self.rnActor.rnSystem = TheSystem
+				
+				// there is nearby alert
+           		and TheSystem.rnctAlert.select(location.isNearTo(AdtGPSLocation)) = ColctAlertsNearBy
+				and ColctAlertsNearBy->size()>0
+        }
+        postF {
+        		let TheSystem: ctState in
+  
+				let  TheactComCompany:actComCompany in
+				let  ActPI:ctPI in
+				let  ActCrisis:ctCrisis in
+				let  AdtSMS:dtSMS in
+				let  AdtPhoneNumber:dtPhoneNumber in
+				let  AdtGPSLocation:dtGPSLocation in
+				
+					self.rnActor.rnSystem = TheSystem
+					and self.rnActor = TheactComCompany
+					
+				and list<ctPI>
+        }
+	}
+}
+}
