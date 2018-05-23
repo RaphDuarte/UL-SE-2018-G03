@@ -61,7 +61,8 @@ public class ActAdministratorImpl extends ActAuthenticatedImpl implements
 
 		Logger log = Log4JUtils.getInstance().getLogger();
 
-		Registry registry = LocateRegistry.getRegistry(RmiUtils.getInstance().getHost(),RmiUtils.getInstance().getPort());
+		Registry registry = LocateRegistry.getRegistry(RmiUtils.getInstance().getHost(),
+				RmiUtils.getInstance().getPort());
 
 		//Gathering the remote object as it was published into the registry
 		IcrashSystem iCrashSys_Server = (IcrashSystem) registry

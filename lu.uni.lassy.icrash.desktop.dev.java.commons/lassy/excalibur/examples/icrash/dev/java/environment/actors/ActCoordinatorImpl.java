@@ -337,7 +337,7 @@ public class ActCoordinatorImpl extends ActAuthenticatedImpl implements ActCoord
 
 	@Override
 	synchronized public EtCoordinatorDomain oeGetCoordinatorDomain() {
-		return this.oeGetCoordinatorDomain();
+		return null;
 	}
 
 	@Override

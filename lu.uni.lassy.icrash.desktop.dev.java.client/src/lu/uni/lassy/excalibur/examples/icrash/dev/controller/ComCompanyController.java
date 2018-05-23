@@ -124,9 +124,12 @@ public class ComCompanyController implements HasListeners{
 			EtCrisisDomain aEtDomain = EtCrisisDomain.regular;
 			PtString aDomain = new PtString("regular");
 			if(domain.equals("fire")) { aEtDomain = EtCrisisDomain.fire; aDomain = new PtString("none");}
-			if(domain.equals("chemicalSubstance")) { aEtDomain = EtCrisisDomain.chemicalSubstance; aDomain = new PtString("chemicalSubstance");}
+			aDomain = new PtString("fire");}
+			if(domain.equals("chemicalSubstance")) { aEtDomain = EtCrisisDomain.chemicalSubstance; 
+			aDomain = new PtString("chemicalSubstance");}
 			if(domain.equals("naturalCase")) { aEtDomain = EtCrisisDomain.naturalCase; aDomain = new PtString("naturalCase");}
-			if(domain.equals("unknownSubstance")) { aEtDomain = EtCrisisDomain.unknownSubstance; aDomain = new PtString("unknownSubstance");}
+			if(domain.equals("unknownSubstance")) { aEtDomain = EtCrisisDomain.unknownSubstance; 
+			aDomain = new PtString("unknownSubstance");}
 			Hashtable<JIntIs, String> ht = new Hashtable<JIntIs, String>();
 			ht.put(aDtGPSLocation.latitude, Double.toString(aDtGPSLocation.latitude.value.getValue()));
 			ht.put(aDtGPSLocation.longitude, Double.toString(aDtGPSLocation.longitude.value.getValue()));
