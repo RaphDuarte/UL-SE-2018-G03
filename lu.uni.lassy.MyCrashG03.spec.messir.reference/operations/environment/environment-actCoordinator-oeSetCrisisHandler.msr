@@ -13,8 +13,23 @@ import icrash.environment
 Operation Model {
 
 operation: actCoordinator.outactCoordinator.oeSetCrisisHandler(AdtCrisisID:dtCrisisID):ptBoolean{
+
+// Add a constrain that only Coordinators with the domain receive a crisis
+preF{ 
+let Self:ctCrisis in
+and self.CrisisID = AdtCrisisID
+
+  if(self.Adomain = EtCrisisDomain.regular)
+  then (AactCoordinator.rnInterfaceIN.ieSendACrisis(self))
+  else 
+  (
+  	if(AactCoordinator.Adomain = self.Adomain)
+  	then (AactCoordinator.rnInterfaceIN.ieSendACrisis(self))
+  	else (result = false)
+  	endif)
+  endif
+  }
 prolog{"src/Operations/Environment/OUT/outactCoordinator-oeSetCrisisHandler.pl"}
 }
-
-}
+}	
 }

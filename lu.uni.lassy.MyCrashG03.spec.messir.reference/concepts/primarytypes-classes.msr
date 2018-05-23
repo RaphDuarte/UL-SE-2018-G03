@@ -22,6 +22,7 @@ import lu.uni.lassy.messir.libraries.calendar
 				
 				operation init(	AnextValueForAlertID:dtInteger,
 												AnextValueForCrisisID:dtInteger,
+												AnextValueForPIID: dtInteger , 
 				 								Aclock:dtDateAndTime,
 												AcrisisReminderPeriod:dtSecond ,
 												AmaxCrisisReminderPeriod:dtSecond ,

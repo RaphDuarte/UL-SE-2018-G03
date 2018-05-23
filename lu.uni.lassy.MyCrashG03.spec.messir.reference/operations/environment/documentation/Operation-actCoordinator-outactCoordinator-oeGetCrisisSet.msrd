@@ -21,6 +21,11 @@ icrash.environment.actCoordinator.outactCoordinator.oeGetCrisisSet
 
 //postFunctional descriptions
 @postF 
+
+" the receiving thr list of crisis must be of the same domain of the Coordinator or it must have the domain 'regular'"
+
+@postF 
+
 " the post state is the one obtained by satisfying the \msrcode{isSentToCoordinator} predicate for each crisis having the provided status and for the actor sending the message \msrcode{ieSendACrisis}. (cf. specification of \msrcode{isSentToCoordinator} predicate given for the \msrcode{ctCrisis} type."
 @endPostF
 

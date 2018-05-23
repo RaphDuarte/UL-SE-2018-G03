@@ -5,7 +5,7 @@ package icrash.usecases.ugManageCrisisWithDomain {
 
 	Use Case Model {
 		
-		use case system usergoal ugManageCrisis() {
+		use case system usergoal ugManageCrisisWithDomain() {
 			actor actCoordinator[primary, active]
 
 			reuse oeValidateAlert[0..*]
