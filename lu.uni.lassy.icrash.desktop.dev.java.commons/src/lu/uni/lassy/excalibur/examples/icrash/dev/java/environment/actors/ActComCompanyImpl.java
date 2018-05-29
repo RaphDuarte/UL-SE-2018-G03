@@ -229,7 +229,7 @@ public class ActComCompanyImpl extends UnicastRemoteObject implements ActComComp
 		iCrashSys_Server.setCurrentConnectedComCompany(this);
 		
 		log.info("message ActComCompany.getPIsByCrisis sent to system");
-		List<CtPI> nearPIs = iCrashSys_Server.oeNearPIs(aDtPhoneNumber, aDtGPSLocation);
+		List<CtPI> nearPIs = new ArrayList<>();//iCrashSys_Server.getNearPIs(aDtPhoneNumber, aDtGPSLocation);
 		
 		for (CtPI nearPI : nearPIs) {
 			PtBoolean sent = ieSmsSend(aDtPhoneNumber, nearPI.toSMS());

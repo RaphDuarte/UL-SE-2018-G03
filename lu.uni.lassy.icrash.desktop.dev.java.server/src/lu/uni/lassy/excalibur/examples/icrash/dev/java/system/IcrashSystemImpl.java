@@ -176,52 +176,6 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 	}
 	
 	/**
-	 * Gets the PIs by crisis.
-	 *
-	 * @param aCtCrisis The crisis to use to search for the associated PI
-	 * @return The PI(s) that are associated with crisis provided
-	 */
-	public List<CtPI> oeNearPIs(DtPhoneNumber aDtPhoneNumber, DtGPSLocation aDtGPSLocation) {
-		List<CtPI> listPIs = new ArrayList<CtPI>();
-		
-		try{
-			//PreP1
-			isSystemStarted();
-			
-			//Precondition - Existing Near Alert with Crisis!
-			boolean existsNear = false;
-			CtCrisis aCtCrisis = new CtCrisis();
-			//check if there exists a reported Alert that is closer than 100 m. 
-			for (CtAlert existingCtAlert : assCtAlertCtCrisis.keySet()) {
-				existsNear = existingCtAlert.location.isNearTo(
-						aDtGPSLocation.latitude, aDtGPSLocation.longitude)
-						.getValue();
-				if (existsNear) {
-					aCtCrisis = assCtAlertCtCrisis.get(existingCtAlert);
-					break;
-				}
-			}
-			
-			if (existsNear) {
-				for (CtPI ctPI : assCtPICtCrisis.keySet()) {
-					if (assCtPICtCrisis.get(ctPI).id.value.getValue().equals(
-							aCtCrisis.id.value.getValue()))
-						listPIs.add(ctPI);
-				}
-			} else {
-				log.error("List of PI faileed to load");
-			}
-
-			return listPIs;
-			
-		}
-		catch(Exception e){
-			log.error("Exception in oePI..." + e);
-		}
-		return new ArrayList<CtPI>();
-	}
-	
-	/**
 	 * Gets the class Authenticated (Of a coordinator type) that has the associated ID provided.
 	 *
 	 * @param aDtCoordinatorID The ID to use to search for the user
@@ -551,6 +505,51 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 				result.add(comComp);
 		}
 		return result;
+	}
+	
+	/* (non-Javadoc)
+	 * @see lu.uni.lassy.excalibur.examples.icrash.dev.java.system.IcrashSystem#getNearPIs()
+	 */
+	public PtBoolean getNearPIs(DtPhoneNumber aDtPhoneNumber, DtGPSLocation aDtGPSLocation) throws RemoteException {
+		ArrayList<CtPI> listPIs = new ArrayList<CtPI>();
+		//ArrayList<CtPI>
+		try{
+			//PreP1
+			isSystemStarted();
+			
+			//Precondition - Existing Near Alert with Crisis!
+			boolean existsNear = false;
+			CtCrisis aCtCrisis = new CtCrisis();
+			//check if there exists a reported Alert that is closer than 100 m. 
+			for (CtAlert existingCtAlert : assCtAlertCtCrisis.keySet()) {
+				existsNear = existingCtAlert.location.isNearTo(
+						aDtGPSLocation.latitude, aDtGPSLocation.longitude)
+						.getValue();
+				if (existsNear) {
+					aCtCrisis = assCtAlertCtCrisis.get(existingCtAlert);
+					break;
+				}
+			}
+			
+			if (existsNear) {
+				for (CtPI ctPI : assCtPICtCrisis.keySet()) {
+					if (assCtPICtCrisis.get(ctPI).id.value.getValue().equals(
+							aCtCrisis.id.value.getValue()))
+						listPIs.add(ctPI);
+				}
+			} else {
+				//log.error("List of PI failed to load");
+			}
+
+			//return listPIs;
+			return new PtBoolean(true);
+			
+		}
+		catch(Exception e){
+			//log.error("Exception in oePI..." + e);
+		}
+		//return new ArrayList<CtPI>();
+		return new PtBoolean(false);
 	}
 	
 	/* (non-Javadoc)

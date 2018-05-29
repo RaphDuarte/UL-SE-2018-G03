@@ -51,6 +51,35 @@ UNLOCK TABLES;
 
 
 --
+-- Table structure for table `points of interest`
+--
+
+DROP TABLE IF EXISTS `pis`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pis` (
+	  `id` varchar(80) NOT NULL,
+	  `latitude` double DEFAULT NULL,
+	  `longitude` double DEFAULT NULL,
+	  `instant` datetime DEFAULT NULL,
+	  `title` varchar(80) DEFAULT NULL,
+	  `category` varchar(80) DEFAULT NULL,
+  `crisis` varchar(80) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `alerts`
+--
+
+LOCK TABLES `pis` WRITE;
+/*!40000 ALTER TABLE `pis` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pis` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+--
 -- Table structure for table `crises`
 --
 

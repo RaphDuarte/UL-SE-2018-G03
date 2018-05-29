@@ -124,7 +124,7 @@ public class ComCompanyController implements HasListeners{
 			EtCrisisDomain aEtDomain = EtCrisisDomain.regular;
 			PtString aDomain = new PtString("regular");
 			if(domain.equals("fire")) { aEtDomain = EtCrisisDomain.fire; aDomain = new PtString("none");}
-			aDomain = new PtString("fire");}
+			aDomain = new PtString("fire");
 			if(domain.equals("chemicalSubstance")) { aEtDomain = EtCrisisDomain.chemicalSubstance; 
 			aDomain = new PtString("chemicalSubstance");}
 			if(domain.equals("naturalCase")) { aEtDomain = EtCrisisDomain.naturalCase; aDomain = new PtString("naturalCase");}

@@ -209,6 +209,14 @@ public interface IcrashSystem extends Remote {
 	public ArrayList<ActComCompany> getAllActComCompanies() throws RemoteException;
 	
 	/**
+	 * Gets list of near points of interest
+	 * @param aCtCrisis near crisis
+	 * @return list of points of interests
+	 */
+	public PtBoolean getNearPIs(DtPhoneNumber aDtPhoneNumber, DtGPSLocation aDtGPSLocation) throws RemoteException;
+
+	
+	/**
 	 * Gets the specified communication company with the name specified.
 	 *
 	 * @param name The name of the company to retrieve
@@ -421,12 +429,5 @@ public interface IcrashSystem extends Remote {
 	 */
 	public PtBoolean oeSetClock(DtDateAndTime aCurrentClock) throws RemoteException;
 
-	/**
-	 * Gets list of near points of interest
-	 * @param aCtCrisis near crisis
-	 * @return list of points of interests
-	 */
-	public List<CtPI> oeNearPIs(DtPhoneNumber aDtPhoneNumber, DtGPSLocation aDtGPSLocation);
-
-
+	
 }
