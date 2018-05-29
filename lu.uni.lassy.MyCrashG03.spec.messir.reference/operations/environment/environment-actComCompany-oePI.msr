@@ -33,6 +33,21 @@ import lu.uni.lassy.messir.libraries.calendar
            		and TheSystem.rnctAlert.select(location.isNearTo(AdtGPSLocation)) = ColctAlertsNearBy
 				and ColctAlertsNearBy->size()>0
 				
+				// there is human
+				and  TheSystem.rnctHuman->select(id.eq(AdtPhoneNumber)) = HumanCol1
+
+				and HumanCol1->select(kind.etEq(AetHumanKind)) = HumanCol2
+				and if (HumanCol2->msrIsEmpty)
+    				then (ActHuman.init(AdtPhoneNumber,AetHumanKind)
+          				and ActHuman@post.rnactComCompany = TheactComCompany
+         				)
+    				else (HumanCol2->any(true) = ActHuman)
+    				endif
+    
+				and ActHuman.rnSignaled->msrIncluding(ActPI) = ColPIs
+ 
+ 				and ActHuman@post.rnSignaled = ColPIs
+				
 				// human is victim
 				and AetHumanKind.eq(etHumanKind.victim)
            	}

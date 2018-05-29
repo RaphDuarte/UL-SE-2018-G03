@@ -222,24 +222,25 @@ public class ActComCompanyImpl extends UnicastRemoteObject implements ActComComp
 		Registry registry = LocateRegistry.getRegistry(RmiUtils.getInstance().getHost(),RmiUtils.getInstance().getPort());
 
 		//Gathering the remote object as it was published into the registry
-		IcrashSystem iCrashSys_Server = (IcrashSystem) registry
-				.lookup("iCrashServer");
+		IcrashSystem iCrashSys_Server = (IcrashSystem) registry.lookup("iCrashServer");
 
 		//set up ComCompany instance that performs the request
 		iCrashSys_Server.setCurrentConnectedComCompany(this);
 		
 		log.info("message ActComCompany.getPIsByCrisis sent to system");
-		List<CtPI> nearPIs = new ArrayList<>();//iCrashSys_Server.getNearPIs(aDtPhoneNumber, aDtGPSLocation);
+		ArrayList<CtPI> nearPIs = iCrashSys_Server.getNearPIs(aDtPhoneNumber, aDtGPSLocation);
 		
 		for (CtPI nearPI : nearPIs) {
 			PtBoolean sent = ieSmsSend(aDtPhoneNumber, nearPI.toSMS());
 			
 			if (sent.getValue() == false) {
 				res = false;
+				
+			} else {
+				log.info("mySMS: " + nearPI.toString());
 			}
 		}
 		if (res) {
-			log.info("sms sent");
 			return new PtBoolean(true);
 		} else {
 			log.info("one or more sms not sent");

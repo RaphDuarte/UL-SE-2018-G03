@@ -159,5 +159,14 @@ public class ActProxyComCompanyImpl extends UnicastRemoteObject implements
 			return false;
 		return true;
 	}
+
+	@Override
+	public PtBoolean oeNearPIs(DtPhoneNumber aDtPhoneNumber, DtGPSLocation aDtGPSLocation)
+			throws RemoteException, NotBoundException {
+		if (serverSideActor != null)
+			return serverSideActor.oeNearPIs(aDtPhoneNumber, aDtGPSLocation);
+		else
+			return new PtBoolean(false);
+	}
 	
 }

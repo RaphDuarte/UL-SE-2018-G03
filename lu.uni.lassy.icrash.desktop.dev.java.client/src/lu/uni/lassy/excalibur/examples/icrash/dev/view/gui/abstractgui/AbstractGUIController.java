@@ -46,6 +46,7 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtAl
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtCoordinator;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtCrisis;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtHuman;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtPI;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtState;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtAlertStatus;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisStatus;
@@ -506,6 +507,67 @@ public abstract class AbstractGUIController implements Initializable {
 	}
 	
 	/**
+	 * Sets up the point of interest tableviews with the correct columns.
+	 *
+	 * @param tblvw The tableview to add the columns to
+	 */
+	public void setUpPITables(TableView<CtPI> tblvw){
+		TableColumn<CtPI, String> idCol = new TableColumn<CtPI, String>("ID");
+		TableColumn<CtPI, String> titleCol = new TableColumn<CtPI, String>("Title");
+		TableColumn<CtPI, String> categoryCol = new TableColumn<CtPI, String>("Category");
+		TableColumn<CtPI, String> dateCol = new TableColumn<CtPI, String>("Date");
+		TableColumn<CtPI, String> timeCol = new TableColumn<CtPI, String>("Time");
+		TableColumn<CtPI, Double> longitudeCol = new TableColumn<CtPI, Double>("Longitude");
+		TableColumn<CtPI, Double> latitudeCol = new TableColumn<CtPI, Double>("Latitude");
+		
+		idCol.setCellValueFactory(new Callback<CellDataFeatures<CtPI, String>, ObservableValue<String>>() {
+			public ObservableValue<String> call(CellDataFeatures<CtPI, String> pi) {
+				return new ReadOnlyObjectWrapper<String>(pi.getValue().id.value.getValue());
+			}
+		});
+		titleCol.setCellValueFactory(new Callback<CellDataFeatures<CtPI, String>, ObservableValue<String>>() {
+			public ObservableValue<String> call(CellDataFeatures<CtPI, String> pi) {
+				return new ReadOnlyObjectWrapper<String>(pi.getValue().title.value.getValue());
+			}
+		});
+		categoryCol.setCellValueFactory(new Callback<CellDataFeatures<CtPI, String>, ObservableValue<String>>() {
+			public ObservableValue<String> call(CellDataFeatures<CtPI, String> pi) {
+				return new ReadOnlyObjectWrapper<String>(pi.getValue().category.name());
+			}
+		});	
+		dateCol.setCellValueFactory(new Callback<CellDataFeatures<CtPI, String>, ObservableValue<String>>() {
+			public ObservableValue<String> call(CellDataFeatures<CtPI, String> pi) {
+				return new ReadOnlyObjectWrapper<String>(pi.getValue().instant.date.toString());
+			}
+		});
+		timeCol.setCellValueFactory(new Callback<CellDataFeatures<CtPI, String>, ObservableValue<String>>() {
+			public ObservableValue<String> call(CellDataFeatures<CtPI, String> pi) {
+				return new ReadOnlyObjectWrapper<String>(pi.getValue().instant.time.toString());
+			}
+		});
+		longitudeCol.setCellValueFactory(new Callback<CellDataFeatures<CtPI, Double>, ObservableValue<Double>>() {
+			public ObservableValue<Double> call(CellDataFeatures<CtPI, Double> pi) {
+				return new ReadOnlyObjectWrapper<Double>(pi.getValue().location.longitude.value.getValue());
+			}
+		});
+		latitudeCol.setCellValueFactory(new Callback<CellDataFeatures<CtPI, Double>, ObservableValue<Double>>() {
+			public ObservableValue<Double> call(CellDataFeatures<CtPI, Double> pi) {
+				return new ReadOnlyObjectWrapper<Double>(pi.getValue().location.latitude.value.getValue());
+			}
+		});
+			
+		tblvw.getColumns().add(idCol);
+		tblvw.getColumns().add(titleCol);
+		tblvw.getColumns().add(categoryCol);
+		tblvw.getColumns().add(dateCol);
+		tblvw.getColumns().add(timeCol);
+		tblvw.getColumns().add(longitudeCol);
+		tblvw.getColumns().add(latitudeCol);
+
+		setColumnsSameWidth(tblvw);
+	}
+	
+	/**
 	 * Sets up the human tableviews with the correct columns.
 	 *
 	 * @param tblvw The tableview to add the columns to
@@ -712,6 +774,17 @@ public abstract class AbstractGUIController implements Initializable {
 	public void addCrisesToTableView(TableView<CtCrisis> tblvw, Collection<? extends CtCrisis> collection, EtCrisisStatus aEtCrisisStatus){
 		tblvw.getItems().clear();
 		tblvw.getItems().addAll(collection.stream().filter(t-> t.status.equals(aEtCrisisStatus)).collect(Collectors.toList()));
+	}
+	
+	/**
+	 * Adds the provided list of points of interest to the tableview.
+	 *
+	 * @param tblvw The tableview to add the data to
+	 * @param collection the list of items to add to the tableview
+	 */
+	public void addPIsToTableView(TableView<CtPI> tblvw, Collection<? extends CtPI> collection){
+		tblvw.getItems().clear();
+		tblvw.getItems().addAll(collection);
 	}
 	
 	/**

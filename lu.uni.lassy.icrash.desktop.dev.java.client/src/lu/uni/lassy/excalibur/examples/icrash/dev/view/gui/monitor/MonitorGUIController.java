@@ -23,6 +23,7 @@ import javafx.event.ActionEvent;
 import lu.uni.lassy.excalibur.examples.icrash.dev.controller.AlertController;
 import lu.uni.lassy.excalibur.examples.icrash.dev.controller.CrisisController;
 import lu.uni.lassy.excalibur.examples.icrash.dev.controller.HumanController;
+import lu.uni.lassy.excalibur.examples.icrash.dev.controller.PIController;
 import lu.uni.lassy.excalibur.examples.icrash.dev.controller.SystemStateController;
 import lu.uni.lassy.excalibur.examples.icrash.dev.controller.exceptions.NullValueException;
 import lu.uni.lassy.excalibur.examples.icrash.dev.controller.exceptions.ServerNotBoundException;
@@ -33,6 +34,7 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtAl
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtCoordinator;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtCrisis;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtHuman;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtPI;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtState;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtBoolean;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.utils.Log4JUtils;
@@ -73,6 +75,10 @@ public class MonitorGUIController extends AbstractGUIController implements HasTa
 	/** The tableview of the crises in the system. */
     @FXML
     private TableView<CtCrisis> tblvwCrises;
+    
+    /** The tableview of the points of interests in the system. */
+    @FXML
+    private TableView<CtPI> tblvwPIs;
 
     /** The tableview of the humans in the system. */
     @FXML
@@ -123,6 +129,9 @@ public class MonitorGUIController extends AbstractGUIController implements HasTa
     /** The crisis controller, which allows crisis specific functions, like getting a list of crises. */
     private CrisisController crisisController;
     
+    /** The alert controller, which allows alert specific functions, like getting a list of alerts. */
+    private PIController piController;
+    
     /** The system state controller, which allows state specific functions, like getting the current server date and time. */
     private SystemStateController systemStateController;
 	
@@ -146,6 +155,7 @@ public class MonitorGUIController extends AbstractGUIController implements HasTa
 			addAlertsToTableView(tblvwAlerts, alertController.getListOfAlerts());
 			addHumansToTableView(tblvwHumans, humanController.getAllHumans());
 			addCrisesToTableView(tblvwCrises, crisisController.getAllCtCrises());
+			addPIsToTableView(tblvwPIs, piController.getListOfPIs());
 			//Moved these to the bottom, as most likely to throw the null pointer exception error
 			addAdminsToTableView(tblvwAdministrators, systemStateController.getAllAdministrators());
 			addCoordsToTableView(tblvwCoordinators, systemStateController.getAllCoordinators());
@@ -170,6 +180,7 @@ public class MonitorGUIController extends AbstractGUIController implements HasTa
     	setUpCrisesTables(tblvwCrises);
     	setUpHumansTables(tblvwHumans);
     	setUpStateTables(tblvwCtState);
+    	setUpPITables(tblvwPIs);
     }
 
 	/* (non-Javadoc)
@@ -182,6 +193,7 @@ public class MonitorGUIController extends AbstractGUIController implements HasTa
 		humanController.closeServerConnection();
 		crisisController.closeServerConnection();
 		humanController.closeServerConnection();
+		piController.closeServerConnection();
 	}
 
 	@Override
@@ -190,6 +202,7 @@ public class MonitorGUIController extends AbstractGUIController implements HasTa
     	crisisController = new CrisisController();
     	alertController = new AlertController();
     	humanController = new HumanController();
+    	piController = new PIController();
     	setUpTables();
     	populateTables();
     	tbpnMonitor.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {

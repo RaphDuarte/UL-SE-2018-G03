@@ -510,14 +510,13 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 	/* (non-Javadoc)
 	 * @see lu.uni.lassy.excalibur.examples.icrash.dev.java.system.IcrashSystem#getNearPIs()
 	 */
-	public PtBoolean getNearPIs(DtPhoneNumber aDtPhoneNumber, DtGPSLocation aDtGPSLocation) throws RemoteException {
+	public ArrayList<CtPI> getNearPIs(DtPhoneNumber aDtPhoneNumber, DtGPSLocation aDtGPSLocation) throws RemoteException {
 		ArrayList<CtPI> listPIs = new ArrayList<CtPI>();
-		//ArrayList<CtPI>
 		try{
 			//PreP1
 			isSystemStarted();
 			
-			//Precondition - Existing Near Alert with Crisis!
+			//Precondition1 - Existing Near Alert with Crisis!
 			boolean existsNear = false;
 			CtCrisis aCtCrisis = new CtCrisis();
 			//check if there exists a reported Alert that is closer than 100 m. 
@@ -531,25 +530,46 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 				}
 			}
 			
-			if (existsNear) {
-				for (CtPI ctPI : assCtPICtCrisis.keySet()) {
-					if (assCtPICtCrisis.get(ctPI).id.value.getValue().equals(
-							aCtCrisis.id.value.getValue()))
-						listPIs.add(ctPI);
+			//Precondition1 - Existing Human = victim!
+			CtHuman aCtHuman = new CtHuman();
+			boolean existsHuman = false;
+	
+			//check if there already exists a human 
+			for (CtHuman existingHuman : assCtHumanActComCompany.keySet()) {
+				String exPhoneNumber = existingHuman.id.value.getValue();
+				if (exPhoneNumber.equals(aDtPhoneNumber.value.getValue())) {
+					aCtHuman = existingHuman;
+					existsHuman = true;
+					break;
+				}
+			}
+			
+			if (existsHuman) {
+				if (existsNear && aCtHuman.kind.equals(EtHumanKind.victim)) {
+					for (CtPI ctPI : assCtPICtCrisis.keySet()) {
+						if (assCtPICtCrisis.get(ctPI).id.value.getValue().equals(aCtCrisis.id.value.getValue())) {
+							listPIs.add(ctPI);
+						}
+							
+					}
+				} else {
+					log.error("This person cannot view points of interest");
 				}
 			} else {
-				//log.error("List of PI failed to load");
+				log.error("This person cannot view points of interest");
 			}
+			
+			
 
-			//return listPIs;
-			return new PtBoolean(true);
+			return listPIs;
+			//return new PtBoolean(true);
 			
 		}
 		catch(Exception e){
-			//log.error("Exception in oePI..." + e);
+			log.error("Exception in oePI..." + e);
 		}
-		//return new ArrayList<CtPI>();
-		return new PtBoolean(false);
+		return new ArrayList<CtPI>();
+		//return new PtBoolean(false);
 	}
 	
 	/* (non-Javadoc)
@@ -684,7 +704,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 			assCtAlertCtCrisis = DbAlerts.getAssCtAlertCtCrisis();
 			assCtAlertCtHuman = DbAlerts.getAssCtAlertCtHuman();
 			assCtPICtCrisis = DbPIs.getAssCtPICtCrisis();
-			//assCtPICtHuman = DbPIs.getAssCtPICtHuman();
+			assCtPICtHuman = DbPIs.getAssCtPICtHuman();
 			assCtCrisisCtCoordinator = DbCrises.getAssCtCrisisCtCoordinator();
 			assCtHumanActComCompany = DbHumans.getAssCtHumanActComCompany(env.getActComCompanies());
 			/*
@@ -925,35 +945,77 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 				}
 			}
 			
-			//Creation of PI happens only if there is a near crisis and human is victim
-			if (existsNear && aEtHumanKind.equals(EtHumanKind.victim)) {
-				
-				//Create next ID for PI	
-				ctState.nextValueForPIID.value = new PtInteger(
-						ctState.nextValueForPIID.value.getValue() + 1);
-		
-				//Insert PI into the database
-				CtPI aCtPI = new CtPI();
-				DtPIID aId = new DtPIID(new PtString(""
-						+ nextValueForPIID_at_pre));
-				aCtPI.init(aId, aDtGPSLocation, aInstant, aDtPITitle, aDtPICategory);
-				DbPIs.insertPI(aCtPI); // DB
-				
-				//Update just inserted PI with its corresponding associated (near) crisis
-				assCtPICtCrisis.put(aCtPI, aCtCrisis);
-				DbPIs.bindPICrisis(aCtPI, aCtCrisis); //DB
-				
-				//send SMS
-				DtSMS sms = new DtSMS(new PtString(	"Your point of interest has been added."));
-				currentConnectedComCompany.ieSmsSend(aDtPhoneNumber, sms);
-				
-				//update Messir composition
-				cmpSystemCtPI.put(aCtPI.id.value.getValue(), aCtPI);
-				return new PtBoolean(true);
-				
-			} else {
-				log.error("Point of interest failed to be added");
+			//PostF5
+			CtHuman aCtHuman = new CtHuman();
+			boolean existsHuman = false;
+	
+			//check if there already exists a human who reported an Alert 
+			for (CtHuman existingHuman : assCtHumanActComCompany.keySet()) {
+				String exPhoneNumber = existingHuman.id.value.getValue();
+				if (exPhoneNumber.equals(aDtPhoneNumber.value.getValue())) {
+					aCtHuman = existingHuman;
+					existsHuman = true;
+					break;
+				}
 			}
+			
+			//Creation of PI happens only if human is victim
+			if (aEtHumanKind.equals(EtHumanKind.victim)) {
+				//if there no exists human, then we need (1) to initialise the just created instance
+				// and (2) to add it to the assCtHumanActComCompany relationship 
+				if (!existsHuman) {
+					aCtHuman.init(aDtPhoneNumber, aEtHumanKind);
+					assCtHumanActComCompany.put(aCtHuman, currentConnectedComCompany);
+		
+					//update Messir composition
+					cmpSystemCtHuman.put(aCtHuman.id.value.getValue(), aCtHuman);
+		
+					//DB: get currentConnectedComCompany's id
+					String idComCompany = DbComCompanies
+							.getComCompanyID(currentConnectedComCompany.getName());
+		
+					//DB: insert human in the database
+					DbHumans.insertHuman(aCtHuman, idComCompany);
+				}
+				
+				//Creation of PI happens only if there is a near crisis 
+				if (existsNear) {					
+					//Create next ID for PI	
+					ctState.nextValueForPIID.value = new PtInteger(
+							ctState.nextValueForPIID.value.getValue() + 1);
+			
+					//Insert PI into the database
+					CtPI aCtPI = new CtPI();
+					DtPIID aId = new DtPIID(new PtString(""
+							+ nextValueForPIID_at_pre));
+					aCtPI.init(aId, aDtGPSLocation, aInstant, aDtPITitle, aDtPICategory);
+					DbPIs.insertPI(aCtPI); // DB
+					
+					//Update just inserted PI with its corresponding associated (near) crisis
+					assCtPICtCrisis.put(aCtPI, aCtCrisis);
+					DbPIs.bindPICrisis(aCtPI, aCtCrisis); //DB
+					
+					//send SMS
+					DtSMS sms = new DtSMS(new PtString(	"Your point of interest has been added."));
+					currentConnectedComCompany.ieSmsSend(aDtPhoneNumber, sms);
+					
+					//bind human with alert
+					assCtPICtHuman.put(aCtPI, aCtHuman);
+					//DB: update just inserted alert with reporting human
+					DbPIs.bindPIHuman(aCtPI, aCtHuman);
+					
+					//update Messir composition
+					cmpSystemCtPI.put(aCtPI.id.value.getValue(), aCtPI);
+					return new PtBoolean(true);
+					
+				} else {
+					log.error("Point of interest failed to be added");
+				}
+			} else {
+				log.error("This is not victim!");
+			}
+	
+			
 			
 		}
 		catch(Exception e){

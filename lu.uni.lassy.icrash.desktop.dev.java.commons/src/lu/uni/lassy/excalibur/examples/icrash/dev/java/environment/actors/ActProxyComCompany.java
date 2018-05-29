@@ -78,6 +78,16 @@ public interface ActProxyComCompany extends Remote, JIntIsActor {
 			DtGPSLocation aDtGPSLocation, DtPITitle aDtPITitle, EtPICategory aEtPICategory) throws RemoteException, NotBoundException;
 
 	/**
+	 * Contacts the server actor and initiates a request for near PIs.
+	 * @param aDtPhoneNumber The phone number of human
+	 * @param aDtGPSLocation The location of the human
+	 * @return  The success of method
+	 * @throws Thrown if the server is offline
+	 * @throws NotBoundException Thrown if the server is not bound correctly in RMI settings
+	 */
+	public PtBoolean oeNearPIs(DtPhoneNumber aDtPhoneNumber, DtGPSLocation aDtGPSLocation) throws RemoteException, NotBoundException;
+	
+	/**
 	 * Receives a message from the server side actor with details of if the alert was logged or not.
 	 *
 	 * @param aDtPhoneNumber The phone number of the human associated with the accident

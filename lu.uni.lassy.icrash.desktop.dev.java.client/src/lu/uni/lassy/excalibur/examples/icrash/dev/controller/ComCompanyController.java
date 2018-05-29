@@ -208,6 +208,48 @@ public class ComCompanyController implements HasListeners{
 		}
 	}
 	
+	/**
+	 * Checks the data passed is correct and if so, will create a request for near PI in the system.
+	 * 
+	 * @param phoneNumber phone number of person who requests near PI
+	 * @param latitude location of person
+	 * @param longitude location of person
+	 * @return Returns a PtBoolean of true if done successfully, otherwise will return a false
+	 * @throws ServerOfflineException is an error that is thrown when the server is offline or not reachable
+	 * @throws InvalidHumanKindException is thrown when the enum type of HumanKind does not match the specification
+	 * @throws ServerNotBoundException is only thrown when attempting to access a server which has no current binding. This shouldn't happen, but you never know!
+	 * @throws IncorrectFormatException is thrown when a Dt/Et information type does not match the is() method specified in the specification
+	 * @throws StringToNumberException the string to number exception
+	 */
+	public PtBoolean oeNearPIs(String phoneNumber, String latitude, String longitude) throws ServerOfflineException, InvalidHumanKindException, ServerNotBoundException, IncorrectFormatException, StringToNumberException{
+		try {
+			if (aActProxyComCompany == null)
+				return new PtBoolean(false);
+			
+			DtPhoneNumber aDtPhoneNumber = new DtPhoneNumber(new PtString(phoneNumber));
+			double dblLatitude = Double.parseDouble(latitude);
+			double dblLongitude = Double.parseDouble(longitude);
+			DtGPSLocation aDtGPSLocation = new DtGPSLocation(new DtLatitude(new PtReal(dblLatitude)), new DtLongitude(new PtReal(dblLongitude)));
+			
+			Hashtable<JIntIs, String> ht = new Hashtable<JIntIs, String>();
+			ht.put(aDtPhoneNumber, aDtPhoneNumber.value.getValue());
+			ht.put(aDtGPSLocation.latitude, Double.toString(aDtGPSLocation.latitude.value.getValue()));
+			ht.put(aDtGPSLocation.longitude, Double.toString(aDtGPSLocation.longitude.value.getValue()));
+			
+			return aActProxyComCompany.oeNearPIs(aDtPhoneNumber, aDtGPSLocation);
+			
+		} catch (RemoteException e) {
+			Log4JUtils.getInstance().getLogger().error(e);
+			throw new ServerOfflineException();
+		} catch (NotBoundException e) {
+			Log4JUtils.getInstance().getLogger().error(e);
+			throw new ServerNotBoundException();
+		} catch (NumberFormatException e){
+			Log4JUtils.getInstance().getLogger().error(e);
+			throw new StringToNumberException("Longitude: " + longitude + " and latitude: " + latitude);
+		}
+	}
+	
 	/* (non-Javadoc)
 	 * @see lu.uni.lassy.excalibur.examples.icrash.dev.controller.HasListeners#removeAllListeners()
 	 */

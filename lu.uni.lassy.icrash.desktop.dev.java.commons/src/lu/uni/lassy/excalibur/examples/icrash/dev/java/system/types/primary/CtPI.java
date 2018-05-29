@@ -62,9 +62,13 @@ public class CtPI implements Serializable {
 	}
 	
 	public DtSMS toSMS() {
+		String latit = String.valueOf(this.location.latitude.value.getValue());
+		String longit = String.valueOf(this.location.latitude.value.getValue());
+		
 		PtString message = new PtString("PI: " + this.title.toString() +
 										". Category: " + this.category.toString() +
-										". Location:" + this.location.latitude.toString());
+										". Location: " + latit +
+										", " + longit);
 		DtSMS sms = new DtSMS(message);
 		return sms;
 	}

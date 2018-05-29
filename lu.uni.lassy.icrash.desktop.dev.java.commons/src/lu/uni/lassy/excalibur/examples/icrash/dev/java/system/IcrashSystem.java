@@ -213,7 +213,7 @@ public interface IcrashSystem extends Remote {
 	 * @param aCtCrisis near crisis
 	 * @return list of points of interests
 	 */
-	public PtBoolean getNearPIs(DtPhoneNumber aDtPhoneNumber, DtGPSLocation aDtGPSLocation) throws RemoteException;
+	public ArrayList<CtPI> getNearPIs(DtPhoneNumber aDtPhoneNumber, DtGPSLocation aDtGPSLocation) throws RemoteException;
 
 	
 	/**

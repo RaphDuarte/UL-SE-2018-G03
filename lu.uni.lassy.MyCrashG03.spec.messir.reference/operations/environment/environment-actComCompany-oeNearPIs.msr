@@ -18,6 +18,10 @@ import lu.uni.lassy.messir.libraries.calendar
 				// there is nearby alert
            		and TheSystem.rnctAlert.select(location.isNearTo(AdtGPSLocation)) = ColctAlertsNearBy
 				and ColctAlertsNearBy->size()>0
+				
+				/// there is human - victim
+				and TheSystem.rnctHuman->select(id.eq(AdtPhoneNumber)) = HumanCol
+				and HumanCol->select(kind.etEq(etHumanKind.victim)
         }
         postF {
         		let TheSystem: ctState in

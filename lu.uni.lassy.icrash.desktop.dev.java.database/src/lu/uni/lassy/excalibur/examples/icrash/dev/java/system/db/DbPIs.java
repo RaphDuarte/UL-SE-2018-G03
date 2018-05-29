@@ -23,10 +23,12 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLa
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLongitude;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPIID;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPITitle;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPhoneNumber;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtAlertStatus;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisDomain;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisStatus;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisType;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtHumanKind;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtPICategory;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtDate;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtDateAndTime;
@@ -52,7 +54,6 @@ public class DbPIs extends DbAbstract {
 			conn = DriverManager.getConnection(url + dbName, userName, password);
 			try{
 				
-				// why l in numberOfPIsl?
 				String sql = "SELECT COUNT(id)  AS numberOfPIsl FROM "+ dbName + ".pis" ;
 
 
@@ -539,11 +540,114 @@ public class DbPIs extends DbAbstract {
 	 *
 	 * @return the hashtable of the associated humans and PIs
 	 */
-	/*
 	static public Hashtable<CtPI, CtHuman> getAssCtPICtHuman() {
-		// TO DO! Getting the PIs and their associated crises inserting them into a hashtable
-		return null;
-	}*/
+
+		Hashtable<CtPI, CtHuman> assCtAlertCtHuman = new Hashtable<CtPI, CtHuman>();
+
+		try {
+			conn = DriverManager
+					.getConnection(url + dbName, userName, password);
+			log.debug("Connected to the database");
+
+			/********************/
+			//Select
+
+			try {
+				String sql = "SELECT * FROM " + dbName + ".pis "
+						+ "INNER JOIN " + dbName + ".humans ON " + dbName
+						+ ".pis.human = " + dbName + ".humans.phone";
+
+				PreparedStatement statement = conn.prepareStatement(sql);
+				ResultSet res = statement.executeQuery(sql);
+
+				CtPI aCtPI = null;
+				CtHuman aCtHuman = null;
+
+				while (res.next()) {
+
+					aCtPI = new CtPI();
+					//PI's id
+					DtPIID aId = new DtPIID(new PtString(
+							res.getString("pis.id")));
+					
+					//PI's location
+					DtLatitude aDtLatitude = new DtLatitude(new PtReal(
+							res.getDouble("pis.latitude")));
+					DtLongitude aDtLongitude = new DtLongitude(new PtReal(
+							res.getDouble("pis.longitude")));
+					DtGPSLocation aDtGPSLocation = new DtGPSLocation(
+							aDtLatitude, aDtLongitude);
+
+					//PI's instant
+					Timestamp instant = res.getTimestamp("pis.instant");
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(instant);
+
+					int d = cal.get(Calendar.DATE);
+					int m = cal.get(Calendar.MONTH);
+					int y = cal.get(Calendar.YEAR);
+					DtDate aDtDate = ICrashUtils.setDate(y, m, d);
+					int h = cal.get(Calendar.HOUR_OF_DAY);
+					int min = cal.get(Calendar.MINUTE);
+					int sec = cal.get(Calendar.SECOND);
+					DtTime aDtTime = ICrashUtils.setTime(h, min, sec);
+					DtDateAndTime aInstant = new DtDateAndTime(aDtDate, aDtTime);
+
+					//PI's title  
+					DtPITitle aDtPITitle = new DtPITitle(new PtString(
+							res.getString("pis.title")));
+					
+					//PI's category -> [gas, food, music, movie, other]
+					String theCategory = res.getString("pis.category");
+					EtPICategory aCategory = null;
+					if (theCategory.equals(EtPICategory.gas.name()))
+						aCategory = EtPICategory.gas;
+					if (theCategory.equals(EtPICategory.food.name()))
+						aCategory = EtPICategory.food;
+					if (theCategory.equals(EtPICategory.music.name()))
+						aCategory = EtPICategory.music;
+					if (theCategory.equals(EtPICategory.movie.name()))
+						aCategory = EtPICategory.movie;
+					if (theCategory.equals(EtPICategory.other.name()))
+						aCategory = EtPICategory.other;
+
+					//init aCtPI instance
+					aCtPI.init(aId, aDtGPSLocation, aInstant, aDtPITitle, aCategory);
+
+					//*************************************
+					aCtHuman = new CtHuman();
+					//human's id
+					DtPhoneNumber aId1 = new DtPhoneNumber(new PtString(
+							res.getString("phone")));
+					//human's kind  -> [witness,victim,anonym]
+					String theKind = res.getString("kind");
+					EtHumanKind aKind = null;
+					if (theKind.equals(EtHumanKind.witness.name()))
+						aKind = EtHumanKind.witness;
+					if (theKind.equals(EtHumanKind.victim.name()))
+						aKind = EtHumanKind.victim;
+					if (theKind.equals(EtHumanKind.anonym.name()))
+						aKind = EtHumanKind.anonym;
+
+					aCtHuman.init(aId1, aKind);
+
+					//add instances to the hash
+					assCtAlertCtHuman.put(aCtPI, aCtHuman);
+
+				}
+
+			} catch (SQLException s) {
+				log.error("SQL statement is not executed! " + s);
+			}
+			conn.close();
+			log.debug("Disconnected from database");
+
+		} catch (Exception e) {
+			logException(e);
+		}
+
+		return assCtAlertCtHuman;
+	}
 	
 
 	/**
@@ -587,10 +691,9 @@ public class DbPIs extends DbAbstract {
 	/**
 	 * Binds a human onto a PI in the database.
 	 *
-	 * @param aCtAlert The PI to bind the human to
+	 * @param aCtPI The PI to bind the human to
 	 * @param aCtHuman The human to bind to the PI
 	 */
-	/*
 	static public void bindPIHuman(CtPI aCtPI, CtHuman aCtHuman) {
 		try {
 			conn = DriverManager
@@ -620,7 +723,7 @@ public class DbPIs extends DbAbstract {
 			logException(e);
 		}
 
-	}*/
+	}
 
 	/**
 	 * Deletes a PI from the database, it will use the ID from the CtPI to delete it.
